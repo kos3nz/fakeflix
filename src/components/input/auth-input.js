@@ -17,7 +17,7 @@ const AuthInput = ({
       className={`
             py-3 px-4 w-full
             bg-gray-700 rounded-md
-            text-gray-200 placeholder-gray-500 caret-gray-200
+            text-paragraph placeholder-gray-500 caret-gray-200
             appearance-none
             ${errors[id] ? 'border-b-2 border-yellow-500' : ''}
             focus:outline-none
