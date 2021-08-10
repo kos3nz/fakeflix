@@ -1,62 +1,52 @@
 import dynamic from 'next/dynamic';
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  useViewportScroll,
-} from 'framer-motion';
+import { useRouter } from 'next/router';
+import { motion } from 'framer-motion';
 import LogoLink from 'components/link/logo-link';
+import NavMenu from './nav-menu';
+import MobileNavMenu from './mobile-nav-menu';
 import Search from 'components/search';
 import UserIcon from 'components/user-icon';
+
+import { useScrollTop } from 'hooks';
 
 const Viewport = dynamic(() => import('react-responsive'), { ssr: false });
 
 const NavBar = () => {
-  const { scrollY } = useViewportScroll();
-  const backgroundColor = useTransform(
-    scrollY,
-    [0, 95, 100],
-    ['rgba(255,255,255,0)', 'rgba(255,255,255,0)', 'rgba(255,255,255,1)']
-  );
-  // console.log(backgroundColor);
-
-  const logo = {
-    initial: { y: 30, opacity: 0 },
-    animate: { y: 0, opacity: 1, transition: { duration: 1 } },
-    hover: { scale: 1.1 },
-  };
+  const isScrollTop = useScrollTop();
 
   return (
-    <motion.nav
+    <motion.header
       className="
-        w-full h-20 px-4 xs:px-6
+        w-full py-4 xs:py-6 px-6 xs:px-8
         fixed flex items-center
+        transition duration-500
         z-30
       "
-      style={{ backgroundColor }}
-      transition={{ duration: 2 }}
+      style={{
+        backgroundColor: isScrollTop ? 'transparent' : 'rgba(28, 25, 24, 1)',
+      }}
     >
-      <motion.div
-        initial="initial"
-        animate="animate"
-        whileHover="hover"
-        variants={logo}
-      >
-        <Viewport minWidth={600}>
+      <Viewport minWidth={600}>
+        {(matches) =>
+          matches ? (
+            <LogoLink href="/login" logoType="desktop" size="sm" />
+          ) : (
+            <LogoLink href="/login" logoType="mobile" size="md" />
+          )
+        }
+      </Viewport>
+      <nav className="flex-1 flex items-center ml-10">
+        <Viewport minWidth={1024}>
           {(matches) =>
-            matches ? (
-              <LogoLink href="/login" logoType="desktop" size="sm" />
-            ) : (
-              <LogoLink href="/login" logoType="mobile" size="md" />
-            )
+            matches ? <NavMenu /> : <MobileNavMenu isScrollTop={isScrollTop} />
           }
         </Viewport>
-      </motion.div>
-      <div className="flex-1 flex justify-end gap-4 sm:gap-6">
-        <Search />
-        <UserIcon />
-      </div>
-    </motion.nav>
+        <div className="flex-1 flex justify-end gap-4 sm:gap-6">
+          <Search />
+          <UserIcon />
+        </div>
+      </nav>
+    </motion.header>
   );
 };
 

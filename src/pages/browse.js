@@ -1,22 +1,25 @@
 import Head from 'next/head';
-import { motion } from 'framer-motion';
 import NavBar from 'components/navbar';
-import Header from 'components/header';
+import Banner from 'components/banner';
+import Row from 'components/row';
+import movies from 'const/movies-data';
 
 export default function HomePage() {
-  // const { scrollY } = useViewportScroll();
-  // console.log(scrollY);
-
   return (
     <>
       <Head>
         <title>Fakeflix - The unofficial Netflix clone</title>
         <link rel="icon" href="/Fakeflix_favicon_64.ico" />
       </Head>
-      <div className="w-full h-screen bg-gray-900">
-        <NavBar />
-        <Header />
-      </div>
+      <NavBar />
+      <main>
+        <Banner movie={movies[1]} />
+        {Array(3)
+          .fill('test')
+          .map((v, i) => (
+            <Row key={i} movies={movies} />
+          ))}
+      </main>
     </>
   );
 }

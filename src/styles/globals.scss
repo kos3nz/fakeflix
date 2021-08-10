@@ -12,6 +12,7 @@
   html,
   body {
     /* font-family: Inter, sans-serif; */
+    @apply text-paragraph bg-gray-900;
   }
 }
 
@@ -20,16 +21,10 @@
   --paragraph: rgba(231, 229, 228, 1); /* gray-200 */
 }
 
-.float-input:focus ~ label {
-  @apply text-purple-500;
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
 }
 
-.float-input:focus ~ label,
-.float-input:not(:placeholder-shown) ~ label {
-  @apply transform scale-75 -translate-y-5 origin-0;
-}
-
-.outline .float-input:focus ~ label,
-.outline .float-input:not(:placeholder-shown) ~ label {
-  @apply transform scale-75 -translate-y-5 origin-0 z-20 -translate-x-1 px-1;
+.row-showmore:hover span {
+  @apply opacity-100 transform translate-x-2;
 }

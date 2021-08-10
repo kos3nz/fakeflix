@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 
-export const useViewport = () => {
+const useViewport = () => {
   // next.jsで'window is not defined.'エラーの対処法
+  // このhookで取得したwindow sizeを使ってコンポーネントにダイナミックにclassNameなどを変更する場合は、このhookとは別にnext/dynamicでimportする必要がある
+
   const isClient = typeof window !== 'undefined';
   const reportWindowSize = () => ({
     width: isClient ? window?.innerWidth : undefined,
@@ -25,3 +27,5 @@ export const useViewport = () => {
 
   return viewport;
 };
+
+export default useViewport;

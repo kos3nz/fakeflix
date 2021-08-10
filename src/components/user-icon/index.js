@@ -30,9 +30,9 @@ const UserIcon = () => {
     <div className="text-paragraph" ref={dropdownRef}>
       <div
         className="
-        flex items-center gap-1
-        cursor-pointer
-      "
+          flex items-center gap-1
+          cursor-pointer
+        "
         onClick={() => setIsVisible((isVisible) => !isVisible)}
       >
         <img

@@ -13,11 +13,16 @@ module.exports = {
       xs: '400px',
       ...defaultTheme.screens,
     },
+    gradientColorStops: (theme) => ({
+      ...theme('colors'),
+      'gray-900-opacity-75': 'rgba(28,25,23,.75)',
+    }),
     extend: {
       colors: {
         gray: colors.warmGray,
         primary: 'rgba(220, 38, 38, 1)', // primary
         paragraph: 'rgba(231, 229, 228, 1)', // gray-200
+        background: 'rgba(28, 25, 23, 1)', // gray-900
       },
       fontFamily: {
         // lato: ['Lato', 'sans-serif'],

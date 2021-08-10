@@ -8,11 +8,6 @@ import SignUp from 'components/form/sign-up';
 export default function LoginPage() {
   const [isSignedUp, setIsSignedUp] = useState(true);
 
-  const logo = {
-    initial: { y: 30, opacity: 0 },
-    animate: { y: 0, opacity: 1, transition: { duration: 1 } },
-    hover: { scale: 1.1 },
-  };
   const formContainer = {
     hidden: { y: 300, opacity: 0 },
     visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
@@ -38,18 +33,9 @@ export default function LoginPage() {
             flex justify-center items-center
           "
         >
-          <motion.div
-            className="absolute top-8 left-8 z-10 hidden xs:block"
-            initial="initial"
-            animate="animate"
-            whileHover="hover"
-            variants={logo}
-          >
-            <LogoLink
-              href="/browse"
-              imageUrl="https://cdn.jsdelivr.net/gh/Th3Wall/assets-cdn/Fakeflix/Fakeflix_logo.png"
-            />
-          </motion.div>
+          <div className="absolute top-8 left-8 z-10 hidden xs:block">
+            <LogoLink href="/browse" />
+          </div>
           <motion.div
             className="
                 max-w-90 mx-auto sm:max-w-lg bg-black px-8 py-10 sm:px-12 sm:py-16 bg-opacity-70 rounded-lg z-20
