@@ -28,55 +28,57 @@
 .row {
   .swiper-container {
     // 左右の余白はここで指定
-    @apply w-full px-[4%] overflow-visible;
+    overflow: initial;
+    @apply w-full h-auto px-[4%];
 
     .swiper-wrapper {
       @apply h-auto;
+      @media only screen and (min-width: 768px) {
+        &.is-center:hover {
+          .swiper-slide {
+            // hoverした.slider要素より前の.slider要素
+            transform: translateX(-12%);
+            opacity: 0.2;
+            &:hover {
+              // hoverした.slider要素
+              // @apply z-10 scale-125 translate-x-0 opacity-100;
+              @apply z-10 opacity-100;
+              transform: scale(1.25) translateX(0%);
 
-      &.is-center:hover {
-        .swiper-slide {
-          // hoverした.slider要素より前の.slider要素
-          transform: translateX(-12%);
-          opacity: 0.2;
-          &:hover {
-            // hoverした.slider要素
-            // @apply z-10 scale-125 translate-x-0 opacity-100;
-            @apply z-10 opacity-100;
-            transform: scale(1.25) translateX(0%);
-
-            ~ .swiper-slide {
-              // hoverした.slider要素以降の.slider要素
-              transform: translateX(12%);
+              ~ .swiper-slide {
+                // hoverした.slider要素以降の.slider要素
+                transform: translateX(12%);
+              }
             }
           }
         }
-      }
 
-      &.is-left:hover {
-        .swiper-slide {
-          transform: translateX(0%);
-          opacity: 0.2;
-          &:hover {
-            @apply z-10 opacity-100;
-            transform: scale(1.25) translateX(0%);
+        &.is-left:hover {
+          .swiper-slide {
+            transform: translateX(0%);
+            opacity: 0.2;
+            &:hover {
+              @apply z-10 opacity-100;
+              transform: scale(1.25) translateX(0%);
 
-            ~ .swiper-slide {
-              transform: translateX(25%);
+              ~ .swiper-slide {
+                transform: translateX(25%);
+              }
             }
           }
         }
-      }
 
-      &.is-right:hover {
-        .swiper-slide {
-          transform: translateX(-25%);
-          opacity: 0.2;
-          &:hover {
-            @apply z-10 opacity-100;
-            transform: scale(1.25) translateX(0%);
+        &.is-right:hover {
+          .swiper-slide {
+            transform: translateX(-25%);
+            opacity: 0.2;
+            &:hover {
+              @apply z-10 opacity-100;
+              transform: scale(1.25) translateX(0%);
 
-            ~ .swiper-slide {
-              transform: translateX(0%);
+              ~ .swiper-slide {
+                transform: translateX(0%);
+              }
             }
           }
         }
@@ -110,7 +112,7 @@
 
       &-bullet {
         margin: 0;
-        @apply w-4 h-[4px] bg-white rounded-none ml-1 transition duration-300;
+        @apply w-4 h-[4px] bg-gray-200 rounded-none ml-1 transition duration-300;
 
         &-active {
           @apply h-[5px];
@@ -150,24 +152,6 @@
 
     &.swiper-button-disabled {
       @apply opacity-30 cursor-default;
-    }
-  }
-}
-
-.row-poster {
-  .poster-info {
-    @apply opacity-0 translate-y-10;
-  }
-  .poster-bg {
-    @apply opacity-0;
-  }
-
-  &:hover {
-    .poster-info {
-      @apply opacity-100 translate-y-0;
-    }
-    .poster-bg {
-      @apply opacity-100;
     }
   }
 }

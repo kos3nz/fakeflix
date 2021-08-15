@@ -3,22 +3,30 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch } from 'react-icons/fi';
 import useOutsideClick from 'hooks/useOutsideClick';
 
+const inputVariant = {
+  visible: {
+    opacity: 1,
+    width: '100%',
+    transition: {
+      opacity: { duration: 0.3 },
+      width: { duration: 0.4 },
+    },
+  },
+  hidden: { opacity: 0.1, width: '0px' },
+  exit: {
+    opacity: 0,
+    width: '0px',
+    transition: {
+      opacity: { duration: 0.3 },
+      width: { duration: 0.4 },
+    },
+  },
+};
+
 const Search = () => {
   const [isVisible, setIsVisible] = useState(false);
   const searchContainerRef = useRef();
   const searchInputRef = useRef();
-
-  const inputVariant = {
-    visible: {
-      opacity: 1,
-      width: '100%',
-      transition: {
-        duration: 0.2,
-      },
-    },
-    hidden: { opacity: 0, width: '0px' },
-    exit: { opacity: 0, width: '0px' },
-  };
 
   useOutsideClick(searchContainerRef, () => {
     // inputに入力値があった場合、input elementはそのまま残す
@@ -39,8 +47,8 @@ const Search = () => {
             className="
               p-2 w-[200px]
               text-sm text-paragraph
-              placeholder-gray-500 caret-gray-200
-            bg-gray-900 bg-opacity-50 rounded-md
+              placeholder-gray-400 caret-gray-200
+            bg-gray-900/75 rounded-md
               ring-1 ring-gray-500
               transition duration-200;
               focus:outline-none focus:ring-gray-200

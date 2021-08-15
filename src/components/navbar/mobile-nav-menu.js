@@ -34,9 +34,10 @@ const MobileNavMenu = ({ isScrollTop }) => {
       <div
         className="
           w-full h-10 pb-2
-          absolute top-[68px] left-0
+          absolute top-[80px] left-0
           flex justify-center
           text-paragraph text-sm xs:text-base
+          transition duration-500
         "
         style={{
           backgroundColor: isScrollTop ? 'transparent' : 'rgba(28, 25, 24, 1)',

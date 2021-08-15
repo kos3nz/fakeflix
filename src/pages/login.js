@@ -34,7 +34,7 @@ export default function LoginPage() {
           "
         >
           <div className="absolute top-8 left-8 z-10 hidden xs:block">
-            <LogoLink href="/browse" />
+            <LogoLink href="/" />
           </div>
           <motion.div
             className="

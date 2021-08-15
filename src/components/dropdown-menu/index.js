@@ -1,12 +1,19 @@
 import { motion, AnimatePresence } from 'framer-motion';
 
-const DropdownMenu = ({ isVisible, ...rest }) => {
-  const dropdownVariants = {
-    hidden: { y: 50, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.2 } },
-    exit: { y: 50, opacity: 0 },
-  };
+const dropdownVariants = {
+  hidden: { y: 50, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.3 } },
+  exit: {
+    y: 50,
+    opacity: 0,
+    transition: {
+      y: { duration: 0.4 },
+      opacity: { duration: 0.3 },
+    },
+  },
+};
 
+const DropdownMenu = ({ isVisible, ...rest }) => {
   return (
     <AnimatePresence>
       {isVisible && (

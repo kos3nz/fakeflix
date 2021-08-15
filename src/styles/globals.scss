@@ -28,3 +28,30 @@
 .row-showmore:hover span {
   @apply opacity-100 transform translate-x-2;
 }
+
+.row-poster {
+  .poster-info {
+    @apply opacity-0 translate-y-10;
+  }
+
+  .poster-bg {
+    @apply opacity-0;
+  }
+
+  @media only screen and (min-width: 768px) {
+    &:hover {
+      .poster-info {
+        @apply opacity-100 translate-y-0;
+      }
+      .poster-bg {
+        @apply opacity-100;
+      }
+    }
+  }
+
+  .poster-genre:last-of-type {
+    span {
+      display: none;
+    }
+  }
+}

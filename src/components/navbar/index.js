@@ -17,7 +17,7 @@ const NavBar = () => {
   return (
     <motion.header
       className="
-        w-full py-4 xs:py-6 px-6 xs:px-8
+        w-full h-20 px-6 xs:px-8
         fixed flex items-center
         transition duration-500
         z-30

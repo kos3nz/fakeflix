@@ -4,24 +4,24 @@ import { IoMdArrowDropdown } from 'react-icons/io';
 import DropdownMenu from 'components/dropdown-menu';
 import useOutsideClick from 'hooks/useOutsideClick';
 
+const iconVariants = {
+  up: {
+    rotate: 180,
+    transition: {
+      duration: 0.2,
+    },
+  },
+  down: {
+    rotate: 360,
+    transition: {
+      duration: 0.2,
+    },
+  },
+};
+
 const UserIcon = () => {
   const [isVisible, setIsVisible] = useState(false);
   const dropdownRef = useRef();
-
-  const iconVariants = {
-    up: {
-      rotate: 180,
-      transition: {
-        duration: 0.2,
-      },
-    },
-    down: {
-      rotate: 360,
-      transition: {
-        duration: 0.2,
-      },
-    },
-  };
 
   useOutsideClick(dropdownRef, () => setIsVisible(false));
 

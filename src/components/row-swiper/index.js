@@ -7,7 +7,7 @@ import { useViewport, useSwiperRef } from 'hooks';
 /* Swiper */
 SwiperCore.use([Pagination, Navigation]);
 
-const RowSwiper = ({ movies }) => {
+const RowSwiper = ({ movies, isLarge }) => {
   const { width } = useViewport();
   const [prevEl, prevElRef] = useSwiperRef();
   const [nextEl, nextElRef] = useSwiperRef();
@@ -58,7 +58,7 @@ const RowSwiper = ({ movies }) => {
         else element.classList.add('center');
       });
     },
-    // draggable: false,
+    draggable: false,
     // observer: true,
     // observeParents: true,
     // touchRatio: 0.03,
@@ -113,7 +113,7 @@ const RowSwiper = ({ movies }) => {
               onMouseOver={onMouseOver}
               onMouseLeave={onMouseLeave}
             >
-              <RowPoster key={movie.title} movie={movie} />
+              <RowPoster key={movie.title} movie={movie} isLarge={isLarge} />
             </SwiperSlide>
           );
         })}

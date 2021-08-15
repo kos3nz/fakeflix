@@ -1,11 +1,15 @@
+import Image from 'next/image';
 import { useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { VscChromeClose } from 'react-icons/vsc';
 import { FaPlus } from 'react-icons/fa';
-import MovieBG from 'components/movie-background';
 import Button from 'components/button/index';
-import { useOutsideClick } from 'hooks';
+import { useOutsideClick, useConvertGenreIds } from 'hooks';
+import { MOVIE_IMAGE_URL } from 'const/request-url';
+import { closeModal } from 'duck/modal/modal.slice';
+import { selectModalContent } from 'duck/modal/modal.selectors';
 
 const bgVariants = {
   hidden: { opacity: 0 },
@@ -61,34 +65,35 @@ const infoItemVariants = {
   },
 };
 
-const Modal = ({
-  movie: {
+const Modal = ({ isOpen }) => {
+  const modalContent = useSelector(selectModalContent);
+  const dispatch = useDispatch();
+  const {
     title,
-    description,
-    genres,
-    firstAirDate,
-    averageVote,
-    language,
+    overview,
+    genre_ids,
+    release_date,
+    vote_average,
+    original_language,
     ageClassification,
-    imageUrl,
-  },
-  isVisible,
-  cb,
-}) => {
+    backdrop_path,
+  } = modalContent;
   const modalRef = useRef();
-  useOutsideClick(modalRef, () => cb(false));
+  const genres = useConvertGenreIds(genre_ids);
+
+  useOutsideClick(modalRef, () => dispatch(closeModal()));
 
   return (
-    <AnimatePresence exitBeforeEnter>
-      {isVisible && (
+    <AnimatePresence>
+      {isOpen && (
         <motion.div
           className="
-        absolute top-0 left-0 z-50
-        w-full h-screen
-        flex justify-center items-center
-        bg-black/75
-        overflow-hidden
-      "
+            fixed top-0 left-0 z-50
+            w-full h-full
+            flex justify-center items-center
+            bg-black/80
+            overflow-hidden
+          "
           // overflow:hiddenでmodalがexit animationで下へ消えることによるスクロールバーを非表示
           initial="hidden"
           animate="visible"
@@ -97,46 +102,62 @@ const Modal = ({
         >
           <motion.div
             ref={modalRef}
-            className="w-[90%] sm:w-[80%] md:w-[60%] h-9/10 bg-gray-900 rounded-md overflow-hidden overflow-y-scroll scrollbar-hidden"
+            className="w-[90%] sm:w-[80%] md:w-[65vw] h-9/10 bg-gray-900 rounded-md overflow-hidden overflow-y-scroll scrollbar-hidden"
             variants={modalVariants}
           >
-            <MovieBG type="modal" imageUrl={imageUrl}>
-              <div className="absolute bottom-[10%] left-6 flex items-center gap-2">
+            <div className="w-full h-auto relative">
+              <Image
+                src={`${MOVIE_IMAGE_URL}${backdrop_path}`}
+                alt="poster"
+                layout="responsive"
+                width={16}
+                height={9}
+                objectFit="cover"
+                quality={80}
+              />
+              <div
+                className="
+                  absolute bottom-0 left-0
+                  w-full h-[50%]
+                  bg-gradient-to-t via-gray-900/30 from-gray-900
+                "
+              />
+              <div className="absolute bottom-[5%] left-6 flex items-center gap-2">
                 <Button as="a" Icon={BsFillPlayFill}>
                   Play
                 </Button>
                 <button
                   className="
-              p-2 sm:p-3 ml-1
-              border-1 rounded-full
-              bg-transparent
-              outline-none
-              transition duration-300
-              hover:bg-gray-200 hover:text-gray-900
-              "
+                  p-2 sm:p-3 ml-1
+                  border-1 rounded-full
+                  bg-transparent
+                  outline-none
+                  transition duration-300
+                  hover:bg-gray-200 hover:text-gray-900
+                  "
                 >
                   <FaPlus className="w-3 sm:w-4 h-3 sm:h-4" />
                 </button>
               </div>
               <button
                 className="
-              absolute top-4 right-4
-              p-1 sm:p-2
-              border-1 rounded-full
-              bg-gray-900/75
-              outline-none
-              transition duration-300
-              hover:bg-gray-200 hover:text-gray-900
-            "
+                  absolute top-4 right-4
+                  p-1 sm:p-2
+                  border-1 rounded-full
+                  bg-gray-900/75
+                  outline-none
+                  transition duration-300
+                  hover:bg-gray-200 hover:text-gray-900
+                "
               >
                 <VscChromeClose
                   className="
-              w-4 sm:w-5 h-4 sm:h-5
-              "
-                  onClick={() => cb(false)}
+                  w-4 sm:w-5 h-4 sm:h-5
+                  "
+                  onClick={() => dispatch(closeModal())}
                 />
               </button>
-            </MovieBG>
+            </div>
             <motion.div
               className="p-6 sm:p-8"
               initial="hidden"
@@ -153,19 +174,19 @@ const Modal = ({
                 className="text-sm xs:text-base leading-6"
                 variants={infoItemVariants}
               >
-                {description}
+                {overview}
               </motion.p>
-              <hr className="my-4 xs:my-6 text-gray-600 " />
+              <hr className="my-4 xs:my-6 border-gray-500" />
               <motion.h4
                 className="text-lg xs:text-xl mb-4"
                 variants={infoItemVariants}
               >
                 Info on <b>{title}</b>
               </motion.h4>
-              <InfoItem info="Genres" item={genres} />
-              <InfoItem info="First air date" item={firstAirDate} />
-              <InfoItem info="Average vote" item={averageVote} />
-              <InfoItem info="Original language" item={language} />
+              <InfoItem info="Genres" item={genres.join(', ')} />
+              <InfoItem info="First air date" item={release_date} />
+              <InfoItem info="Average vote" item={vote_average} />
+              <InfoItem info="Original language" item={original_language} />
               <InfoItem info="Age classification" item={ageClassification} />
             </motion.div>
           </motion.div>
@@ -178,7 +199,7 @@ const Modal = ({
 const InfoItem = ({ info, item = 'Not available' }) => {
   return (
     <motion.div
-      className="flex text-sm xs:text-base mb-2 last:mb-0"
+      className="flex text-xs xs:text-sm mb-2 last:mb-0"
       variants={infoItemVariants}
     >
       <span className="text-gray-500 mr-1">{`${info}:`}</span>
