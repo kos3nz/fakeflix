@@ -29,7 +29,8 @@
   @apply opacity-100 transform translate-x-2;
 }
 
-.row-poster {
+.row-poster,
+.poster {
   .poster-info {
     @apply opacity-0 translate-y-10;
   }
@@ -52,6 +53,86 @@
   .poster-genre:last-of-type {
     span {
       display: none;
+    }
+  }
+}
+
+.category-grid {
+  @apply grid gap-x-2 gap-y-6 grid-cols-[repeat(2,1fr)];
+
+  @media only screen and (min-width: 640px) {
+    @apply grid-cols-[repeat(3,1fr)];
+  }
+  @media only screen and (min-width: 1024px) {
+    @apply grid-cols-[repeat(4,1fr)];
+  }
+  @media only screen and (min-width: 1350px) {
+    @apply grid-cols-[repeat(5,1fr)];
+  }
+  @media only screen and (min-width: 1650px) {
+    @apply grid-cols-[repeat(6,1fr)];
+  }
+
+  .poster {
+    @media only screen and (min-width: 768px) {
+      transition: all 0.3s;
+      z-index: 1;
+
+      &:hover {
+        transform: scale(1.2);
+        z-index: 5;
+
+        & ~ .poster {
+          z-index: 1;
+        }
+      }
+
+      // すべてinitialにリセット
+      &:nth-child(1n) {
+        transform-origin: initial;
+      }
+      &:nth-child(3n-2) {
+        transform-origin: left;
+      }
+      &:nth-child(3n) {
+        transform-origin: right;
+      }
+    }
+
+    @media only screen and (min-width: 1024px) {
+      &:nth-child(1n) {
+        transform-origin: initial;
+      }
+      &:nth-child(4n-3) {
+        transform-origin: left;
+      }
+      &:nth-child(4n) {
+        transform-origin: right;
+      }
+    }
+
+    @media only screen and (min-width: 1350px) {
+      &:nth-child(1n) {
+        transform-origin: initial;
+      }
+      &:nth-child(5n-4) {
+        transform-origin: left;
+      }
+      &:nth-child(5n) {
+        transform-origin: right;
+      }
+    }
+
+    @media only screen and (min-width: 1650px) {
+      &:nth-child(1n) {
+        transform-origin: initial;
+      }
+      &:nth-child(6n-5) {
+        transform-origin: left;
+      }
+      &:nth-child(6n) {
+        transform-origin: right;
+      }
     }
   }
 }

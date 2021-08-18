@@ -9,7 +9,10 @@ import Button from 'components/button/index';
 import { useOutsideClick, useConvertGenreIds } from 'hooks';
 import { MOVIE_IMAGE_URL } from 'const/request-url';
 import { closeModal } from 'duck/modal/modal.slice';
-import { selectModalContent } from 'duck/modal/modal.selectors';
+import {
+  selectIsModalOpen,
+  selectModalContent,
+} from 'duck/modal/modal.selectors';
 
 const bgVariants = {
   hidden: { opacity: 0 },
@@ -65,8 +68,9 @@ const infoItemVariants = {
   },
 };
 
-const Modal = ({ isOpen }) => {
+const Modal = () => {
   const modalContent = useSelector(selectModalContent);
+  const isModalOpen = useSelector(selectIsModalOpen);
   const dispatch = useDispatch();
   const {
     title,
@@ -81,11 +85,13 @@ const Modal = ({ isOpen }) => {
   const modalRef = useRef();
   const genres = useConvertGenreIds(genre_ids);
 
-  useOutsideClick(modalRef, () => dispatch(closeModal()));
+  useOutsideClick(modalRef, () => {
+    dispatch(closeModal());
+  });
 
   return (
-    <AnimatePresence>
-      {isOpen && (
+    <AnimatePresence exitBeforeEnter>
+      {isModalOpen && (
         <motion.div
           className="
             fixed top-0 left-0 z-50
@@ -102,7 +108,7 @@ const Modal = ({ isOpen }) => {
         >
           <motion.div
             ref={modalRef}
-            className="w-[90%] sm:w-[80%] md:w-[65vw] h-9/10 bg-gray-900 rounded-md overflow-hidden overflow-y-scroll scrollbar-hidden"
+            className="w-[90%] sm:w-[80%] md:w-[65vw] max-w-xl 2xl:max-w-2xl h-9/10 bg-gray-900 rounded-md overflow-hidden overflow-y-scroll scrollbar-hidden"
             variants={modalVariants}
           >
             <div className="w-full h-auto relative">
@@ -113,7 +119,8 @@ const Modal = ({ isOpen }) => {
                 width={16}
                 height={9}
                 objectFit="cover"
-                quality={80}
+                quality={75}
+                loading="eager"
               />
               <div
                 className="

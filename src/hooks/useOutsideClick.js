@@ -9,10 +9,10 @@ const useOutsideClick = (ref, cb) => {
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClick);
+    window.addEventListener('mousedown', handleClick);
 
     return () => {
-      document.removeEventListener('mousedown', handleClick);
+      window.removeEventListener('mousedown', handleClick);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

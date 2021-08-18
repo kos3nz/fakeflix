@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const MovieBG = ({ imageUrl, children }) => {
   return (
     <div
@@ -8,10 +10,19 @@ const MovieBG = ({ imageUrl, children }) => {
           flex items-end justify-center
           lg:items-center lg:justify-start
         `}
-      style={{
-        backgroundImage: `url(${imageUrl})`,
-      }}
+      // style={{
+      //   backgroundImage: `url(${imageUrl})`,
+      // }}
     >
+      <Image
+        src={imageUrl}
+        alt="image background"
+        layout="fill"
+        priority={true}
+        objectFit="cover"
+        quality={100}
+        loading="eager"
+      />
       <div
         className="
             absolute top-0 left-0

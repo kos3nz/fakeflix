@@ -29,9 +29,9 @@ const NavBar = () => {
       <Viewport minWidth={600}>
         {(matches) =>
           matches ? (
-            <LogoLink href="/login" logoType="desktop" size="sm" />
+            <LogoLink href="/" logoType="desktop" size="sm" />
           ) : (
-            <LogoLink href="/login" logoType="mobile" size="md" />
+            <LogoLink href="/" logoType="mobile" size="md" />
           )
         }
       </Viewport>

@@ -1,15 +1,15 @@
-const DesktopLogo = ({ size = 'md' }) => {
-  const maxWidth = {
-    sm: 'max-w-[120px]',
-    md: 'max-w-[160px]',
-    lg: 'max-w-[200px]',
-  };
+import Image from 'next/image';
+import logoUrl from 'images/Fakeflix_logo.png';
 
-  const logoUrl =
-    'https://cdn.jsdelivr.net/gh/Th3Wall/assets-cdn/Fakeflix/Fakeflix_logo.png';
-
+const DesktopLogo = () => {
   return (
-    <img className={`w-full ${maxWidth[size]}`} src={logoUrl} alt="logo" />
+    <Image
+      src={logoUrl}
+      alt="logo"
+      layout="responsive"
+      width={65}
+      height={18}
+    />
   );
 };
 

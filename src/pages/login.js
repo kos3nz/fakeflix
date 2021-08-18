@@ -1,11 +1,13 @@
-import { useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import LogoLink from '../components/link/logo-link';
 import SignIn from 'components/form/sign-in';
 import SignUp from 'components/form/sign-up';
+import signinBg from 'images/Fakeflix_signin_bg.jpg';
 
-export default function LoginPage() {
+export default function Login() {
   const [isSignedUp, setIsSignedUp] = useState(true);
 
   const formContainer = {
@@ -19,22 +21,27 @@ export default function LoginPage() {
         <title>Fakeflix Login</title>
         <link rel="icon" href="/Fakeflix_favicon_64.ico" />
       </Head>
-      <div
-        className="w-full bg-cover h-screen bg-center"
-        style={{
-          backgroundImage:
-            'url("https://cdn.jsdelivr.net/gh/Th3Wall/assets-cdn/Fakeflix/Fakeflix_signin_bg.jpg")',
-        }}
-      >
+      <div className="w-full h-screen">
+        <Image
+          src={signinBg}
+          alt="image background"
+          layout="fill"
+          priority={true}
+          objectFit="cover"
+          quality={75}
+          loading="eager"
+          objectPosition="center"
+        />
         <div
           className="
+            relative
             w-full h-screen
             bg-gray-900 bg-opacity-50
             flex justify-center items-center
           "
         >
           <div className="absolute top-8 left-8 z-10 hidden xs:block">
-            <LogoLink href="/" />
+            <LogoLink href="/" logoType="desktop" size="sm" />
           </div>
           <motion.div
             className="

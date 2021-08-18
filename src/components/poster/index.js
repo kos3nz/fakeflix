@@ -6,14 +6,13 @@ import { MOVIE_IMAGE_URL } from 'const/request-url';
 import fallbackImage from 'images/Fakeflix_fallback.png';
 import { openModal } from 'duck/modal/modal.slice';
 
-const RowPoster = ({ movie, isLarge = false }) => {
+const Poster = ({ movie }) => {
   const dispatch = useDispatch();
-  const { backdrop_path, poster_path } = movie;
+  const { backdrop_path } = movie;
   const aspectRatio = {
-    width: isLarge ? 79 : 16,
-    height: isLarge ? 120 : 9,
+    width: 16,
+    height: 9,
   };
-  const imageType = isLarge ? poster_path : backdrop_path;
 
   const handleOpenModal = (e) => {
     e.stopPropagation();
@@ -21,11 +20,15 @@ const RowPoster = ({ movie, isLarge = false }) => {
   };
 
   return (
-    <div className="row-poster" onClick={handleOpenModal}>
+    <div
+      className="poster relative cursor-pointer rounded-md overflow-hidden"
+      onClick={handleOpenModal}
+    >
       <Image
-        src={imageType ? `${MOVIE_IMAGE_URL}${imageType}` : fallbackImage}
+        src={
+          backdrop_path ? `${MOVIE_IMAGE_URL}${backdrop_path}` : fallbackImage
+        }
         alt="movie"
-        // layout="fill"
         width={aspectRatio.width}
         height={aspectRatio.height}
         layout="responsive"
@@ -39,4 +42,4 @@ const RowPoster = ({ movie, isLarge = false }) => {
   );
 };
 
-export default RowPoster;
+export default Poster;

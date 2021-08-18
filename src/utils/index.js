@@ -4,7 +4,7 @@ export const fetcher = async (url) => {
   return data;
 };
 
-export const fetchMovies = async (url) => {
+export const fetchResults = async (url) => {
   const data = await fetcher(url);
   return data.results;
 };
@@ -14,5 +14,12 @@ export const truncate = (text, chars) => {
 };
 
 export const randomPick = (data) => {
-  return Math.floor(Math.random() * data.length);
+  return data[Math.floor(Math.random() * data.length)];
 };
+
+export const capitalize = (...words) => {
+  return words
+    .map((str) => str.charAt(0).toUpperCase() + str.substr(1))
+    .join(' ');
+};
+// cap(...'top_rated'.split('_')) → Top Rated

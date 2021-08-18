@@ -10,20 +10,35 @@ const LogoLink = ({ href, logoType = 'desktop', size = 'md', ...rest }) => {
     hover: { scale: 1.1 },
   };
 
+  let width;
+  switch (size) {
+    case 'sm': {
+      width = logoType === 'desktop' ? 'w-[120px]' : 'w-[30px]';
+      break;
+    }
+    case 'md': {
+      width = logoType === 'desktop' ? 'w-[160px]' : 'w-[40px]';
+      break;
+    }
+    case 'lg': {
+      width = logoType === 'desktop' ? 'w-[200px]' : 'w-[50px]';
+      break;
+    }
+    default:
+      break;
+  }
+
   return (
     <motion.div
       initial="initial"
       animate="animate"
       whileHover="hover"
       variants={logoVariants}
+      className={`${width}`}
     >
       <Link href={href} {...rest}>
         <a className="block">
-          {logoType === 'desktop' ? (
-            <DesktopLogo size={size} />
-          ) : (
-            <MobileLogo size={size} />
-          )}
+          {logoType === 'desktop' ? <DesktopLogo /> : <MobileLogo />}
         </a>
       </Link>
     </motion.div>

@@ -1,7 +1,7 @@
-import { genresObj } from 'const/genres';
+import { genresTitleObj } from 'const/data.config';
 
-const convertGenreIds = (genreIds = []) => {
-  return genreIds.slice(0, 3).map((id) => genresObj[id]);
+const useConvertGenreIds = (genreIds = []) => {
+  return genreIds.slice(0, 3).map((id) => genresTitleObj[id]);
 };
 
-export default convertGenreIds;
+export default useConvertGenreIds;

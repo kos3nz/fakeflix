@@ -1,15 +1,15 @@
-const MobileLogo = ({ size = 'md' }) => {
-  const maxWidth = {
-    sm: 'max-w-[30px]',
-    md: 'max-w-[40px]',
-    lg: 'max-w-[50px]',
-  };
+import Image from 'next/image';
+import mobileLogoUrl from 'images/Fakeflix_mobile_logo.png';
 
-  const logoUrl =
-    'https://cdn.jsdelivr.net/gh/Th3Wall/assets-cdn/Fakeflix/Fakeflix_favicon_192.png';
-
+const MobileLogo = () => {
   return (
-    <img className={`w-full ${maxWidth[size]}`} src={logoUrl} alt="logo" />
+    <Image
+      src={mobileLogoUrl}
+      alt="logo"
+      layout="responsive"
+      width={1}
+      height={1}
+    />
   );
 };
 

@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const dropdownVariants = {
@@ -34,7 +35,9 @@ const DropdownMenu = ({ isVisible, ...rest }) => {
         "
           {...rest}
         >
-          Sign Out
+          <Link href="/login">
+            <a>Sign Out</a>
+          </Link>
         </motion.ul>
       )}
     </AnimatePresence>
