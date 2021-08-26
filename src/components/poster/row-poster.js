@@ -1,10 +1,11 @@
+import { useEffect } from 'react';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import PosterBackground from 'components/poster/poster-bg';
 import PosterInfo from 'components/poster/poster-info';
-import { MOVIE_IMAGE_URL } from 'const/request-url';
+import { W780_IMAGE_URL } from 'const/request-url';
 import fallbackImage from 'images/Fakeflix_fallback.png';
-import { openModal } from 'duck/modal/modal.slice';
+import { openModal } from 'redux/modal/modal.slice';
 
 const RowPoster = ({ movie, isLarge = false }) => {
   const dispatch = useDispatch();
@@ -20,10 +21,12 @@ const RowPoster = ({ movie, isLarge = false }) => {
     dispatch(openModal(movie));
   };
 
+  useEffect(() => {}, []);
+
   return (
     <div className="row-poster" onClick={handleOpenModal}>
       <Image
-        src={imageType ? `${MOVIE_IMAGE_URL}${imageType}` : fallbackImage}
+        src={imageType ? `${W780_IMAGE_URL}${imageType}` : fallbackImage}
         alt="movie"
         // layout="fill"
         width={aspectRatio.width}

@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
-import modalReducer from 'duck/modal/modal.slice';
+import modalReducer from 'redux/modal/modal.slice';
+import modalVideoReducer from 'redux/modal-video/modal-video.slice';
+import searchReducer from 'redux/search/search.slice';
 
 const middlewares = [];
 
@@ -11,6 +13,8 @@ if (process.env.NODE_ENV === 'development') {
 export const store = configureStore({
   reducer: {
     modal: modalReducer,
+    modalVideo: modalVideoReducer,
+    search: searchReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(middlewares),

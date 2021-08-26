@@ -3,11 +3,13 @@ import { FiChevronDown } from 'react-icons/fi';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { FaPlus } from 'react-icons/fa';
 import { useConvertGenreIds } from 'hooks';
-import { openModal } from 'duck/modal/modal.slice';
+import { openModal } from 'redux/modal/modal.slice';
+import { openModalVideo } from 'redux/modal-video/modal-video.slice';
 
 const PosterInfo = ({ movie }) => {
   const dispatch = useDispatch();
-  const { title, original_title, name, original_name, genre_ids } = movie;
+  const { title, original_title, name, original_name, genre_ids, videoKey } =
+    movie;
   const movieTitle = title || name || original_title || original_name;
   const genres = useConvertGenreIds(genre_ids);
 
@@ -22,6 +24,7 @@ const PosterInfo = ({ movie }) => {
 
   const handlePlay = (e) => {
     e.stopPropagation();
+    if (videoKey) dispatch(openModalVideo(videoKey));
   };
 
   return (
@@ -38,15 +41,17 @@ const PosterInfo = ({ movie }) => {
     >
       <div className="flex items-center gap-1">
         <button
-          className="
-              p-1
+          className={`
               border-1 rounded-full
-              text-gray-900
-              bg-gray-200
               outline-none
               transition duration-300
-              hover:bg-gray-400 hover:border-gray-400
-            "
+              p-1
+              ${
+                videoKey
+                  ? 'bg-gray-200 text-gray-900 hover:bg-gray-400 hover:border-gray-400'
+                  : 'bg-gray-500 text-gray-700 border-gray-500 cursor-default'
+              }
+            `}
           onClick={handlePlay}
         >
           <BsFillPlayFill

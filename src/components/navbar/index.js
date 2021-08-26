@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import LogoLink from 'components/link/logo-link';
 import NavMenu from './nav-menu';
 import MobileNavMenu from './mobile-nav-menu';
-import Search from 'components/search';
+import SearchBar from 'components/search-bar';
 import UserIcon from 'components/user-icon';
 
 import { useScrollTop } from 'hooks';
@@ -12,7 +12,7 @@ import { useScrollTop } from 'hooks';
 const Viewport = dynamic(() => import('react-responsive'), { ssr: false });
 
 const NavBar = () => {
-  const isScrollTop = useScrollTop();
+  const isScrollTop = useScrollTop(50);
 
   return (
     <motion.header
@@ -42,7 +42,7 @@ const NavBar = () => {
           }
         </Viewport>
         <div className="flex-1 flex justify-end gap-4 sm:gap-6">
-          <Search />
+          <SearchBar />
           <UserIcon />
         </div>
       </nav>

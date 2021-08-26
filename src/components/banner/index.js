@@ -5,8 +5,9 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import MovieBG from 'components/movie-background';
 import Button from 'components/button';
 import { truncate } from 'utils';
-import { MOVIE_IMAGE_URL } from 'const/request-url';
-import { openModal } from 'duck/modal/modal.slice';
+import { ORIGINAL_IMAGE_URL } from 'const/request-url';
+import { openModal } from 'redux/modal/modal.slice';
+import { openModalVideo } from 'redux/modal-video/modal-video.slice';
 
 const wrapperVariants = {
   initial: {
@@ -31,13 +32,18 @@ const Banner = ({ movie }) => {
     name,
     original_name,
     overview,
+    videoKey,
   } = movie;
   const movieTitle = title || name || original_title || original_name;
   const description = truncate(overview, 150);
 
+  const handlePlayVideo = () => {
+    if (videoKey) dispatch(openModalVideo(videoKey));
+  };
+
   return (
     <>
-      <MovieBG imageUrl={`${MOVIE_IMAGE_URL}${backdrop_path}`}>
+      <MovieBG imageUrl={`${ORIGINAL_IMAGE_URL}${backdrop_path}`}>
         <motion.div
           className="
                 relative z-10
@@ -52,7 +58,7 @@ const Banner = ({ movie }) => {
           <h1
             className="
           text-paragraph text-4xl xs:text-5xl sm:text-6xl font-bold text-center lg:text-left
-          "
+            "
           >
             {movieTitle}
           </h1>
@@ -60,9 +66,13 @@ const Banner = ({ movie }) => {
             className="
             flex items-center gap-3
             mt-6
-          "
+            "
           >
-            <Button as="a" Icon={BsFillPlayFill}>
+            <Button
+              Icon={BsFillPlayFill}
+              onClick={handlePlayVideo}
+              color={videoKey ? 'primary' : 'disabled'}
+            >
               Play
             </Button>
             <Button
@@ -79,7 +89,7 @@ const Banner = ({ movie }) => {
             className="
             md:max-w-[60vw] lg:max-w-sm mt-4
             text-sm sm:text-base lg:text-sm text-paragraph text-center lg:text-left tracking-wide
-          "
+            "
           >
             {description}
           </p>

@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import Layout from 'components/layout';
 import Poster from 'components/poster';
-import { fetchResults, attachOfficialTrailerKeysToResults } from 'utils';
+import { attachOfficialTrailerKeysToResults, fetchResults } from 'utils';
 import { genresData } from 'const/data.config';
 import { useIntersectionObserver } from 'hooks';
 
-const MoviesCategory = ({ title, moviesUrl, results, totalPages }) => {
-  const [movies, setMovies] = useState(results || []);
+const TvSeriesCategory = ({ title, tvSeriesUrl, results, totalPages }) => {
+  const [tvSeries, setTvSeries] = useState(results);
   const [page, setPage] = useState(2);
   const [bottomPageRef, isIntersecting] = useIntersectionObserver();
 
@@ -14,13 +14,13 @@ const MoviesCategory = ({ title, moviesUrl, results, totalPages }) => {
     const loadMore = async () => {
       try {
         const { results, errorCode } = await fetchResults(
-          moviesUrl + `&page=${page}`
+          tvSeriesUrl + `&page=${page}`
         );
         if (!errorCode) {
-          await attachOfficialTrailerKeysToResults(results, 'movie');
+          await attachOfficialTrailerKeysToResults(results, 'tv');
 
           setPage((page) => page + 1);
-          setMovies((state) => [...state, ...results]);
+          setTvSeries((state) => [...state, ...results]);
         }
       } catch (error) {
         console.log(error);
@@ -38,22 +38,22 @@ const MoviesCategory = ({ title, moviesUrl, results, totalPages }) => {
         <div className="py-8 px-[4vw]">
           <h2 className="text-xl font-bold capitalize mb-6">{title}</h2>
           <div className="category-grid">
-            {movies.map((movie, i) => (
+            {tvSeries.map((movie, i) => (
               <Poster key={i} movie={movie} />
             ))}
           </div>
-          <div ref={bottomPageRef} className="w-full h-1" />
+          <div ref={bottomPageRef} className="w-full h-10" />
         </div>
       </div>
     </Layout>
   );
 };
 
-export default MoviesCategory;
+export default TvSeriesCategory;
 
 export async function getStaticPaths() {
   const paths = genresData
-    .filter((genre) => genre.url.movie) // returns only genre.url.movie value is true
+    .filter((genre) => genre.url.tv) // returns only genre.url.movie value is true
     .map((genre) => {
       return {
         // params: { category: encodeURIComponent(genre) },
@@ -71,14 +71,14 @@ export async function getStaticProps({ params: { category } }) {
   try {
     const data = genresData.filter((genre) => genre.slug === category)[0];
     const title = data.title;
-    const moviesUrl = data.url.movie;
-    const { results, totalPages } = await fetchResults(moviesUrl);
-    await attachOfficialTrailerKeysToResults(results, 'movie');
+    const tvSeriesUrl = data.url.tv;
+    const { results, totalPages } = await fetchResults(tvSeriesUrl);
+    await attachOfficialTrailerKeysToResults(results, 'tv');
 
     return {
       props: {
         title,
-        moviesUrl,
+        tvSeriesUrl,
         results,
         totalPages,
       },

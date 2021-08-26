@@ -1,12 +1,15 @@
 import Link from 'next/link';
-import dynamic from 'next/dynamic';
 import { FiChevronRight } from 'react-icons/fi';
+import RowSwiper from 'components/row-swiper';
 
-const RowSwiper = dynamic(() => import('components/row-swiper'), {
-  ssr: false,
-});
+const Row = ({ row: { title, movies, isLarge, slug, type } }) => {
+  const href =
+    type === 'movie'
+      ? `/movies/${slug}`
+      : type === 'tv'
+      ? `/tvseries/${slug}`
+      : `/all/${slug}`;
 
-const Row = ({ row: { title, movies, isLarge } }) => {
   return (
     <div className="py-[3vh]">
       <h3
@@ -16,7 +19,7 @@ const Row = ({ row: { title, movies, isLarge } }) => {
         inline-block
         "
       >
-        <Link href="#">
+        <Link href={href}>
           <a className="flex items-baseline gap-1 row-showmore">
             {title}
             <span className="flex items-center text-sm opacity-0 transition-all duration-700">

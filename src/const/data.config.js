@@ -1,3 +1,14 @@
+import {
+  TRENDING_MOVIES_AND_TV_SERIES_URL,
+  TOP_RATED_MOVIES_URL,
+  TRENDING_MOVIES_URL,
+  UPCOMING_MOVIES_URL,
+  CATEGORY_MOVIES_URL,
+  NETFLIX_ORIGINALS_URL,
+  TRENDING_TV_SERIES_URL,
+  CATEGORY_TV_SERIES_URL,
+} from 'const/request-url';
+
 export const moviesGenresList = [
   { id: 28, name: 'Action' },
   { id: 12, name: 'Adventure' },
@@ -39,7 +50,7 @@ export const tvSeriesGenresList = [
   { id: 37, name: 'Western' },
 ];
 
-export const genresTitleObj = {
+export const genresTitlesById = {
   28: 'Action',
   12: 'Adventure',
   16: 'Animation',
@@ -69,7 +80,7 @@ export const genresTitleObj = {
   10768: 'War & Politics',
 };
 
-export const genresIdObj = {
+export const genresIdByTitle = {
   action: 28,
   adventure: 12,
   animation: 16,
@@ -99,6 +110,254 @@ export const genresIdObj = {
   war_politics: 10768,
 };
 
+export const genresData = [
+  {
+    title: 'Top Rated on Fakeflix',
+    url: {
+      movie: TOP_RATED_MOVIES_URL,
+    },
+    slug: 'top_rated',
+  },
+  {
+    title: 'Trending Now',
+    url: {
+      movie: TRENDING_MOVIES_URL,
+      tv: TRENDING_TV_SERIES_URL,
+      // all: TRENDING_MOVIES_AND_TV_SERIES_URL,
+    },
+    slug: 'trending',
+  },
+
+  {
+    title: 'Fakeflix Originals',
+    url: {
+      tv: NETFLIX_ORIGINALS_URL,
+    },
+    slug: 'originals',
+    isLarge: true,
+  },
+  {
+    title: 'Action',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.action,
+    },
+    slug: 'action',
+  },
+  {
+    title: 'Adventure',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.adventure,
+    },
+    slug: 'adventure',
+  },
+  {
+    title: 'Animation',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.animation,
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.animation,
+    },
+    slug: 'animation',
+  },
+  {
+    title: 'Comedy',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.comedy,
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.comedy,
+    },
+    slug: 'comedy',
+  },
+  {
+    title: 'Crime',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.crime,
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.crime,
+    },
+    slug: 'crime',
+  },
+  {
+    title: 'Documentary',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.documentary,
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.documentary,
+    },
+    slug: 'documentary',
+  },
+  {
+    title: 'Drama',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.drama,
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.drama,
+    },
+    slug: 'drama',
+  },
+  {
+    title: 'Family',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.family,
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.family,
+    },
+    slug: 'family',
+  },
+  {
+    title: 'Fantasy',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.fantasy,
+    },
+    slug: 'fantasy',
+  },
+  {
+    title: 'History',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.history,
+    },
+    slug: 'history',
+  },
+  {
+    title: 'Horror',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.horror,
+    },
+    slug: 'horror',
+  },
+  {
+    title: 'Music',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.music,
+    },
+    slug: 'music',
+  },
+  {
+    title: 'Mystery',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.mystery,
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.mystery,
+    },
+    slug: 'mystery',
+  },
+  {
+    title: 'Romance',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.romance,
+    },
+    slug: 'romance',
+  },
+  {
+    title: 'Science Fiction',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.science_fiction,
+    },
+    slug: 'science_fiction',
+  },
+  {
+    title: 'TV Movie',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.tv_movie,
+    },
+    slug: 'tv_movie',
+  },
+  {
+    title: 'Thriller',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.thriller,
+    },
+    slug: 'thriller',
+  },
+  {
+    title: 'War',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.war,
+    },
+    slug: 'war',
+  },
+  {
+    title: 'Western',
+    url: {
+      movie: CATEGORY_MOVIES_URL + genresIdByTitle.western,
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.western,
+    },
+    slug: 'western',
+  },
+  {
+    title: 'Action & Adventure',
+    url: {
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.action_adventure,
+    },
+    slug: 'action_adventure',
+  },
+  {
+    title: 'Kids',
+    url: {
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.kids,
+    },
+    slug: 'kids',
+  },
+  {
+    title: 'News',
+    url: {
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.news,
+    },
+    slug: 'news',
+  },
+  {
+    title: 'Reality',
+    url: {
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.reality,
+    },
+    slug: 'reality',
+  },
+  {
+    title: 'Sci-Fi & Fantasy',
+    url: {
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle['sci-fi_fantasy'],
+    },
+    slug: 'sci-fi_fantasy',
+  },
+  {
+    title: 'Soap',
+    url: {
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.soap,
+    },
+    slug: 'soap',
+  },
+  {
+    title: 'Talk',
+    url: {
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.talk,
+    },
+    slug: 'talk',
+  },
+  {
+    title: 'War & Politics',
+    url: {
+      tv: CATEGORY_TV_SERIES_URL + genresIdByTitle.war_politics,
+    },
+    slug: 'war_politics',
+  },
+  {
+    title: 'Upcoming',
+    url: {
+      movie: UPCOMING_MOVIES_URL,
+    },
+    slug: 'upcoming',
+  },
+];
+
+export const homeTitles = [
+  'top_rated',
+  'trending',
+  'originals',
+  'action',
+  'adventure',
+  'family',
+  'comedy',
+  'drama',
+  'romance',
+  'animation',
+  'music',
+  'horror',
+  'upcoming',
+];
+
 export const moviesCategoryPaths = [
   'top_rated',
   'trending',
@@ -116,7 +375,7 @@ export const moviesCategoryPaths = [
 
 export const tvSeriesCategoryPaths = [
   'trending',
-  'netflix',
+  'originals',
   'action_adventure',
   'family',
   'comedy',
@@ -126,5 +385,5 @@ export const tvSeriesCategoryPaths = [
   'kids',
   'documentary',
   'reality',
-  'upcoming',
+  'sci-fi_fantasy',
 ];

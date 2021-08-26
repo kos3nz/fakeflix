@@ -1,9 +1,7 @@
 import Head from 'next/head';
-import NavBar from 'components/navbar';
 import Footer from 'components/footer';
-import Modal from 'components/modal';
 
-const Layout = ({ children }) => {
+const Layout = ({ containsFooter = true, children }) => {
   return (
     <>
       <Head>
@@ -15,10 +13,8 @@ const Layout = ({ children }) => {
         <title key="title">Fakeflix - The unofficial Netflix clone</title>
         <link rel="icon" href="/Fakeflix_favicon_64.ico" key="favicon" />
       </Head>
-      <NavBar />
       <main className="overflow-hidden">{children}</main>
-      <Footer />
-      <Modal />
+      {containsFooter && <Footer />}
     </>
   );
 };

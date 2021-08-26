@@ -9,13 +9,24 @@ const Button = ({
   const btnColor = {
     primary: {
       btnBg: 'bg-primary',
+      text: 'text-white',
       ring: 'ring-primary',
+      cursor: 'cursor-pointer',
       hover: 'hover:bg-red-700',
     },
     gray: {
       btnBg: 'bg-gray-500 bg-opacity-75',
+      text: 'text-white',
       ring: 'ring-gray-500',
+      cursor: 'cursor-pointer',
       hover: 'hover:bg-opacity-100',
+    },
+    disabled: {
+      btnBg: 'bg-gray-700 bg-opacity-90',
+      text: 'text-gray-500',
+      ring: 'ring-gray-500',
+      cursor: 'cursor-default',
+      hover: '',
     },
   };
 
@@ -23,9 +34,10 @@ const Button = ({
     flex items-center justify-center
     px-4 sm:px-5 py-2 sm:py-3 min-w-[120px] sm:min-w-[140px]
     ${btnColor[color].btnBg} rounded-md
-    text-sm xs:text-base text-white font-medium
+    ${btnColor[color].text} text-sm xs:text-base font-medium
     transition-all duration-200
     ${btnColor[color].hover}
+    ${btnColor[color].cursor}
   `;
 
   const iconClass = `

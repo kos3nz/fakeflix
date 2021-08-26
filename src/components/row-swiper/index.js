@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
@@ -8,6 +9,7 @@ import { useViewport, useSwiperRef } from 'hooks';
 SwiperCore.use([Pagination, Navigation]);
 
 const RowSwiper = ({ movies, isLarge }) => {
+  const swiperRef = useRef(null);
   const { width } = useViewport();
   const [prevEl, prevElRef] = useSwiperRef();
   const [nextEl, nextElRef] = useSwiperRef();
@@ -51,11 +53,11 @@ const RowSwiper = ({ movies, isLarge }) => {
       const activeIndex = swiper.activeIndex;
       const slides = swiper.slides;
       const visibleSliders = slides.slice(activeIndex, activeIndex + groupNum);
-      visibleSliders.forEach((element, i, arr) => {
-        element.classList.remove('left', 'right', 'center');
-        if (i === 0) element.classList.add('left');
-        else if (i === arr.length - 1) element.classList.add('right');
-        else element.classList.add('center');
+      visibleSliders.forEach((slide, i, arr) => {
+        slide.classList.remove('left', 'right', 'center');
+        if (i === 0) slide.classList.add('left');
+        else if (i === arr.length - 1) slide.classList.add('right');
+        else slide.classList.add('center');
       });
     },
     draggable: false,
@@ -71,17 +73,13 @@ const RowSwiper = ({ movies, isLarge }) => {
     // };
   };
 
-  const insertPosClassName = (i) => {
-    const index = i + 1;
-
-    if (index === 1) return 'left';
-    else if (index === groupNum) return 'right';
-    else return 'center';
-  };
-
   const onMouseOver = (e) => {
     // e.currentTarget === 'swiper-slide', e.currentTarget.parentElement === 'swiper-wrapper
-    if (e.currentTarget.classList.contains('left'))
+    // REVIEW: 初回render時のclassName設定で .swiper-slide-active, .swiper-slide-next クラスのある要素に何故か .left, .center が付かないのでその対処 ↓
+    if (
+      e.currentTarget.classList.contains('swiper-slide-active') ||
+      e.currentTarget.classList.contains('left')
+    )
       e.currentTarget.parentElement.classList.add('is-left');
     else if (e.currentTarget.classList.contains('right'))
       e.currentTarget.parentElement.classList.add('is-right');
@@ -96,6 +94,29 @@ const RowSwiper = ({ movies, isLarge }) => {
     );
   };
 
+  const insertPosClassName = (i) => {
+    const index = i + 1;
+
+    if (index === 1) return 'left';
+    else if (index === groupNum) return 'right';
+    else return 'center';
+  };
+
+  // NOTE: slider componentに直接classNameを設定するとserver, clientでclassNameが食い違ってしまいエラーがでるため、componentがrender後にjavascriptでclassNameを追加する。
+  useEffect(() => {
+    // swiperRef.current.childNodes[1] = swiper-wrapper
+    // swiperRef.current.childNodes[1].childNodes = swiper-slider
+    // NOTE: childrenやchildNodesのままだとarray methodが使えないのでArray.fromでiterable objectに変更 (childNodesの場合はforEach methodは使える)
+    const visibleSlides = Array.from(
+      swiperRef.current.childNodes[1].childNodes
+    ).slice(0, groupNum);
+
+    visibleSlides.forEach((slide, i) => {
+      const pos = insertPosClassName(i);
+      slide.classList.add(pos);
+    });
+  }, [swiperRef, groupNum]);
+
   return (
     <div className="relative flex row">
       <div ref={prevElRef} className="swiper-button prev">
@@ -104,12 +125,11 @@ const RowSwiper = ({ movies, isLarge }) => {
       <div ref={nextElRef} className="swiper-button next">
         <FiChevronRight />
       </div>
-      <Swiper {...swiperProps}>
+      <Swiper ref={swiperRef} {...swiperProps}>
         {movies.map((movie, i) => {
           return (
             <SwiperSlide
               key={i}
-              className={insertPosClassName(i)}
               onMouseOver={onMouseOver}
               onMouseLeave={onMouseLeave}
             >

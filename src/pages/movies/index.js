@@ -7,57 +7,56 @@ import {
   fetchAll,
   randomPick,
 } from 'utils';
-import { genresData, homeTitles } from 'const/data.config';
+import { genresData } from 'const/data.config';
 
-export default function Home({ rows }) {
+const MoviesPage = ({ rows }) => {
   if (rows.length === 0) return <div>Loading...</div>;
 
-  const [bannerMovie, setBannerMovie] = useState(null);
+  const [bannerTitle, setBannerTitle] = useState(null);
   const trendingTitles = rows[1].movies;
 
   useEffect(() => {
-    setBannerMovie(randomPick(trendingTitles));
+    setBannerTitle(randomPick(trendingTitles));
   }, []);
 
   return (
     <Layout>
-      <Banner movie={bannerMovie} />
+      <Banner movie={bannerTitle} />
       {rows.map((row, i) => (
         <Row key={i} row={row} />
       ))}
     </Layout>
   );
-}
+};
+
+export default MoviesPage;
 
 export async function getStaticProps() {
   try {
-    // pick genres that included in homeTitles
-    const homeData = genresData.filter((data) => {
-      return homeTitles.includes(data.slug);
+    const type = 'movie';
+
+    // filter out if genreData does not have a url for the movie
+    const moviesData = genresData.filter((data) => {
+      return data.url.movie;
     });
 
     // get an array of the urls
-    const urls = homeData.map((data) => {
-      if (data.slug === 'originals') return data.url.tv;
-      // else if (data.slug === 'trending') return data.url.all;
-      else return data.url.movie;
+    const urls = moviesData.map((data) => {
+      return data.url.movie;
     });
 
-    // fetch all the data
+    // fetch all the movies data
     const requests = urls.map((url) => fetch(url));
     const allMovies = await fetchAll(requests);
 
     // fetch all the video keys if they are on YouTube
-    for (let i = 0; i < allMovies.length; i++) {
-      const type = homeTitles[i] === 'originals' ? 'tv' : 'movie';
-      const results = allMovies[i].results;
+    for (const movies of allMovies) {
+      const results = movies.results;
       await attachOfficialTrailerKeysToResults(results, type);
     }
 
     // put all the data into rows variable
-    const rows = homeData.map((data, i) => {
-      const type = data.slug === 'originals' ? 'tv' : 'movie';
-
+    const rows = moviesData.map((data, i) => {
       return { ...data, movies: allMovies[i].results, type };
     });
 

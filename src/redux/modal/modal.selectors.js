@@ -1,4 +1,4 @@
-// redux-toolkit には reselect が入ってるのでインストールする必要はありません
+// redux-toolkit には reselect が入ってるのでインストールする必要はなし
 import { createSelector } from 'reselect';
 
 const selectModal = (state) => state.modal;

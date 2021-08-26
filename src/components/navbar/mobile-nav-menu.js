@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MdArrowDropDown } from 'react-icons/md';
@@ -8,26 +9,12 @@ import { useOutsideClick } from 'hooks';
 const MobileNavMenu = ({ isScrollTop }) => {
   const [isVisible, setIsVisible] = useState(false);
   const listItemRef = useRef();
+  const router = useRouter();
+  const currentPath = router.asPath;
 
   useOutsideClick(listItemRef, () => {
     if (listItemRef.current) setIsVisible((isVisible) => !isVisible);
   });
-
-  const listItemVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.3,
-      },
-    },
-    exit: {
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
 
   return (
     <>
@@ -81,7 +68,8 @@ const MobileNavMenu = ({ isScrollTop }) => {
                   key={item.text}
                   text={item.text}
                   href={item.href}
-                  active={item.active}
+                  active={item.href === currentPath ? true : false}
+                  onClick={() => setIsVisible(false)}
                 />
               ))}
             </ul>
@@ -93,3 +81,19 @@ const MobileNavMenu = ({ isScrollTop }) => {
 };
 
 export default MobileNavMenu;
+
+const listItemVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const useScrollTop = () => {
+const useScrollTop = (position) => {
   const [isScrollTop, setIsScrollTop] = useState(true);
 
   const getScrollTop = () => {
@@ -13,8 +13,8 @@ const useScrollTop = () => {
 
   useEffect(() => {
     const onScroll = () => {
-      const position = getScrollTop();
-      if (position > 50) setIsScrollTop(false);
+      const positionTop = getScrollTop();
+      if (positionTop > position) setIsScrollTop(false);
       else setIsScrollTop(true);
     };
 

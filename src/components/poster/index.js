@@ -1,10 +1,11 @@
+import { useEffect } from 'react';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import PosterBackground from 'components/poster/poster-bg';
 import PosterInfo from 'components/poster/poster-info';
-import { MOVIE_IMAGE_URL } from 'const/request-url';
+import { W780_IMAGE_URL } from 'const/request-url';
 import fallbackImage from 'images/Fakeflix_fallback.png';
-import { openModal } from 'duck/modal/modal.slice';
+import { openModal } from 'redux/modal/modal.slice';
 
 const Poster = ({ movie }) => {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ const Poster = ({ movie }) => {
     dispatch(openModal(movie));
   };
 
+  useEffect(() => {}, []);
+
   return (
     <div
       className="poster relative cursor-pointer rounded-md overflow-hidden"
@@ -26,7 +29,7 @@ const Poster = ({ movie }) => {
     >
       <Image
         src={
-          backdrop_path ? `${MOVIE_IMAGE_URL}${backdrop_path}` : fallbackImage
+          backdrop_path ? `${W780_IMAGE_URL}${backdrop_path}` : fallbackImage
         }
         alt="movie"
         width={aspectRatio.width}
@@ -34,7 +37,7 @@ const Poster = ({ movie }) => {
         layout="responsive"
         quality={50}
         objectFit="cover"
-        loading="lazy"
+        // loading="lazy"
       />
       <PosterBackground />
       <PosterInfo movie={movie} />

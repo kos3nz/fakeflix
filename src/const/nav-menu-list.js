@@ -1,9 +1,9 @@
 const items = [
-  { text: 'Home', href: '/browse', active: true },
-  { text: 'TV Series', href: '/browse', active: false },
-  { text: 'Movies', href: '/browse', active: false },
-  { text: 'New & Popular', href: '/browse', active: false },
-  { text: 'My list', href: '/browse', active: false },
+  { text: 'Home', href: '/' },
+  { text: 'TV Series', href: '/tvseries' },
+  { text: 'Movies', href: '/movies' },
+  { text: 'New & Popular', href: '/' },
+  { text: 'My list', href: '/' },
 ];
 
 export default items;

@@ -58,7 +58,7 @@
 }
 
 .category-grid {
-  @apply grid gap-x-2 gap-y-6 grid-cols-[repeat(2,1fr)];
+  @apply grid gap-x-2 gap-y-8 grid-cols-[repeat(2,1fr)];
 
   @media only screen and (min-width: 640px) {
     @apply grid-cols-[repeat(3,1fr)];

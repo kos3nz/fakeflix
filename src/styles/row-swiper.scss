@@ -94,7 +94,8 @@
           @apply origin-center;
         }
 
-        &.left {
+        &.left,
+        &.swiper-slide-active {
           @apply origin-left;
         }
 
