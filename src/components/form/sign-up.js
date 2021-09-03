@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import AuthInput from '../input/auth-input';
 import AuthButton from '../button/auth-button';
+import { supabase } from 'db/supabaseClient';
 
 const SignUp = () => {
   const {
@@ -11,28 +12,8 @@ const SignUp = () => {
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
 
-  const form = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-  const item = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: 'easeInOut' },
-    },
-  };
-
-  const onSubmit = (data) => console.log(data);
-
   // console.log(watch('email'));
-  // console .log({ errors });
+  // console.log({ errors });
 
   const usernameRegistration = register('username', {
     required: 'Please enter your name',
@@ -67,14 +48,24 @@ const SignUp = () => {
       value === watch('password') || 'Passwords should match.',
   });
 
+  const onSubmit = async (data) => {
+    const { username, email, password } = data;
+    const response = await supabase.auth.signUp({
+      username,
+      email,
+      password,
+    });
+    console.log(response);
+  };
+
   return (
     <motion.form
       onSubmit={handleSubmit(onSubmit)}
       initial="hidden"
       animate="visible"
-      variants={form}
+      variants={formVariant}
     >
-      <motion.div variants={item} className="mb-3 xs:mb-4">
+      <motion.div variants={itemVariant} className="mb-3 xs:mb-4">
         <AuthInput
           id="username"
           placeholder="Your name"
@@ -82,7 +73,7 @@ const SignUp = () => {
           registration={usernameRegistration}
         />
       </motion.div>
-      <motion.div variants={item} className="mb-3 xs:mb-4">
+      <motion.div variants={itemVariant} className="mb-3 xs:mb-4">
         <AuthInput
           id="email"
           placeholder="E-mail"
@@ -90,7 +81,7 @@ const SignUp = () => {
           registration={emailRegistration}
         />
       </motion.div>
-      <motion.div variants={item} className="mb-3 xs:mb-4">
+      <motion.div variants={itemVariant} className="mb-3 xs:mb-4">
         <AuthInput
           type="password"
           id="password"
@@ -99,7 +90,7 @@ const SignUp = () => {
           registration={passwordRegistration}
         />
       </motion.div>
-      <motion.div variants={item} className="mb-8">
+      <motion.div variants={itemVariant} className="mb-8">
         <AuthInput
           type="password"
           id="passwordConfirmation"
@@ -108,7 +99,7 @@ const SignUp = () => {
           registration={passwordConfirmationRegistration}
         />
       </motion.div>
-      <motion.div variants={item}>
+      <motion.div variants={itemVariant}>
         <AuthButton type="submit" text="Sign in" color="primary" />
       </motion.div>
     </motion.form>
@@ -116,3 +107,21 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+const formVariant = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+const itemVariant = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: 'easeInOut' },
+  },
+};

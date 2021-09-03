@@ -111,7 +111,15 @@ export const searchSlice = createSlice({
     builder.addCase(loadMoreSearchTitles.fulfilled, (state, action) => {
       const { requestId } = action.meta;
       if (state.loading === 'pending' && state.currentRequestId === requestId) {
-        state.searchResults = [...state.searchResults, ...action.payload];
+        // state.searchResults = [...state.searchResults, ...action.payload];
+        // NOTE: ↑ だとsearch results の重複しているものが含まれている場合があるため、Map Objectを利用し除外
+        // 一度 results をMap Object化、そのあとvalue() methodでvalueだけを新たなarrayに入れる
+        const results = [...state.searchResults, ...action.payload];
+        state.searchResults = [
+          ...new Map(
+            results.map((result) => [`${result.backdrop_path}`, result]) // [key, value]
+          ).values(),
+        ]; // spread syntaxではなく、Array.from()でも可
         state.page = state.page + 1;
         state.error = null;
         state.loading = 'idle';

@@ -69,6 +69,7 @@ const MobileNavMenu = ({ isScrollTop }) => {
                   text={item.text}
                   href={item.href}
                   active={item.href === currentPath ? true : false}
+                  unavailable={item.unavailable || false}
                   onClick={() => setIsVisible(false)}
                 />
               ))}

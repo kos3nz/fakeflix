@@ -1,20 +1,12 @@
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const dropdownVariants = {
-  hidden: { y: 50, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.3 } },
-  exit: {
-    y: 50,
-    opacity: 0,
-    transition: {
-      y: { duration: 0.4 },
-      opacity: { duration: 0.3 },
-    },
-  },
-};
+import { supabase } from 'db/supabaseClient';
 
 const DropdownMenu = ({ isVisible, ...rest }) => {
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) console.error(error);
+  };
+
   return (
     <AnimatePresence>
       {isVisible && (
@@ -35,9 +27,7 @@ const DropdownMenu = ({ isVisible, ...rest }) => {
         "
           {...rest}
         >
-          <Link href="/login">
-            <a>Sign Out</a>
-          </Link>
+          <li onClick={handleSignOut}>Log out</li>
         </motion.ul>
       )}
     </AnimatePresence>
@@ -45,3 +35,16 @@ const DropdownMenu = ({ isVisible, ...rest }) => {
 };
 
 export default DropdownMenu;
+
+const dropdownVariants = {
+  hidden: { y: 50, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.3 } },
+  exit: {
+    y: 50,
+    opacity: 0,
+    transition: {
+      y: { duration: 0.4 },
+      opacity: { duration: 0.3 },
+    },
+  },
+};

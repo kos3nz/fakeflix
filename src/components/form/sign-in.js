@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import AuthInput from '../input/auth-input';
 import AuthButton from '../button/auth-button';
+import { supabase } from 'db/supabaseClient';
 
 const SingIn = () => {
   const {
@@ -11,25 +12,13 @@ const SingIn = () => {
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
 
-  const form = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
+  const onSubmit = async ({ email, password }) => {
+    const { error } = await supabase.auth.signIn({
+      email,
+      password,
+    });
+    if (error) console.error(error);
   };
-  const item = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: 'easeInOut' },
-    },
-  };
-
-  const onSubmit = (data) => console.log(data);
 
   // console .log({ errors });
 
@@ -101,3 +90,21 @@ const SingIn = () => {
 };
 
 export default SingIn;
+
+const form = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+const item = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: 'easeInOut' },
+  },
+};

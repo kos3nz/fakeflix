@@ -8,19 +8,23 @@ import {
   randomPick,
 } from 'utils';
 import { genresData, homeTitles } from 'const/data.config';
+import { useRequireLogin } from 'hooks';
 
 export default function Home({ rows }) {
-  if (rows.length === 0) return <div>Loading...</div>;
-
   const [bannerMovie, setBannerMovie] = useState(null);
   const trendingTitles = rows[1].movies;
+  const user = useRequireLogin();
 
   useEffect(() => {
     setBannerMovie(randomPick(trendingTitles));
   }, []);
 
+  if (rows.length === 0) return <div>Loading...</div>;
+
+  if (!user) return <div>redirecting...</div>;
+
   return (
-    <Layout>
+    <Layout containsFooter>
       <Banner movie={bannerMovie} />
       {rows.map((row, i) => (
         <Row key={i} row={row} />
@@ -67,7 +71,7 @@ export async function getStaticProps() {
       },
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       props: { rows: [] },
     };

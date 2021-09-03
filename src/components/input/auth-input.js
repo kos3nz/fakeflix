@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-
 const AuthInput = ({
   type = 'text',
   placeholder = '',

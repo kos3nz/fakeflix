@@ -19,6 +19,7 @@ const NavMenu = () => {
           text={item.text}
           href={item.href}
           active={item.href === currentPath ? true : false}
+          unavailable={item.unavailable || false}
         />
       ))}
     </ul>

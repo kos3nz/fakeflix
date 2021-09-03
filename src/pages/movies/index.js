@@ -8,19 +8,23 @@ import {
   randomPick,
 } from 'utils';
 import { genresData } from 'const/data.config';
+import { useRequireLogin } from 'hooks';
 
 const MoviesPage = ({ rows }) => {
-  if (rows.length === 0) return <div>Loading...</div>;
-
   const [bannerTitle, setBannerTitle] = useState(null);
   const trendingTitles = rows[1].movies;
+  const user = useRequireLogin();
 
   useEffect(() => {
     setBannerTitle(randomPick(trendingTitles));
   }, []);
 
+  if (rows.length === 0) return <div>Loading...</div>;
+
+  if (!user) return <div>redirecting...</div>;
+
   return (
-    <Layout>
+    <Layout containsFooter>
       <Banner movie={bannerTitle} />
       {rows.map((row, i) => (
         <Row key={i} row={row} />

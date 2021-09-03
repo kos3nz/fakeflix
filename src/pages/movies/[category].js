@@ -3,12 +3,15 @@ import Layout from 'components/layout';
 import Poster from 'components/poster';
 import { fetchResults, attachOfficialTrailerKeysToResults } from 'utils';
 import { genresData } from 'const/data.config';
-import { useIntersectionObserver } from 'hooks';
+import { useIntersectionObserver, useRequireLogin } from 'hooks';
 
 const MoviesCategory = ({ title, moviesUrl, results, totalPages }) => {
   const [movies, setMovies] = useState(results || []);
   const [page, setPage] = useState(2);
   const [bottomPageRef, isIntersecting] = useIntersectionObserver();
+  // const user = useRequireLogin();
+
+  // if (!user) return <div>redirecting...</div>;
 
   useEffect(() => {
     const loadMore = async () => {
@@ -33,7 +36,7 @@ const MoviesCategory = ({ title, moviesUrl, results, totalPages }) => {
   }, [isIntersecting]);
 
   return (
-    <Layout containsFooter={false}>
+    <Layout>
       <div className="w-full pt-[120px] lg:pt-20">
         <div className="py-8 px-[4vw]">
           <h2 className="text-xl font-bold capitalize mb-6">{title}</h2>

@@ -1,26 +1,27 @@
-import Head from 'next/head';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import Layout from 'components/layout';
 import LogoLink from '../components/link/logo-link';
 import SignIn from 'components/form/sign-in';
 import SignUp from 'components/form/sign-up';
 import signinBg from 'images/Fakeflix_signin_bg.jpg';
+import { useRequireLogin } from 'hooks';
 
 export default function Login() {
   const [isSignedUp, setIsSignedUp] = useState(true);
+  const user = useRequireLogin();
+  const router = useRouter();
 
-  const formContainer = {
-    hidden: { y: 300, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
-  };
+  useEffect(() => {
+    if (user) router.push('/');
+  }, [user]);
+
+  if (user) return <div>redirecting...</div>;
 
   return (
-    <>
-      <Head>
-        <title>Fakeflix Login</title>
-        <link rel="icon" href="/Fakeflix_favicon_64.ico" />
-      </Head>
+    <Layout title="Fakeflix login">
       <div className="w-full h-screen">
         <Image
           src={signinBg}
@@ -41,7 +42,7 @@ export default function Login() {
           "
         >
           <div className="absolute top-8 left-8 z-10 hidden xs:block">
-            <LogoLink href="/" logoType="desktop" size="sm" />
+            <LogoLink href="/login" logoType="desktop" size="sm" />
           </div>
           <motion.div
             className="
@@ -49,7 +50,7 @@ export default function Login() {
               "
             initial="hidden"
             animate="visible"
-            variants={formContainer}
+            variants={formContainerVariant}
           >
             <h2 className="text-paragraph text-xl xs:text-2xl font-semibold">
               {isSignedUp ? 'Sign In' : 'Sign Up'}
@@ -87,6 +88,11 @@ export default function Login() {
           </motion.div>
         </div>
       </div>
-    </>
+    </Layout>
   );
 }
+
+const formContainerVariant = {
+  hidden: { y: 300, opacity: 0 },
+  visible: { y: 0, opacity: 1, transition: { duration: 0.5 } },
+};

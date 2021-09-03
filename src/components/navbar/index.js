@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
 import { motion } from 'framer-motion';
 import LogoLink from 'components/link/logo-link';
 import NavMenu from './nav-menu';
@@ -9,6 +8,7 @@ import UserIcon from 'components/user-icon';
 
 import { useScrollTop } from 'hooks';
 
+// REVIEW: dynamic import する必要があるのか再度確認。
 const Viewport = dynamic(() => import('react-responsive'), { ssr: false });
 
 const NavBar = () => {

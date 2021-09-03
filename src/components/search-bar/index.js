@@ -96,10 +96,10 @@ const SearchBar = () => {
   const handleClearInput = () => {
     dispatch(clearInputValue());
     dispatch(clearTitles());
-    router.push({
-      pathname: '/search',
-      query: { keyword: '' },
-    });
+    // router.push({
+    //   pathname: '/search',
+    //   query: { keyword: '' },
+    // });
   };
 
   return (

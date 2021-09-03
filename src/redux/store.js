@@ -3,6 +3,7 @@ import logger from 'redux-logger';
 import modalReducer from 'redux/modal/modal.slice';
 import modalVideoReducer from 'redux/modal-video/modal-video.slice';
 import searchReducer from 'redux/search/search.slice';
+import userReducer from 'redux/user/user.slice';
 
 const middlewares = [];
 
@@ -15,6 +16,7 @@ export const store = configureStore({
     modal: modalReducer,
     modalVideo: modalVideoReducer,
     search: searchReducer,
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(middlewares),
