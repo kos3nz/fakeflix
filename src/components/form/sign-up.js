@@ -1,8 +1,9 @@
+import { useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import AuthInput from '../input/auth-input';
 import AuthButton from '../button/auth-button';
-import { supabase } from 'db/supabaseClient';
+import { manageUserSession } from 'redux/user/user.slice';
 
 const SignUp = () => {
   const {
@@ -11,6 +12,7 @@ const SignUp = () => {
     watch,
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
+  const dispatch = useDispatch();
 
   // console.log(watch('email'));
   // console.log({ errors });
@@ -48,14 +50,9 @@ const SignUp = () => {
       value === watch('password') || 'Passwords should match.',
   });
 
-  const onSubmit = async (data) => {
-    const { username, email, password } = data;
-    const response = await supabase.auth.signUp({
-      username,
-      email,
-      password,
-    });
-    console.log(response);
+  const onSubmit = async ({ email, password }) => {
+    const type = 'signUp';
+    dispatch(manageUserSession({ email, password, type }));
   };
 
   return (
@@ -100,7 +97,7 @@ const SignUp = () => {
         />
       </motion.div>
       <motion.div variants={itemVariant}>
-        <AuthButton type="submit" text="Sign in" color="primary" />
+        <AuthButton type="submit" text="Sign up" color="primary" />
       </motion.div>
     </motion.form>
   );

@@ -9,31 +9,31 @@ const MoviesCategory = ({ title, moviesUrl, results, totalPages }) => {
   const [movies, setMovies] = useState(results || []);
   const [page, setPage] = useState(2);
   const [bottomPageRef, isIntersecting] = useIntersectionObserver();
-  // const user = useRequireLogin();
+  const user = useRequireLogin();
 
-  // if (!user) return <div>redirecting...</div>;
+  const loadMore = async (page, setPage, setMovies) => {
+    try {
+      const { results, errorCode } = await fetchResults(
+        moviesUrl + `&page=${page}`
+      );
+      if (!errorCode) {
+        await attachOfficialTrailerKeysToResults(results, 'movie');
+
+        setPage((page) => page + 1);
+        setMovies((state) => [...state, ...results]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const loadMore = async () => {
-      try {
-        const { results, errorCode } = await fetchResults(
-          moviesUrl + `&page=${page}`
-        );
-        if (!errorCode) {
-          await attachOfficialTrailerKeysToResults(results, 'movie');
-
-          setPage((page) => page + 1);
-          setMovies((state) => [...state, ...results]);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    if (isIntersecting && page <= totalPages) {
-      loadMore();
+    if (bottomPageRef && isIntersecting && page <= totalPages) {
+      loadMore(page, setPage, setMovies);
     }
-  }, [isIntersecting]);
+  }, [bottomPageRef, isIntersecting]);
+
+  if (!user) return <div>redirecting...</div>;
 
   return (
     <Layout>

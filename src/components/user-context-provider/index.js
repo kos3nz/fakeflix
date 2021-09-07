@@ -1,23 +1,23 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { supabase } from 'db/supabaseClient';
-import { checkCurrentSession } from 'redux/user/user.slice';
+import { setUserSession } from 'redux/user/user.slice';
 
 const UserContextProviderWithRedux = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // const user = supabase.auth.user();
     const session = supabase.auth.session();
-    dispatch(checkCurrentSession(session));
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        // console.log({ event }, { session });
-        dispatch(checkCurrentSession(session));
-      }
-    );
-    return () => {
-      authListener?.unsubscribe();
-    };
+    dispatch(setUserSession(session));
+    // const { data: authListener } = supabase.auth.onAuthStateChange(
+    //   (event, session) => {
+    //     dispatch(setUserSession(session));
+    //   }
+    // );
+    // return () => {
+    //   authListener?.unsubscribe();
+    // };
   }, []);
 
   return null;

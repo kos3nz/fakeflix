@@ -1,23 +1,22 @@
+import { useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import AuthInput from '../input/auth-input';
 import AuthButton from '../button/auth-button';
-import { supabase } from 'db/supabaseClient';
+import { manageUserSession } from 'redux/user/user.slice';
 
 const SingIn = () => {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
 
-  const onSubmit = async ({ email, password }) => {
-    const { error } = await supabase.auth.signIn({
-      email,
-      password,
-    });
-    if (error) console.error(error);
+  const onSubmit = ({ email, password }) => {
+    const type = 'signIn';
+    dispatch(manageUserSession({ email, password, type }));
   };
 
   // console .log({ errors });
@@ -72,7 +71,7 @@ const SingIn = () => {
       </motion.div>
       <motion.div variants={item} className="mb-2">
         <AuthButton
-          type="submit"
+          type="button"
           text="Sign in with Google"
           color="google"
           Icon={FcGoogle}

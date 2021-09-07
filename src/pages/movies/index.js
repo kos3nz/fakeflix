@@ -11,6 +11,8 @@ import { genresData } from 'const/data.config';
 import { useRequireLogin } from 'hooks';
 
 const MoviesPage = ({ rows }) => {
+  if (rows.length === 0) return <div>Loading...</div>;
+
   const [bannerTitle, setBannerTitle] = useState(null);
   const trendingTitles = rows[1].movies;
   const user = useRequireLogin();
@@ -18,8 +20,6 @@ const MoviesPage = ({ rows }) => {
   useEffect(() => {
     setBannerTitle(randomPick(trendingTitles));
   }, []);
-
-  if (rows.length === 0) return <div>Loading...</div>;
 
   if (!user) return <div>redirecting...</div>;
 

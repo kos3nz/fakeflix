@@ -1,0 +1,56 @@
+@function makeLongShadow($length, $angle) {
+  $val: 0px 0px transparent;
+  @for $i from 1 through $length {
+    $val: #{$val}, #{$i}px #{$i * $angle}px #aaa;
+  }
+  @return $val;
+}
+// Output Example
+// text-shadow: makeLongShadow(100, 1);
+// ↓
+// text-shadow: 0px 0px transparent, 1px 1px #aaa, ... , 100px 100px #aaa;
+
+#text-animation__wrapper {
+  @apply absolute top-0 left-0 w-full
+    h-full flex justify-center items-center z-50 overflow-hidden;
+  background: radial-gradient(#fff, #aaa);
+
+  .text-animation {
+    @apply text-center text-[10vmin] font-bold uppercase outline-none whitespace-nowrap;
+    animation-name: netflix_style;
+    animation-duration: 3.5s;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes netflix_style {
+  0% {
+    text-shadow: makeLongShadow(100, 1);
+    color: #f3f3f3;
+    transform: scale(1.5, 1.5);
+  }
+  10% {
+    text-shadow: makeLongShadow(100, 1.5);
+    color: #f3f3f3;
+    transform: scale(1.5, 1.5);
+  }
+  15% {
+    color: #f3f3f3;
+  }
+  20% {
+    text-shadow: none;
+    color: #e90418;
+    transform: scale(1.1, 1.1);
+  }
+  75% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+    color: #e90418;
+    transform: scale(0.85, 0.9);
+  }
+  100% {
+    opacity: 0;
+  }
+}

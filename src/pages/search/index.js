@@ -10,7 +10,7 @@ import {
   selectSearchQuery,
   selectSearchError,
 } from 'redux/search/search.selectors';
-import { useIntersectionObserver } from 'hooks';
+import { useIntersectionObserver, useRequireLogin } from 'hooks';
 
 const SearchPage = () => {
   const results = useSelector(selectSearchResults);
@@ -19,14 +19,16 @@ const SearchPage = () => {
   const page = useSelector(selectSearchPage);
   const error = useSelector(selectSearchError);
   const dispatch = useDispatch();
-
   const [bottomPageRef, isIntersecting] = useIntersectionObserver();
+  const user = useRequireLogin();
 
   useEffect(() => {
-    if (isIntersecting && page <= totalPages) {
+    if (bottomPageRef && isIntersecting && page <= totalPages) {
       dispatch(loadMoreSearchTitles());
     }
-  }, [isIntersecting, page, totalPages]);
+  }, [bottomPageRef && isIntersecting, page, totalPages]);
+
+  if (!user) return <div>redirecting...</div>;
 
   return (
     <Layout containsFooter={false}>

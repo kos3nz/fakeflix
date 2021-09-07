@@ -27,7 +27,7 @@ const useIntersectionObserver = (options = {}, callback = emptyFunc) => {
       },
       { ...baseOptions, ...options }
     );
-    observer.observe(ref.current);
+    if (ref.current) observer.observe(ref.current);
 
     return () => {
       // observer.unobserve(ref.current);

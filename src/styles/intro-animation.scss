@@ -1,0 +1,614 @@
+@use 'sass:math';
+@import './_variables.scss';
+
+@mixin lamp($left: 1%, $width: 1%, $color) {
+  background-color: $color;
+  left: $left;
+  width: $width;
+  animation-delay: math.div(random(200), 100) + 2 + s;
+  &::before {
+    left: percentage(random());
+    // left: percentage(math.div(random(200), 100));
+    animation-delay: math.div(random(200), 100) + 2 + s;
+    background-color: $color;
+  }
+}
+
+@mixin fur($left, $width, $color, $op: 1, $timing1, $timing2: 100%) {
+  left: $left;
+  width: $width;
+  background: linear-gradient(
+    to bottom,
+    rgba($color, $op) 0%,
+    rgba($color, $op) $timing1,
+    rgba(0, 0, 0, 0) $timing2,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+#intro-animation__wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 100;
+
+  .netflix-intro {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    animation: zoom-in;
+    animation-delay: 0.5s;
+    animation-duration: 4.5s;
+    animation-timing-function: cubic-bezier(0.69, 0.05, 0.57, 0.98);
+    animation-fill-mode: forwards;
+
+    @media only screen and (min-width: 500px) {
+      width: 300px;
+      height: 300px;
+    }
+    @media only screen and (min-width: 1440px) {
+      width: 350px;
+      height: 350px;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      display: block;
+      background-color: $color-background;
+      width: 150%;
+      height: 30%;
+      left: -25%;
+      bottom: -27%;
+      border-radius: 50%;
+      z-index: 5;
+    }
+
+    &[data-letter='F'] {
+      transform-origin: 37% center;
+
+      .helper-1 {
+        width: 19.5%;
+        height: 100%;
+        top: 0;
+        left: 30%;
+        transform: rotate(180deg);
+
+        .effect-brush {
+          animation-name: fade-out;
+          animation-duration: 2.5s;
+          animation-delay: 2.5s;
+        }
+      }
+
+      .helper-2 {
+        width: 17%;
+        height: 32%;
+        top: 16%;
+        left: 49%;
+        transform: rotate(-90deg);
+        transform-origin: top left;
+        overflow: hidden;
+
+        .effect-brush {
+          animation-name: brush-moving;
+          animation-duration: 2.2s;
+          animation-delay: 0.6s;
+        }
+      }
+
+      .helper-3 {
+        width: 17%;
+        height: 22%;
+        top: 55%;
+        left: 49%;
+        transform: rotate(-90deg);
+        transform-origin: top left;
+        overflow: hidden;
+
+        .effect-brush {
+          animation-name: brush-moving;
+          animation-duration: 2s;
+          animation-delay: 1s;
+        }
+      }
+
+      [class*='helper-'] {
+        position: absolute;
+
+        .effect-brush {
+          position: relative;
+          width: 100%;
+          height: 700%;
+          overflow: hidden;
+          animation-fill-mode: forwards;
+
+          &.front::before {
+            display: block;
+            content: '';
+            position: absolute;
+            background-color: $color-primary;
+            width: 100%;
+            height: 70%;
+            box-shadow: 0 0 29px 24px $color-primary;
+          }
+
+          &.back::before {
+            display: block;
+            content: '';
+            position: absolute;
+            background-color: rgba($color-primary, 0.3);
+            width: 100%;
+            height: 70%;
+            box-shadow: 0 0 29px 24px rgba($color-primary, 0.3);
+          }
+
+          [class*='fur-'] {
+            display: block;
+            position: absolute;
+            bottom: 0%;
+            height: 100%;
+          }
+
+          .fur-1 {
+            @include fur(0%, 3.8%, $color-primary, 1, 15%, 81%);
+
+            &.backside {
+              @include fur(0%, 3.8%, $color-primary, 0.3, 15%, 81%);
+            }
+          }
+          .fur-2 {
+            @include fur(3.8%, 2.8%, $color-primary, 1, 10%, 62%);
+
+            &.backside {
+              @include fur(3.8%, 2.8%, $color-primary, 0.3, 10%, 62%);
+            }
+          }
+          .fur-3 {
+            @include fur(6.6%, 4.8%, $color-primary, 1, 37%);
+
+            &.backside {
+              @include fur(6.6%, 4.8%, $color-primary, 0.3, 37%);
+            }
+          }
+          .fur-4 {
+            @include fur(11.4%, 4%, $color-primary, 1, 23%);
+
+            &.backside {
+              @include fur(11.4%, 4%, $color-primary, 0.3, 23%);
+            }
+          }
+          .fur-5 {
+            @include fur(15.4%, 4%, $color-primary, 1, 15%, 86%);
+
+            &.backside {
+              @include fur(15.4%, 4%, $color-primary, 0.3, 15%, 86%);
+            }
+          }
+          .fur-6 {
+            @include fur(19.4%, 2.5%, $color-primary, 1, 27%, 89%);
+
+            &.backside {
+              @include fur(19.4%, 2.5%, $color-primary, 0.3, 27%, 89%);
+            }
+          }
+          .fur-7 {
+            @include fur(21.9%, 4%, $color-primary, 1, 20%);
+
+            &.backside {
+              @include fur(21.9%, 4%, $color-primary, 0.3, 20%);
+            }
+          }
+          .fur-8 {
+            @include fur(25.9%, 2%, $color-primary, 1, 30%);
+
+            &.backside {
+              @include fur(25.9%, 2%, $color-primary, 0.3, 20%);
+            }
+          }
+          .fur-9 {
+            @include fur(27.9%, 4%, $color-primary, 1, 35%, 95%);
+
+            &.backside {
+              @include fur(27.9%, 4%, $color-primary, 0.3, 35%, 95%);
+            }
+          }
+          .fur-10 {
+            @include fur(31.9%, 3.5%, $color-primary, 1, 39%, 95%);
+
+            &.backside {
+              @include fur(31.9%, 3.5%, $color-primary, 0.3, 39%, 95%);
+            }
+          }
+          .fur-11 {
+            @include fur(35.4%, 2%, $color-primary, 1, 34%, 95%);
+
+            &.backside {
+              @include fur(35.4%, 2%, $color-primary, 0.3, 34%, 95%);
+            }
+          }
+          .fur-12 {
+            @include fur(37.4%, 2.6%, $color-primary, 1, 22%, 95%);
+
+            &.backside {
+              @include fur(37.4%, 2.6%, $color-primary, 0.3, 22%, 95%);
+            }
+          }
+          .fur-13 {
+            @include fur(40%, 6%, $color-primary, 1, 47%);
+
+            &.backside {
+              @include fur(40%, 6%, $color-primary, 0.3, 47%);
+            }
+          }
+          .fur-14 {
+            @include fur(46%, 2%, $color-primary, 1, 36%);
+
+            &.backside {
+              @include fur(46%, 2%, $color-primary, 0.3, 36%);
+            }
+          }
+          .fur-15 {
+            @include fur(48%, 5.5%, $color-primary, 1, 29%);
+
+            &.backside {
+              @include fur(48%, 5.5%, $color-primary, 0.3, 29%);
+            }
+          }
+          .fur-16 {
+            @include fur(53.5%, 3%, $color-primary, 1, 39%, 95%);
+
+            &.backside {
+              @include fur(53.5%, 3%, $color-primary, 0.3, 39%, 95%);
+            }
+          }
+          .fur-17 {
+            @include fur(56.5%, 4.1%, $color-primary, 1, 45%);
+
+            &.backside {
+              @include fur(56.5%, 4.1%, $color-primary, 0.3, 45%);
+            }
+          }
+          .fur-18 {
+            @include fur(60.6%, 2.4%, $color-primary, 1, 34%);
+
+            &.backside {
+              @include fur(60.6%, 2.4%, $color-primary, 0.3, 34%);
+            }
+          }
+          .fur-19 {
+            @include fur(63%, 4%, $color-primary, 1, 47%);
+
+            &.backside {
+              @include fur(63%, 4%, $color-primary, 0.3, 47%);
+            }
+          }
+          .fur-20 {
+            @include fur(67%, 1.5%, $color-primary, 1, 27%, 95%);
+
+            &.backside {
+              @include fur(67%, 1.5%, $color-primary, 0.3, 27%, 95%);
+            }
+          }
+          .fur-21 {
+            @include fur(68.5%, 2.8%, $color-primary, 1, 37%);
+
+            &.backside {
+              @include fur(68.5%, 2.8%, $color-primary, 0.3, 37%);
+            }
+          }
+          .fur-22 {
+            @include fur(71.3%, 2.3%, $color-primary, 1, 9%);
+
+            &.backside {
+              @include fur(71.3%, 2.3%, $color-primary, 0.3, 9%);
+            }
+          }
+          .fur-23 {
+            @include fur(73.6%, 2.2%, $color-primary, 1, 28%, 92%);
+
+            &.backside {
+              @include fur(73.6%, 2.2%, $color-primary, 0.3, 28%, 92%);
+            }
+          }
+          .fur-24 {
+            @include fur(75.8%, 1%, $color-primary, 1, 37%);
+
+            &.backside {
+              @include fur(75.8%, 1%, $color-primary, 0.3, 37%);
+            }
+          }
+          .fur-25 {
+            @include fur(76.8%, 2.1%, $color-primary, 1, 28%);
+
+            &.backside {
+              @include fur(76.8%, 2.1%, $color-primary, 0.3, 28%);
+            }
+          }
+          .fur-26 {
+            @include fur(78.9%, 4.1%, $color-primary, 1, 34%);
+
+            &.backside {
+              @include fur(78.9%, 4.1%, $color-primary, 0.3, 34%);
+            }
+          }
+          .fur-27 {
+            @include fur(83%, 2.5%, $color-primary, 1, 21%);
+
+            &.backside {
+              @include fur(83%, 2.5%, $color-primary, 0.3, 21%);
+            }
+          }
+          .fur-28 {
+            @include fur(85.5%, 4.5%, $color-primary, 1, 39%);
+
+            &.backside {
+              @include fur(85.5%, 4.5%, $color-primary, 0.3, 39%);
+            }
+          }
+          .fur-29 {
+            @include fur(90%, 2.8%, $color-primary, 1, 30%);
+
+            &.backside {
+              @include fur(90%, 2.8%, $color-primary, 0.3, 30%);
+            }
+          }
+          .fur-30 {
+            @include fur(92.8%, 3.5%, $color-primary, 1, 19%);
+
+            &.backside {
+              @include fur(92.8%, 3.5%, $color-primary, 0.3, 19%);
+            }
+          }
+          .fur-31 {
+            @include fur(96.3%, 3.7%, $color-primary, 1, 37%);
+
+            &.backside {
+              @include fur(96.3%, 3.7%, $color-primary, 0.3, 37%);
+            }
+          }
+        }
+      }
+
+      .effect-illumination {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        animation-name: show-illumination;
+        animation-duration: 2.5s;
+        animation-delay: 2.5s;
+        animation-fill-mode: forwards;
+
+        [class*='lamp-'] {
+          position: absolute;
+          display: block;
+          height: 300%;
+          box-shadow: 0 0 10px 0px rgba($color-primary, 0.75);
+          // background-color: var(--lamp-color);
+
+          &::before {
+            position: absolute;
+            content: '';
+            display: block;
+            width: 100%;
+            height: 300%;
+            box-shadow: 0 0 10px 0px rgba($color-primary, 0.75);
+            // background-color: var(--lamp-color);
+          }
+        }
+
+        .lamp-1,
+        .lamp-3,
+        .lamp-5,
+        .lamp-7,
+        .lamp-9,
+        .lamp-11,
+        .lamp-13,
+        .lamp-15,
+        .lamp-17,
+        .lamp-19,
+        .lamp-21,
+        .lamp-23,
+        .lamp-25,
+        .lamp-27 {
+          animation-name: illumination-moving-left;
+          animation-duration: 3.5s;
+          animation-fill-mode: forwards;
+
+          &::before {
+            animation-name: illumination-moving-left;
+            animation-duration: 4s;
+          }
+        }
+
+        .lamp-2,
+        .lamp-4,
+        .lamp-6,
+        .lamp-8,
+        .lamp-10,
+        .lamp-12,
+        .lamp-14,
+        .lamp-16,
+        .lamp-18,
+        .lamp-20,
+        .lamp-22,
+        .lamp-24,
+        .lamp-26,
+        .lamp-28 {
+          animation-name: illumination-moving-right;
+          animation-duration: 3.5s;
+          animation-fill-mode: forwards;
+
+          &::before {
+            animation-name: illumination-moving-right;
+            animation-duration: 4s;
+          }
+        }
+
+        .lamp-1 {
+          // --lamp-color: #ff0100;
+          @include lamp(0.7%, 1%, #ff0100);
+        }
+        .lamp-2 {
+          @include lamp(2.2%, 1.4%, #ffde01);
+        }
+        .lamp-3 {
+          @include lamp(5.8%, 1.1%, #04fd8f);
+        }
+        .lamp-4 {
+          @include lamp(10.1%, 0.7%, #ff00cc);
+        }
+        .lamp-5 {
+          @include lamp(12.9%, 1.4%, #ff0100);
+        }
+        .lamp-6 {
+          @include lamp(15.3%, 1.3%, #ff9600);
+        }
+        .lamp-7 {
+          @include lamp(21.2%, 1.5%, #0084ff);
+        }
+        .lamp-8 {
+          @include lamp(25%, 1.2%, #f840a6);
+        }
+        .lamp-9 {
+          @include lamp(30.5%, 1.3%, #ffc601);
+        }
+        .lamp-10 {
+          @include lamp(36.3%, 1%, #ff4800);
+        }
+        .lamp-11 {
+          @include lamp(41%, 0.5%, #fd0100);
+        }
+        .lamp-12 {
+          @include lamp(44.2%, 1.6%, #01ffff);
+        }
+        .lamp-13 {
+          @include lamp(51.7%, 0.5%, #ffc601);
+        }
+        .lamp-14 {
+          @include lamp(52.1%, 0.8%, #000fdf);
+        }
+        .lamp-15 {
+          @include lamp(53.8%, 1.3%, #0078fe);
+        }
+        .lamp-16 {
+          @include lamp(57.2%, 1%, #0080ff);
+        }
+        .lamp-17 {
+          @include lamp(62.3%, 0.9%, #ffae01);
+        }
+        .lamp-18 {
+          @include lamp(65.8%, 0.7%, #ff00bf);
+        }
+        .lamp-19 {
+          @include lamp(72.8%, 0.8%, #a601f4);
+        }
+        .lamp-20 {
+          @include lamp(74.3%, 1.2%, #f30b34);
+        }
+        .lamp-21 {
+          @include lamp(79.8%, 1%, #ff00bf);
+        }
+        .lamp-22 {
+          @include lamp(78.2%, 0.8%, #04fd8f);
+        }
+        .lamp-23 {
+          @include lamp(78.5%, 1.1%, #01ffff);
+        }
+        .lamp-24 {
+          @include lamp(85.3%, 1.1%, #a201ff);
+        }
+        .lamp-25 {
+          @include lamp(86.9%, 1.1%, #ec0014);
+        }
+        .lamp-26 {
+          @include lamp(88.8%, 0.9%, #0078fe);
+        }
+        .lamp-27 {
+          @include lamp(92.4%, 1.4%, #ff0036);
+        }
+        .lamp-28 {
+          @include lamp(96.2%, 1.1%, #06f98c);
+        }
+      }
+    }
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-70%);
+  }
+}
+
+@keyframes brush-moving {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes zoom-in {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(15);
+  }
+}
+
+@keyframes show-illumination {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes illumination-moving-left {
+  0% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(10px) scaleX(1);
+  }
+  50% {
+    transform: translateX(60px);
+  }
+  100% {
+    transform: translateX(180px) scaleX(3);
+  }
+}
+
+@keyframes illumination-moving-right {
+  0% {
+    transform: translateX(0);
+  }
+  40% {
+    transform: translateX(-10px) scaleX(1);
+  }
+  50% {
+    transform: translateX(-60px);
+  }
+  100% {
+    transform: translateX(-180px) scaleX(3);
+  }
+}

@@ -15,7 +15,7 @@ export default function Login() {
   const router = useRouter();
 
   useEffect(() => {
-    if (user) router.push('/');
+    if (user) router.push('/intro');
   }, [user]);
 
   if (user) return <div>redirecting...</div>;

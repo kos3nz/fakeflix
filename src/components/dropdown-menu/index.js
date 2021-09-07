@@ -1,10 +1,13 @@
+import { useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from 'db/supabaseClient';
+import { manageUserSession } from 'redux/user/user.slice';
 
 const DropdownMenu = ({ isVisible, ...rest }) => {
+  const dispatch = useDispatch();
+
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) console.error(error);
+    const type = 'signOut';
+    dispatch(manageUserSession({ type }));
   };
 
   return (

@@ -28,7 +28,7 @@ const TvSeriesCategory = ({ title, tvSeriesUrl, results, totalPages }) => {
       }
     };
 
-    if (isIntersecting && page <= totalPages) {
+    if (bottomPageRef && isIntersecting && page <= totalPages) {
       loadMore();
     }
   }, [isIntersecting]);

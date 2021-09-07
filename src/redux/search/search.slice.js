@@ -93,46 +93,54 @@ export const searchSlice = createSlice({
   },
   extraReducers: (builder) => {
     // Search titles
-    builder.addCase(searchTitles.fulfilled, (state, action) => {
-      state.searchResults = [...action.payload.results];
-      state.totalPages = action.payload.totalPages;
-      state.page = 2;
-      state.error = null;
-    });
-    builder.addCase(searchTitles.rejected, (state, action) => {
-      state.error = action.error;
-    });
+    builder
+      .addCase(searchTitles.fulfilled, (state, action) => {
+        state.searchResults = [...action.payload.results];
+        state.totalPages = action.payload.totalPages;
+        state.page = 2;
+        state.error = null;
+      })
+      .addCase(searchTitles.rejected, (state, action) => {
+        state.error = action.error;
+      });
 
     // Load more search titles
-    builder.addCase(loadMoreSearchTitles.pending, (state, action) => {
-      state.loading = 'pending';
-      state.currentRequestId = action.meta.requestId;
-    });
-    builder.addCase(loadMoreSearchTitles.fulfilled, (state, action) => {
-      const { requestId } = action.meta;
-      if (state.loading === 'pending' && state.currentRequestId === requestId) {
-        // state.searchResults = [...state.searchResults, ...action.payload];
-        // NOTE: ↑ だとsearch results の重複しているものが含まれている場合があるため、Map Objectを利用し除外
-        // 一度 results をMap Object化、そのあとvalue() methodでvalueだけを新たなarrayに入れる
-        const results = [...state.searchResults, ...action.payload];
-        state.searchResults = [
-          ...new Map(
-            results.map((result) => [`${result.backdrop_path}`, result]) // [key, value]
-          ).values(),
-        ]; // spread syntaxではなく、Array.from()でも可
-        state.page = state.page + 1;
-        state.error = null;
-        state.loading = 'idle';
-        state.currentRequestId = undefined;
-      }
-    });
-    builder.addCase(loadMoreSearchTitles.rejected, (state, action) => {
-      if (state.loading === 'pending' && state.currentRequestId === requestId) {
-        state.error = action.error;
-        state.loading = 'idle';
-        state.currentRequestId = undefined;
-      }
-    });
+    builder
+      .addCase(loadMoreSearchTitles.pending, (state, action) => {
+        state.loading = 'pending';
+        state.currentRequestId = action.meta.requestId;
+      })
+      .addCase(loadMoreSearchTitles.fulfilled, (state, action) => {
+        const { requestId } = action.meta;
+        if (
+          state.loading === 'pending' &&
+          state.currentRequestId === requestId
+        ) {
+          // state.searchResults = [...state.searchResults, ...action.payload];
+          // NOTE: ↑ だとsearch results の重複しているものが含まれている場合があるため、Map Objectを利用し除外
+          // 一度 results をMap Object化、そのあとvalue() methodでvalueだけを新たなarrayに入れる
+          const results = [...state.searchResults, ...action.payload];
+          state.searchResults = [
+            ...new Map(
+              results.map((result) => [`${result.backdrop_path}`, result]) // [key, value]
+            ).values(),
+          ]; // spread syntaxではなく、Array.from()でも可
+          state.page = state.page + 1;
+          state.error = null;
+          state.loading = 'idle';
+          state.currentRequestId = undefined;
+        }
+      })
+      .addCase(loadMoreSearchTitles.rejected, (state, action) => {
+        if (
+          state.loading === 'pending' &&
+          state.currentRequestId === requestId
+        ) {
+          state.error = action.error;
+          state.loading = 'idle';
+          state.currentRequestId = undefined;
+        }
+      });
   },
 });
 
