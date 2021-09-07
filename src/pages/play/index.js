@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
-const PlayAnimation = () => {
+const Play = () => {
   const router = useRouter();
   const audioRef = useRef(null);
 
@@ -28,4 +28,4 @@ const PlayAnimation = () => {
   );
 };
 
-export default PlayAnimation;
+export default Play;

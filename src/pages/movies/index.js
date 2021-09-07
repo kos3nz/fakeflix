@@ -10,7 +10,7 @@ import {
 import { genresData } from 'const/data.config';
 import { useRequireLogin } from 'hooks';
 
-const MoviesPage = ({ rows }) => {
+const Movies = ({ rows }) => {
   if (rows.length === 0) return <div>Loading...</div>;
 
   const [bannerTitle, setBannerTitle] = useState(null);
@@ -33,7 +33,7 @@ const MoviesPage = ({ rows }) => {
   );
 };
 
-export default MoviesPage;
+export default Movies;
 
 export async function getStaticProps() {
   try {

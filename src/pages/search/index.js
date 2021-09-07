@@ -12,7 +12,7 @@ import {
 } from 'redux/search/search.selectors';
 import { useIntersectionObserver, useRequireLogin } from 'hooks';
 
-const SearchPage = () => {
+const Search = () => {
   const results = useSelector(selectSearchResults);
   const totalPages = useSelector(selectTotalPages);
   const query = useSelector(selectSearchQuery);
@@ -55,4 +55,4 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default Search;

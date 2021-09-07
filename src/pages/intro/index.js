@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const IntroAnimation = () => {
+const Intro = () => {
   const router = useRouter();
 
   const playIntroSound = () => {
@@ -190,4 +190,4 @@ const IntroAnimation = () => {
   );
 };
 
-export default IntroAnimation;
+export default Intro;
