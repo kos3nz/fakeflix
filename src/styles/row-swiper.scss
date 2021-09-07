@@ -29,7 +29,7 @@
   .swiper-container {
     // 左右の余白はここで指定
     overflow: initial;
-    @apply w-full h-auto px-[4%];
+    @apply px-[4%] w-full h-auto;
 
     .swiper-wrapper {
       @apply h-auto;
@@ -113,10 +113,10 @@
 
       &-bullet {
         margin: 0;
-        @apply w-4 h-[4px] bg-gray-200 rounded-none ml-1 transition duration-300;
+        @apply h-[4px] w-4 bg-gray-200 rounded-none ml-1 transition duration-300;
 
         &-active {
-          @apply h-[5px];
+          @apply h-[5px] w-4; // because of @tailwind/jit issue, can't have h-[5px] at the end on prod/build
         }
       }
     }

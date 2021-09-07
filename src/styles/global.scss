@@ -1,14 +1,8 @@
-/* ./styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* @import url(https://fonts.googleapis.com/css?family=Lato:100,100italic,300,300italic,regular,italic,700,700italic,900,900italic); */
 
 @layer base {
-  * {
-    /* @apply border border-blue-300 !important; */
-  }
-
   html,
   body {
     /* font-family: Inter, sans-serif; */
@@ -53,19 +47,25 @@
 }
 
 .category-grid {
-  @apply grid gap-x-2 gap-y-8 grid-cols-[repeat(2,1fr)];
+  // @apply grid gap-x-2 gap-y-8 grid-cols-[repeat(2,1fr)];
+  @apply grid gap-x-2 gap-y-8;
+  grid-template-columns: repeat(2, 1fr);
 
   @media only screen and (min-width: 640px) {
-    @apply grid-cols-[repeat(3,1fr)];
+    // @apply grid-cols-[repeat(3,1fr)];
+    grid-template-columns: repeat(3, 1fr);
   }
   @media only screen and (min-width: 1024px) {
-    @apply grid-cols-[repeat(4,1fr)];
+    // @apply grid-cols-[repeat(4,1fr)];
+    grid-template-columns: repeat(4, 1fr);
   }
   @media only screen and (min-width: 1350px) {
-    @apply grid-cols-[repeat(5,1fr)];
+    // @apply grid-cols-[repeat(5,1fr)];
+    grid-template-columns: repeat(5, 1fr);
   }
   @media only screen and (min-width: 1650px) {
-    @apply grid-cols-[repeat(6,1fr)];
+    // @apply grid-cols-[repeat(6,1fr)];
+    grid-template-columns: repeat(6, 1fr);
   }
 
   .poster {
@@ -131,3 +131,18 @@
     }
   }
 }
+
+/* ==============================
+NOTE:= Error: resolve-url-loader: CSS error when production build
+  Had this issue with tailwindcss/jit.
+  Kept giving me error on prod/build while dev worked fine. Not sure if related to tailwind or what but might help someone.
+  I had mb-[2px] at the end. Moving it to the middle worked fine.
+
+  .some_class {
+    // ✅ - this works
+    @apply grid grid-cols-[auto,1fr,auto] mb-[2px] relative items-center hover:bg-gray-50 hover:shadow;
+    // ❌ - this doesnt work
+    @apply grid grid-cols-[auto,1fr,auto] relative items-center hover:bg-gray-50 hover:shadow mb-[2px];
+  }
+  // NextJS build gives error: "Error: resolve-url-loader: CSS error Invalid mapping: ... "
+============================== */
