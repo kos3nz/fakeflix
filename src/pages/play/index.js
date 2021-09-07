@@ -13,9 +13,9 @@ const PlayAnimation = () => {
   useEffect(() => {
     handleAudio();
     setTimeout(() => {
-      router.replace('/login');
+      router.push('/login');
     }, 3500);
-  }, [router]);
+  }, []);
 
   return (
     <div id="text-animation__wrapper">

@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import Layout from 'components/layout';
 import Poster from 'components/poster';
-import { attachOfficialTrailerKeysToResults, fetchResults } from 'utils';
+import {
+  attachOfficialTrailerKeysToResults,
+  fetchResults,
+  loadMore,
+} from 'utils';
 import { genresData } from 'const/data.config';
 import { useIntersectionObserver, useRequireLogin } from 'hooks';
 
@@ -12,24 +16,8 @@ const TvSeriesCategory = ({ title, tvSeriesUrl, results, totalPages }) => {
   const user = useRequireLogin();
 
   useEffect(() => {
-    const loadMore = async () => {
-      try {
-        const { results, errorCode } = await fetchResults(
-          tvSeriesUrl + `&page=${page}`
-        );
-        if (!errorCode) {
-          await attachOfficialTrailerKeysToResults(results, 'tv');
-
-          setPage((page) => page + 1);
-          setTvSeries((state) => [...state, ...results]);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
     if (bottomPageRef && isIntersecting && page <= totalPages) {
-      loadMore();
+      loadMore(tvSeriesUrl, page, setPage, setTvSeries, 'tv');
     }
   }, [isIntersecting]);
 

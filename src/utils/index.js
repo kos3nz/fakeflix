@@ -45,6 +45,20 @@ export const getOfficialTrailerKeys = (videosData) => {
   return videoKeys;
 };
 
+export const loadMore = async (url, page, setPage, setTitle, type) => {
+  try {
+    const { results, errorCode } = await fetchResults(url + `&page=${page}`);
+    if (!errorCode) {
+      await attachOfficialTrailerKeysToResults(results, type);
+
+      setPage((page) => page + 1);
+      setTitle((state) => [...state, ...results]);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const truncate = (text, chars) => {
   return text?.length > chars ? text.slice(0, chars) + '...' : text;
 };

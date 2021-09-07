@@ -1,17 +1,18 @@
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import Layout from 'components/layout';
 import LogoLink from '../components/link/logo-link';
 import SignIn from 'components/form/sign-in';
 import SignUp from 'components/form/sign-up';
 import signinBg from 'images/Fakeflix_signin_bg.jpg';
-import { useRequireLogin } from 'hooks';
+import { selectCurrentUser } from 'redux/user/user.selectors';
 
 export default function Login() {
   const [isSignedUp, setIsSignedUp] = useState(true);
-  const user = useRequireLogin();
+  const user = useSelector(selectCurrentUser);
   const router = useRouter();
 
   useEffect(() => {
@@ -71,7 +72,6 @@ export default function Login() {
               {isSignedUp
                 ? "Haven't you registered yet?"
                 : 'Do you already have an account?'}
-
               <span
                 className="
                   ml-2 inline-block
