@@ -15,13 +15,12 @@ export default function Home({ rows }) {
 
   const [bannerMovie, setBannerMovie] = useState(null);
   const trendingTitles = rows[1].movies;
-  const user = useRequireLogin();
 
   useEffect(() => {
     setBannerMovie(randomPick(trendingTitles));
   }, []);
 
-  if (!user) return <div>redirecting...</div>;
+  useRequireLogin();
 
   return (
     <Layout containsFooter>

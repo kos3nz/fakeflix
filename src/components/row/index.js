@@ -11,18 +11,18 @@ const Row = ({ row: { title, movies, isLarge, slug, type } }) => {
       : `/all/${slug}`;
 
   return (
-    <div className="py-[3vh]">
+    <div className="py-[2vh]">
       <h3
         className="
-        mb-3 px-[4%]
-        font-semibold text-xl
+        mb-2 xs:mb-3 px-[7%] sm:px-[5%]
+        font-semibold text-md sm:text-lg lg:text-xl
         inline-block
         "
       >
         <Link href={href}>
           <a className="flex items-baseline gap-1 row-showmore">
             {title}
-            <span className="flex items-center text-sm opacity-0 transition-all duration-700">
+            <span className="flex items-center text-[10px] sm:text-xs lg:text-sm opacity-0 transition-all duration-700">
               Show all <FiChevronRight />
             </span>
           </a>

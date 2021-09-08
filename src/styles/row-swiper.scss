@@ -29,11 +29,11 @@
   .swiper-container {
     // 左右の余白はここで指定
     overflow: initial;
-    @apply px-[4%] w-full h-auto;
+    @apply px-[7%] sm:px-[5%] w-full h-auto;
 
     .swiper-wrapper {
       @apply h-auto;
-      @media only screen and (min-width: 768px) {
+      @media only screen and (min-width: 1024px) {
         &.is-center:hover {
           .swiper-slide {
             // hoverした.slider要素より前の.slider要素
@@ -109,38 +109,46 @@
       left: initial !important;
       bottom: initial !important;
       width: auto !important;
-      @apply absolute -top-8 right-[4%] opacity-0 transition duration-500;
+      @apply absolute -top-8 right-[5%] transition duration-500 opacity-0;
+
+      @media only screen and (min-width: 500px) {
+        @apply opacity-100 lg:opacity-0;
+      }
 
       &-bullet {
-        margin: 0;
-        @apply h-[4px] w-4 bg-gray-200 rounded-none ml-1 transition duration-300;
+        @apply w-[6px] h-[6px] bg-gray-200 transition duration-300;
+
+        @media only screen and (min-width: 450px) {
+          @apply w-2 h-2;
+        }
+
+        @media only screen and (min-width: 640px) {
+          @apply sm:w-5 sm:h-[6px] sm:rounded-sm;
+        }
 
         &-active {
-          @apply h-[5px] w-4; // because of @tailwind/jit issue, can't have h-[5px] at the end on prod/build
         }
       }
     }
 
     &:hover .swiper-pagination {
-      @apply opacity-100;
+      @apply sm:opacity-100;
     }
   }
 
   .swiper-button {
     @apply absolute top-0
-    w-[4%] h-full flex-shrink-0
+    w-[7%] sm:w-[5%] h-full flex-shrink-0
     flex justify-center items-center
     bg-gray-900/70
     cursor-pointer z-10;
 
     svg {
-      @apply w-5 h-5 text-gray-200 opacity-0 transition duration-300;
-      // transform: scale(0.5);
+      @apply w-10 h-10 md:w-6 md:h-6 text-gray-200 md:opacity-0 transition duration-300;
     }
 
     &:hover svg {
-      @apply opacity-100;
-      transform: scale(1.75);
+      @apply md:opacity-100 md:scale-150;
     }
 
     &.prev {

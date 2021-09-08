@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import NavBar from 'components/navbar';
 import Modal from 'components/modal';
@@ -12,27 +13,43 @@ const Layout = ({
   children,
 }) => {
   const user = useSelector(selectCurrentUser);
+  const { asPath } = useRouter();
 
   return (
     <>
-      <Head>
-        <meta
-          name="viewport"
-          content="initial-scale=1.0, width=device-width"
-          key="viewport"
-        />
-        <title key="title">{title}</title>
-        <link rel="icon" href="/Fakeflix_favicon_64.ico" key="favicon" />
-      </Head>
-      {user && (
+      {(!user && asPath !== '/login') || (user && asPath === '/login') ? (
+        // if user isn't logged in, browser shows nothing until it redirects to login page
+        <Head>
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width"
+            key="viewport"
+          />
+          <title key="title">{title}</title>
+          <link rel="icon" href="/Fakeflix_favicon_64.ico" key="favicon" />
+        </Head>
+      ) : (
         <>
-          <NavBar />
-          <Modal />
-          <ModalVideo />
+          <Head>
+            <meta
+              name="viewport"
+              content="initial-scale=1.0, width=device-width"
+              key="viewport"
+            />
+            <title key="title">{title}</title>
+            <link rel="icon" href="/Fakeflix_favicon_64.ico" key="favicon" />
+          </Head>
+          {user && (
+            <>
+              <NavBar />
+              <Modal />
+              <ModalVideo />
+            </>
+          )}
+          <main className="overflow-hidden">{children}</main>
+          {containsFooter && <Footer />}
         </>
       )}
-      <main className="overflow-hidden">{children}</main>
-      {containsFooter && <Footer />}
     </>
   );
 };

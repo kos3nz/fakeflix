@@ -14,7 +14,7 @@ const Play = () => {
     handleAudio();
     setTimeout(() => {
       router.push('/login');
-    }, 3500);
+    }, 4200);
   }, []);
 
   return (

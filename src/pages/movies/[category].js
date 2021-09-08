@@ -13,7 +13,6 @@ const MoviesCategory = ({ title, moviesUrl, results, totalPages }) => {
   const [movies, setMovies] = useState(results || []);
   const [page, setPage] = useState(2);
   const [bottomPageRef, isIntersecting] = useIntersectionObserver();
-  const user = useRequireLogin();
 
   useEffect(() => {
     if (bottomPageRef && isIntersecting && page <= totalPages) {
@@ -21,7 +20,7 @@ const MoviesCategory = ({ title, moviesUrl, results, totalPages }) => {
     }
   }, [bottomPageRef, isIntersecting]);
 
-  if (!user) return <div>redirecting...</div>;
+  useRequireLogin();
 
   return (
     <Layout>

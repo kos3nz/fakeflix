@@ -15,13 +15,12 @@ const TVSeries = ({ rows }) => {
 
   const [bannerTitle, setBannerTitle] = useState(null);
   const originalsTitles = rows[1].movies;
-  const user = useRequireLogin();
 
   useEffect(() => {
     setBannerTitle(randomPick(originalsTitles));
   }, []);
 
-  if (!user) return <div>redirecting...</div>;
+  useRequireLogin();
 
   return (
     <Layout containsFooter>

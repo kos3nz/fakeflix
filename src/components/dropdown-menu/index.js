@@ -21,16 +21,13 @@ const DropdownMenu = ({ isVisible, ...rest }) => {
           className="
           absolute top-20 right-6
           min-w-[100px] xs:min-w-[120px]
-          py-3 px-6
           bg-black bg-opacity-60
           border-1 border-gray-500
           text-center text-sm xs:text-base
-          cursor-pointer
-          hover:underline
         "
           {...rest}
         >
-          <li onClick={handleSignOut}>Log out</li>
+          <DropdownItem text="Log out" onClick={handleSignOut} />
         </motion.ul>
       )}
     </AnimatePresence>
@@ -38,6 +35,22 @@ const DropdownMenu = ({ isVisible, ...rest }) => {
 };
 
 export default DropdownMenu;
+
+const DropdownItem = ({ text, ...rest }) => {
+  return (
+    <li
+      className="
+      py-3 px-6
+      border-b-1 last-of-type:border-b-0 border-gray-500
+      cursor-pointer
+      hover:underline
+      "
+      {...rest}
+    >
+      {text}
+    </li>
+  );
+};
 
 const dropdownVariants = {
   hidden: { y: 50, opacity: 0 },

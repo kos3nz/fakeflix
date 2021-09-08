@@ -14,8 +14,20 @@
   display: none;
 }
 
-.row-showmore:hover span {
-  @apply opacity-100 transform translate-x-2;
+.row-showmore {
+  span {
+    @apply opacity-100 transform translate-x-2 underline;
+
+    @media only screen and (min-width: 1024px) {
+      @apply opacity-0 translate-x-0;
+    }
+  }
+
+  &:hover span {
+    @media only screen and (min-width: 1024px) {
+      @apply opacity-100 transform translate-x-2;
+    }
+  }
 }
 
 .row-poster,
@@ -28,7 +40,7 @@
     @apply opacity-0;
   }
 
-  @media only screen and (min-width: 768px) {
+  @media only screen and (min-width: 1024px) {
     &:hover {
       .poster-info {
         @apply opacity-100 translate-y-0;
@@ -48,23 +60,19 @@
 
 .category-grid {
   // @apply grid gap-x-2 gap-y-8 grid-cols-[repeat(2,1fr)];
-  @apply grid gap-x-2 gap-y-8;
+  @apply grid gap-x-2 gap-y-4 sm:gap-y-6 lg:gap-y-8;
   grid-template-columns: repeat(2, 1fr);
 
   @media only screen and (min-width: 640px) {
-    // @apply grid-cols-[repeat(3,1fr)];
     grid-template-columns: repeat(3, 1fr);
   }
   @media only screen and (min-width: 1024px) {
-    // @apply grid-cols-[repeat(4,1fr)];
     grid-template-columns: repeat(4, 1fr);
   }
   @media only screen and (min-width: 1350px) {
-    // @apply grid-cols-[repeat(5,1fr)];
     grid-template-columns: repeat(5, 1fr);
   }
   @media only screen and (min-width: 1650px) {
-    // @apply grid-cols-[repeat(6,1fr)];
     grid-template-columns: repeat(6, 1fr);
   }
 

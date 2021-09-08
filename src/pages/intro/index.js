@@ -34,7 +34,7 @@ const Intro = () => {
   useEffect(() => {
     setTimeout(() => {
       playIntroSound();
-    }, 500);
+    }, 300);
     setTimeout(() => {
       router.replace('/');
     }, 6000);

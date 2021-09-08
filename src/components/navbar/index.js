@@ -1,5 +1,5 @@
-import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
+import Viewport from 'react-responsive';
 import LogoLink from 'components/link/logo-link';
 import NavMenu from './nav-menu';
 import MobileNavMenu from './mobile-nav-menu';
@@ -7,9 +7,6 @@ import SearchBar from 'components/search-bar';
 import UserIcon from 'components/user-icon';
 
 import { useScrollTop } from 'hooks';
-
-// REVIEW: dynamic import する必要があるのか再度確認。
-const Viewport = dynamic(() => import('react-responsive'), { ssr: false });
 
 const NavBar = () => {
   const isScrollTop = useScrollTop(50);
@@ -19,7 +16,7 @@ const NavBar = () => {
       className="
         w-full h-20 px-6 xs:px-8
         fixed flex items-center
-        transition duration-500
+        transition duration-300
         z-30
       "
       style={{

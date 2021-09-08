@@ -20,7 +20,6 @@ const Search = () => {
   const error = useSelector(selectSearchError);
   const dispatch = useDispatch();
   const [bottomPageRef, isIntersecting] = useIntersectionObserver();
-  const user = useRequireLogin();
 
   useEffect(() => {
     if (bottomPageRef && isIntersecting && page <= totalPages) {
@@ -28,7 +27,7 @@ const Search = () => {
     }
   }, [bottomPageRef && isIntersecting, page, totalPages]);
 
-  if (!user) return <div>redirecting...</div>;
+  useRequireLogin();
 
   return (
     <Layout containsFooter={false}>

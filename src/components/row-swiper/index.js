@@ -75,7 +75,7 @@ const RowSwiper = ({ movies, isLarge }) => {
 
   const onMouseOver = (e) => {
     // e.currentTarget === 'swiper-slide', e.currentTarget.parentElement === 'swiper-wrapper
-    // REVIEW: 初回render時のclassName設定で .swiper-slide-active, .swiper-slide-next クラスのある要素に何故か .left, .center が付かないのでその対処 ↓
+    // NOTE: 初回render時のclassName設定で .swiper-slide-active, .swiper-slide-next クラスのある要素に何故か .left, .center が付かないのでその対処 ↓
     if (
       e.currentTarget.classList.contains('swiper-slide-active') ||
       e.currentTarget.classList.contains('left')

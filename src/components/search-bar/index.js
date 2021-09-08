@@ -116,8 +116,8 @@ const SearchBar = () => {
               autoComplete="off"
               className="
               p-2 pr-8 w-[200px]
-              text-sm text-paragraph
-              placeholder-gray-400 caret-gray-200
+              text-xs sm:text-sm text-paragraph
+            placeholder-gray-400 caret-gray-200
             bg-gray-900/75 rounded-md
               ring-1 ring-gray-500
               transition duration-200;
@@ -130,6 +130,12 @@ const SearchBar = () => {
               variants={inputVariant}
               onChange={handleInputChange}
               value={query}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  searchInputRef.current.blur();
+                }
+              }}
             />
             <motion.span
               className="absolute top-[50%] translate-y-[-50%] right-9 flex justify-center items-center cursor-pointer"

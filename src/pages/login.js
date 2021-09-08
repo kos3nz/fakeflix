@@ -19,8 +19,6 @@ export default function Login() {
     if (user) router.push('/intro');
   }, [user]);
 
-  if (user) return <div>redirecting...</div>;
-
   return (
     <Layout title="Fakeflix login">
       <div className="w-full h-screen">

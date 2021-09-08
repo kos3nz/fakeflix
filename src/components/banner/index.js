@@ -47,7 +47,7 @@ const Banner = ({ movie }) => {
         <motion.div
           className="
                 relative z-10
-                max-w-xl pb-[10vh] px-[4vw]
+                max-w-xl pb-[10vh] px-[5vw]
                 flex flex-col items-center
                 lg:items-start lg:pb-0
               "
@@ -57,7 +57,7 @@ const Banner = ({ movie }) => {
         >
           <h1
             className="
-          text-paragraph text-4xl xs:text-5xl sm:text-6xl font-bold text-center lg:text-left
+          text-paragraph text-3xl xs:text-4xl sm:text-6xl font-bold text-center lg:text-left
             "
           >
             {movieTitle}
@@ -88,7 +88,7 @@ const Banner = ({ movie }) => {
           <p
             className="
             md:max-w-[60vw] lg:max-w-sm mt-4
-            text-sm sm:text-base lg:text-sm text-paragraph text-center lg:text-left tracking-wide
+            text-xs sm:text-base lg:text-sm text-paragraph text-center lg:text-left tracking-wide
             "
           >
             {description}
