@@ -1,12 +1,12 @@
 import Image from 'next/image';
 
-const MovieBG = ({ imageUrl, children }) => {
+const MovieBG = ({ imageUrl, matches, children }) => {
   return (
     <div
       className={`
           w-full h-9/10 lg:h-[80vh]
           bg-cover bg-center
-          relative
+          absolute top-0 left-0
           flex items-end justify-center
           lg:items-center lg:justify-start
         `}
@@ -20,7 +20,7 @@ const MovieBG = ({ imageUrl, children }) => {
         layout="fill"
         priority={true}
         objectFit="cover"
-        quality={100}
+        quality={matches ? 75 : 50}
         loading="eager"
       />
       <div

@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { motion } from 'framer-motion';
+import Viewport from 'react-responsive';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 import MovieBG from 'components/movie-background';
 import Button from 'components/button';
@@ -27,6 +28,7 @@ const Banner = ({ movie }) => {
   const dispatch = useDispatch();
   const {
     backdrop_path,
+    poster_path,
     title,
     original_title,
     name,
@@ -42,60 +44,67 @@ const Banner = ({ movie }) => {
   };
 
   return (
-    <>
-      <MovieBG imageUrl={`${ORIGINAL_IMAGE_URL}${backdrop_path}`}>
-        <motion.div
-          className="
+    <Viewport minWidth={600}>
+      {(matches) => (
+        <MovieBG
+          imageUrl={`${ORIGINAL_IMAGE_URL}${
+            matches ? backdrop_path : poster_path
+          }`}
+          matches={matches}
+        >
+          <motion.div
+            className="
                 relative z-10
                 max-w-xl pb-[10vh] px-[5vw]
                 flex flex-col items-center
                 lg:items-start lg:pb-0
               "
-          initial="initial"
-          animate="visible"
-          variants={wrapperVariants}
-        >
-          <h1
-            className="
+            initial="initial"
+            animate="visible"
+            variants={wrapperVariants}
+          >
+            <h1
+              className="
           text-paragraph text-3xl xs:text-4xl sm:text-6xl font-bold text-center lg:text-left
             "
-          >
-            {movieTitle}
-          </h1>
-          <div
-            className="
+            >
+              {movieTitle}
+            </h1>
+            <div
+              className="
             flex items-center gap-3
             mt-6
             "
-          >
-            <Button
-              Icon={BsFillPlayFill}
-              onClick={handlePlayVideo}
-              color={videoKey ? 'primary' : 'disabled'}
             >
-              Play
-            </Button>
-            <Button
-              color="gray"
-              Icon={AiOutlineInfoCircle}
-              onClick={() => {
-                dispatch(openModal(movie));
-              }}
-            >
-              More info
-            </Button>
-          </div>
-          <p
-            className="
+              <Button
+                Icon={BsFillPlayFill}
+                onClick={handlePlayVideo}
+                color={videoKey ? 'primary' : 'disabled'}
+              >
+                Play
+              </Button>
+              <Button
+                color="gray"
+                Icon={AiOutlineInfoCircle}
+                onClick={() => {
+                  dispatch(openModal(movie));
+                }}
+              >
+                More info
+              </Button>
+            </div>
+            <p
+              className="
             md:max-w-[60vw] lg:max-w-sm mt-4
             text-xs sm:text-base lg:text-sm text-paragraph text-center lg:text-left tracking-wide
             "
-          >
-            {description}
-          </p>
-        </motion.div>
-      </MovieBG>
-    </>
+            >
+              {description}
+            </p>
+          </motion.div>
+        </MovieBG>
+      )}
+    </Viewport>
   );
 };
 

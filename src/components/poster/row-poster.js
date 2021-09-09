@@ -34,7 +34,7 @@ const RowPoster = ({ movie, isLarge = false }) => {
         layout="responsive"
         quality={50}
         objectFit="cover"
-        loading="lazy"
+        loading="eager"
       />
       <PosterBackground />
       <PosterInfo movie={movie} />
