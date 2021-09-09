@@ -42,12 +42,12 @@ export const searchTitles = createAsyncThunk(
 
 export const loadMoreSearchTitles = createAsyncThunk(
   'search/loadMoreSearchTitles',
-  async (_, { getState, requestId }) => {
+  async (keyword, { getState, requestId }) => {
     const {
-      search: { query, page, loading, currentRequestId },
+      search: { page, loading, currentRequestId },
     } = getState();
 
-    const filteredQuery = removeSymbols(query);
+    const filteredQuery = removeSymbols(keyword);
 
     if (filteredQuery.length === 0) return [];
     // return if the same request being called
@@ -80,9 +80,6 @@ export const searchSlice = createSlice({
     },
     clearInputValue: (state) => {
       state.query = '';
-    },
-    clearTitles: (state) => {
-      state.searchResults.length = 0;
     },
     showInput: (state) => {
       state.isVisible = true;
@@ -144,12 +141,7 @@ export const searchSlice = createSlice({
   },
 });
 
-export const {
-  changeInputValue,
-  clearInputValue,
-  clearTitles,
-  showInput,
-  hideInput,
-} = searchSlice.actions;
+export const { changeInputValue, clearInputValue, showInput, hideInput } =
+  searchSlice.actions;
 
 export default searchSlice.reducer;

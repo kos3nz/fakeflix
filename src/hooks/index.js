@@ -5,6 +5,7 @@ import useScrollTop from 'hooks/useScrollTop';
 import useConvertGenreIds from 'hooks/useConvertGenreIds';
 import useIntersectionObserver from 'hooks/useIntersectionObserver';
 import useRequireLogin from 'hooks/useRequireLogin';
+import useUrlQueryVariable from 'hooks/useUrlQueryVariable';
 
 export {
   useViewport,
@@ -14,4 +15,5 @@ export {
   useConvertGenreIds,
   useIntersectionObserver,
   useRequireLogin,
+  useUrlQueryVariable,
 };

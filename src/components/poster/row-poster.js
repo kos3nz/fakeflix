@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
+import Viewport from 'react-responsive';
 import PosterBackground from 'components/poster/poster-bg';
 import PosterInfo from 'components/poster/poster-info';
 import { W780_IMAGE_URL } from 'const/request-url';
@@ -25,17 +26,21 @@ const RowPoster = ({ movie, isLarge = false }) => {
 
   return (
     <div className="row-poster" onClick={handleOpenModal}>
-      <Image
-        src={imageType ? `${W780_IMAGE_URL}${imageType}` : fallbackImage}
-        alt="movie"
-        // layout="fill"
-        width={aspectRatio.width}
-        height={aspectRatio.height}
-        layout="responsive"
-        quality={50}
-        objectFit="cover"
-        loading="eager"
-      />
+      <Viewport minWidth={640}>
+        {(matches) => (
+          <Image
+            src={imageType ? `${W780_IMAGE_URL}${imageType}` : fallbackImage}
+            alt="movie"
+            // layout="fill"
+            width={aspectRatio.width}
+            height={aspectRatio.height}
+            layout="responsive"
+            quality={matches ? 50 : 30}
+            objectFit="cover"
+            loading="eager"
+          />
+        )}
+      </Viewport>
       <PosterBackground />
       <PosterInfo movie={movie} />
     </div>

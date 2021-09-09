@@ -9,7 +9,6 @@ import {
   searchTitles,
   changeInputValue,
   clearInputValue,
-  clearTitles,
   showInput,
   hideInput,
 } from 'redux/search/search.slice';
@@ -60,52 +59,61 @@ const SearchBar = () => {
   const searchInputRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
-  const isVisible = useSelector(selectSearchIsVisible);
+  const isSearchBarVisible = useSelector(selectSearchIsVisible);
   const query = useSelector(selectSearchQuery);
 
   useOutsideClick(searchContainerRef, () => {
     // inputに入力値があった場合、input elementはそのまま残す
     if (searchInputRef.current?.value.length === 0) {
       dispatch(hideInput());
-      router.push('/');
+      // router.push('/');
     }
   });
 
   const handleInputChange = (e) => {
     const inputValue = e.target.value;
     dispatch(changeInputValue(inputValue));
+  };
 
-    if (inputValue.length === 0) {
-      router.push({
-        pathname: '/search',
-        query: { keyword: inputValue },
-      });
-      dispatch(clearTitles());
-    }
-    if (inputValue.length > 0) {
-      router.push({
-        pathname: '/search',
-        query: { keyword: inputValue },
-      });
-      dispatch(searchTitles(inputValue));
+  const handleSearchTitles = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      searchInputRef.current.blur();
+
+      if (query.length === 0) return;
+
+      if (query.length > 0) {
+        router.push({
+          pathname: '/search',
+          query: { keyword: query },
+        });
+        dispatch(searchTitles(query));
+      }
     }
   };
 
-  const handleShowInput = () => dispatch(showInput());
+  const handleShowInput = () => {
+    if (!isSearchBarVisible) dispatch(showInput());
+  };
+
+  const handleClickSearchIcon = () => {
+    if (isSearchBarVisible && query.length > 0) {
+      router.push({
+        pathname: '/search',
+        query: { keyword: query },
+      });
+      dispatch(searchTitles(query));
+    }
+  };
 
   const handleClearInput = () => {
     dispatch(clearInputValue());
-    dispatch(clearTitles());
-    // router.push({
-    //   pathname: '/search',
-    //   query: { keyword: '' },
-    // });
   };
 
   return (
     <div ref={searchContainerRef} className="flex items-center gap-2 relative">
       <AnimatePresence>
-        {isVisible && (
+        {isSearchBarVisible && (
           <>
             <motion.input
               ref={searchInputRef}
@@ -130,12 +138,7 @@ const SearchBar = () => {
               variants={inputVariant}
               onChange={handleInputChange}
               value={query}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  searchInputRef.current.blur();
-                }
-              }}
+              onKeyDown={handleSearchTitles}
             />
             <motion.span
               className="absolute top-[50%] translate-y-[-50%] right-9 flex justify-center items-center cursor-pointer"
@@ -155,7 +158,12 @@ const SearchBar = () => {
         onClick={handleShowInput}
         className="cursor-pointer"
       >
-        <FiSearch className="w-5 xs:w-6 h-5 xs:h-6 text-gray-200 hover:text-gray-50 transition duration-200" />
+        <button
+          className="flex justify-center items-center"
+          onClick={handleClickSearchIcon}
+        >
+          <FiSearch className="w-5 xs:w-6 h-5 xs:h-6 text-gray-200 hover:text-gray-50 transition duration-200" />
+        </button>
       </motion.label>
     </div>
   );

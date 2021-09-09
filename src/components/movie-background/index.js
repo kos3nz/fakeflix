@@ -6,7 +6,7 @@ const MovieBG = ({ imageUrl, matches, children }) => {
       className={`
           w-full h-9/10 lg:h-[80vh]
           bg-cover bg-center
-          absolute top-0 left-0
+          relative
           flex items-end justify-center
           lg:items-center lg:justify-start
         `}
