@@ -44,7 +44,7 @@ const Banner = ({ movie }) => {
   };
 
   return (
-    <Viewport minWidth={600}>
+    <Viewport minWidth={640}>
       {(matches) => (
         <MovieBG
           imageUrl={`${ORIGINAL_IMAGE_URL}${

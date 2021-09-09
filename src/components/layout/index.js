@@ -6,6 +6,8 @@ import Modal from 'components/modal';
 import ModalVideo from 'components/modal/modal-video';
 import Footer from 'components/footer';
 import { selectCurrentUser } from 'redux/user/user.selectors';
+import { selectIsModalOpen } from 'redux/modal/modal.selectors';
+import { selectIsModalVideoOpen } from 'redux/modal-video/modal-video.selectors';
 
 const Layout = ({
   title = 'Fakeflix - The unofficial Netflix clone',
