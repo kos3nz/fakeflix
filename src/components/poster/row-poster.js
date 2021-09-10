@@ -35,7 +35,7 @@ const RowPoster = ({ movie, isLarge = false }) => {
             width={aspectRatio.width}
             height={aspectRatio.height}
             layout="responsive"
-            quality={matches ? 50 : 30}
+            quality={matches ? 40 : 30}
             objectFit="cover"
             loading="eager"
           />

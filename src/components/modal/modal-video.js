@@ -24,7 +24,7 @@ const ModalVideo = () => {
         <motion.div
           className="modal-video
           fixed top-0 left-0
-          w-full h-screen
+          w-full min-h-screen
           flex justify-center items-center
           bg-gray-900/80
           z-[100]

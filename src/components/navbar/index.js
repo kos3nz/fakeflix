@@ -7,6 +7,7 @@ import SearchBar from 'components/search-bar';
 import UserIcon from 'components/user-icon';
 
 import { useScrollTop } from 'hooks';
+import Drawer from 'components/drawer';
 
 const NavBar = () => {
   const isScrollTop = useScrollTop(50);
@@ -14,7 +15,7 @@ const NavBar = () => {
   return (
     <motion.header
       className="
-        w-full h-20 px-6 xs:px-8
+        w-full h-20 px-[4%]
         fixed flex items-center
         transition duration-300
         z-30
@@ -34,13 +35,14 @@ const NavBar = () => {
       </Viewport>
       <nav className="flex-1 flex items-center ml-10">
         <Viewport minWidth={1024}>
-          {(matches) =>
-            matches ? <NavMenu /> : <MobileNavMenu isScrollTop={isScrollTop} />
-          }
+          {(matches) => matches && <NavMenu />}
         </Viewport>
-        <div className="flex-1 flex justify-end gap-4 sm:gap-6">
+        <div className="flex-1 flex justify-end items-center space-x-2 sm:space-x-4">
           <SearchBar />
           <UserIcon />
+          <Viewport minWidth={1024}>
+            {(matches) => !matches && <Drawer />}
+          </Viewport>
         </div>
       </nav>
     </motion.header>

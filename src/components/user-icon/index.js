@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import DropdownMenu from 'components/dropdown-menu';
@@ -30,7 +30,7 @@ const UserIcon = () => {
     <div className="text-paragraph" ref={dropdownRef}>
       <div
         className="
-          flex items-center gap-1
+          flex items-center space-x-1
           cursor-pointer
         "
         onClick={() => setIsVisible((isVisible) => !isVisible)}

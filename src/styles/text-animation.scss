@@ -11,8 +11,7 @@
 // text-shadow: 0px 0px transparent, 1px 1px #aaa, ... , 100px 100px #aaa;
 
 #text-animation__wrapper {
-  @apply absolute top-0 left-0 w-full
-    h-full flex justify-center items-center z-50 overflow-hidden;
+  @apply absolute top-0 left-0 w-full h-full flex justify-center items-center z-50 overflow-hidden;
   background: radial-gradient(#fff, #aaa);
 
   .text-animation {

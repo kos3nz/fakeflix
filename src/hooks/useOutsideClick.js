@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 
 const useOutsideClick = (ref, cb) => {
-  const handleClick = (e) => {
+  const handleClick = (event) => {
     // if click inside the ref element, do nothing
-    if (ref.current?.contains(e.target)) return;
+    if (ref.current?.contains(event.target)) return;
     // if click outside, trigger callback function
-    cb();
+    cb(event);
   };
 
   useEffect(() => {
