@@ -9,6 +9,7 @@ const MobileLogo = () => {
       layout="responsive"
       width={1}
       height={1}
+      quality={40}
     />
   );
 };

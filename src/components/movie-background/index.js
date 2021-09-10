@@ -20,7 +20,7 @@ const MovieBG = ({ imageUrl, matches, children }) => {
         layout="fill"
         priority={true}
         objectFit="cover"
-        quality={matches ? 60 : 30}
+        quality={matches ? 40 : 20}
         loading="eager"
       />
       <div

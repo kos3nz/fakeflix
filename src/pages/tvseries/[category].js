@@ -24,7 +24,7 @@ const TvSeriesCategory = ({ title, tvSeriesUrl, results, totalPages }) => {
 
   return (
     <Layout>
-      <div className="w-full pt-[120px] lg:pt-20">
+      <div className="w-full pt-16">
         <div className="py-8 px-[4vw]">
           <h2 className="text-xl font-bold capitalize mb-6">{title}</h2>
           <div className="category-grid">

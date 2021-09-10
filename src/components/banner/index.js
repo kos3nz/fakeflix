@@ -1,3 +1,4 @@
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { motion } from 'framer-motion';
@@ -145,4 +146,4 @@ const BannerFallback = () => (
 const BannerContainer = ({ movie }) =>
   movie ? <Banner movie={movie} /> : <BannerFallback />;
 
-export default BannerContainer;
+export default React.memo(BannerContainer);

@@ -16,15 +16,15 @@ const Intro = () => {
       if (playedPromise) {
         playedPromise
           .then(() => {
-            console.log('playing sound !!!');
+            // console.log('playing sound !!!');
           })
           .catch((error) => {
-            console.log(error);
+            console.error(error);
             if (
               error.name === 'NotAllowedError' ||
               error.name === 'NotSupportedError'
             ) {
-              console.log(error.name);
+              console.error(error.name);
             }
           });
       }

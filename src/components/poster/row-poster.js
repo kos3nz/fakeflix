@@ -31,13 +31,12 @@ const RowPoster = ({ movie, isLarge = false }) => {
           <Image
             src={imageType ? `${W780_IMAGE_URL}${imageType}` : fallbackImage}
             alt="movie"
-            // layout="fill"
             width={aspectRatio.width}
             height={aspectRatio.height}
             layout="responsive"
-            quality={matches ? 40 : 30}
+            quality={matches ? 40 : 20}
             objectFit="cover"
-            loading="eager"
+            loading="lazy"
           />
         )}
       </Viewport>

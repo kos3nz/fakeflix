@@ -161,6 +161,7 @@ const SearchBar = () => {
         <button
           className="flex justify-center items-center"
           onClick={handleClickSearchIcon}
+          aria-label="Search titles"
         >
           <FiSearch className="w-5 xs:w-6 h-5 xs:h-6 text-gray-200 hover:text-gray-50 transition duration-200" />
         </button>

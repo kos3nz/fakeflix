@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Image from 'next/image';
 import { useDispatch } from 'react-redux';
 import Viewport from 'react-responsive';
@@ -21,8 +20,6 @@ const Poster = ({ movie }) => {
     dispatch(openModal(movie));
   };
 
-  useEffect(() => {}, []);
-
   return (
     <div
       className="poster relative cursor-pointer rounded-md overflow-hidden"
@@ -40,7 +37,7 @@ const Poster = ({ movie }) => {
             width={aspectRatio.width}
             height={aspectRatio.height}
             layout="responsive"
-            quality={matches ? 50 : 30}
+            quality={matches ? 40 : 20}
             objectFit="cover"
             // loading="lazy"
           />

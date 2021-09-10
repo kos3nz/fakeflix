@@ -53,6 +53,7 @@ const PosterInfo = ({ movie }) => {
               }
             `}
           onClick={handlePlay}
+          aria-label="Play"
         >
           <BsFillPlayFill
             className="
@@ -70,6 +71,7 @@ const PosterInfo = ({ movie }) => {
               hover:bg-gray-200 hover:text-gray-900
             "
           onClick={handleAddFavorite}
+          aria-label="Add favorite"
         >
           <FaPlus className="w-2 sm:w-3 h-2 sm:h-3" />
         </button>
@@ -83,6 +85,7 @@ const PosterInfo = ({ movie }) => {
               hover:bg-gray-200 hover:text-gray-900
             "
           onClick={handleOpenModal}
+          aria-label="More Info"
         >
           <FiChevronDown className="w-4 sm:w-5 h-4 sm:h-5" />
         </button>

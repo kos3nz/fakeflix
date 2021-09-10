@@ -38,7 +38,7 @@ const Search = () => {
 
   return (
     <Layout containsFooter={false}>
-      <div className="w-full pt-[120px] lg:pt-20">
+      <div className="w-full pt-16">
         <div className="py-8 px-[4vw]">
           {error ? (
             <h2 className="text-xl font-bold capitalize mb-6">

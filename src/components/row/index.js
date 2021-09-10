@@ -12,7 +12,7 @@ const Row = ({ row: { title, movies, isLarge, slug, type } }) => {
 
   return (
     <div className="py-[2vh]">
-      <h3
+      <h2
         className="
         mb-2 xs:mb-3 px-[7%] sm:px-[5%]
         font-semibold text-md sm:text-lg lg:text-xl
@@ -27,7 +27,7 @@ const Row = ({ row: { title, movies, isLarge, slug, type } }) => {
             </span>
           </a>
         </Link>
-      </h3>
+      </h2>
       <RowSwiper movies={movies} isLarge={isLarge} />
     </div>
   );
