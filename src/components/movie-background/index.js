@@ -10,9 +10,6 @@ const MovieBG = ({ imageUrl, matches, children }) => {
           flex items-end justify-center
           lg:items-center lg:justify-start
         `}
-      // style={{
-      //   backgroundImage: `url(${imageUrl})`,
-      // }}
     >
       <Image
         src={imageUrl}

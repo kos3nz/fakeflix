@@ -1,9 +1,12 @@
+import Loader from 'components/loader';
+
 const AuthButton = ({
   type = 'button',
   color = 'primary',
   Icon,
   text,
   label,
+  disabled,
   ...rest
 }) => {
   const colors = {
@@ -26,10 +29,17 @@ const AuthButton = ({
         ${colors[color]}
       `}
       aria-label={label}
+      disabled={disabled}
       {...rest}
     >
-      {Icon && <Icon className="mr-2 w-5 h-5 xs:w-6 xs:h-6" />}
-      {text}
+      {disabled ? (
+        <Loader />
+      ) : (
+        <>
+          {Icon && <Icon className="mr-2 w-5 h-5 xs:w-6 xs:h-6" />}
+          {text}
+        </>
+      )}
     </button>
   );
 };

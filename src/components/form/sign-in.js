@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
@@ -8,8 +8,10 @@ import {
   manageUserSessionWithEmail,
   manageAnonymousSession,
 } from 'redux/user/user.slice';
+import { selectIsProcessing } from 'redux/user/user.selectors';
 
 const SingIn = () => {
+  const isProcessing = useSelector(selectIsProcessing);
   const dispatch = useDispatch();
   const {
     register,
@@ -60,6 +62,7 @@ const SingIn = () => {
           placeholder="E-mail"
           errors={errors}
           registration={emailRegistration}
+          disabled={isProcessing}
         />
       </motion.div>
       <motion.div variants={item} className="mb-5 xs:mb-7">
@@ -70,6 +73,7 @@ const SingIn = () => {
           errors={errors}
           registration={passwordRegistration}
           variants={item}
+          disabled={isProcessing}
         />
       </motion.div>
       <motion.div variants={item} className="mb-2">
@@ -78,6 +82,7 @@ const SingIn = () => {
           text="Sign in"
           color="primary"
           label="sign in with email"
+          disabled={isProcessing}
         />
       </motion.div>
       <motion.div variants={item} className="mb-2">
@@ -87,6 +92,7 @@ const SingIn = () => {
           color="google"
           Icon={FcGoogle}
           label="sign in with Google"
+          disabled={isProcessing}
         />
       </motion.div>
       <motion.div variants={item}>
@@ -96,6 +102,7 @@ const SingIn = () => {
           color="anonymous"
           label="sign in anonymously"
           onClick={signInAnonymously}
+          disabled={isProcessing}
         />
       </motion.div>
     </motion.form>

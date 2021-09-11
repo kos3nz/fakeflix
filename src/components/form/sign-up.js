@@ -1,18 +1,20 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import AuthInput from '../input/auth-input';
 import AuthButton from '../button/auth-button';
 import { manageUserSessionWithEmail } from 'redux/user/user.slice';
+import { selectIsProcessing } from 'redux/user/user.selectors';
 
 const SignUp = () => {
+  const dispatch = useDispatch();
+  const isProcessing = useSelector(selectIsProcessing);
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
-  const dispatch = useDispatch();
 
   // console.log(watch('email'));
   // console.log({ errors });
@@ -68,6 +70,7 @@ const SignUp = () => {
           placeholder="Your name"
           errors={errors}
           registration={usernameRegistration}
+          disabled={isProcessing}
         />
       </motion.div>
       <motion.div variants={itemVariant} className="mb-3 xs:mb-4">
@@ -76,6 +79,7 @@ const SignUp = () => {
           placeholder="E-mail"
           errors={errors}
           registration={emailRegistration}
+          disabled={isProcessing}
         />
       </motion.div>
       <motion.div variants={itemVariant} className="mb-3 xs:mb-4">
@@ -85,6 +89,7 @@ const SignUp = () => {
           placeholder="Password"
           errors={errors}
           registration={passwordRegistration}
+          disabled={isProcessing}
         />
       </motion.div>
       <motion.div variants={itemVariant} className="mb-8">
@@ -94,6 +99,7 @@ const SignUp = () => {
           placeholder="Repeat your password"
           errors={errors}
           registration={passwordConfirmationRegistration}
+          disabled={isProcessing}
         />
       </motion.div>
       <motion.div variants={itemVariant}>
@@ -102,6 +108,7 @@ const SignUp = () => {
           text="Sign up"
           color="primary"
           label="sign up"
+          disabled={isProcessing}
         />
       </motion.div>
     </motion.form>
