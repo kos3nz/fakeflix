@@ -22,7 +22,7 @@ const Layout = ({
         <Head>
           <meta
             name="viewport"
-            content="initial-scale=1.0, width=device-width"
+            content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1"
             key="viewport"
           />
           <title key="title">{title}</title>

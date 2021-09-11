@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer className="my-[2vh] flex flex-col justify-center items-center">
+    <footer className="relative my-[2vh] flex flex-col justify-center items-center">
       <div className="flex items-center">
         <span className="mr-1 text-sm text-gray-500">Developed by</span>
         <a href="#" className="flex items-center">
