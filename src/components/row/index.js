@@ -32,7 +32,7 @@ const Row = ({ row: { title, movies, isLarge, slug, type } }) => {
       <Viewport minWidth={640}>
         {(matches) => (
           <RowSwiper
-            movies={matches ? movies : movies.slice(0, 12)}
+            movies={matches ? movies : movies.slice(0, 10)}
             isLarge={isLarge}
           />
         )}

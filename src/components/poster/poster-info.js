@@ -39,7 +39,7 @@ const PosterInfo = ({ movie }) => {
           poster-info
         "
     >
-      <div className="flex items-center gap-1">
+      <div className="flex items-center space-x-1">
         <button
           className={`
               border-1 rounded-full

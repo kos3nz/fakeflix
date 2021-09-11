@@ -111,7 +111,10 @@ const SearchBar = () => {
   };
 
   return (
-    <div ref={searchContainerRef} className="flex items-center gap-2 relative">
+    <div
+      ref={searchContainerRef}
+      className="flex items-center space-x-2 relative"
+    >
       <AnimatePresence>
         {isSearchBarVisible && (
           <>

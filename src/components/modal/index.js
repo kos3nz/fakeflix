@@ -95,7 +95,7 @@ const Modal = () => {
                   bg-gradient-to-t via-gray-900/30 from-gray-900
                 "
                 />
-                <div className="absolute bottom-[5%] left-6 flex items-center gap-2">
+                <div className="absolute bottom-[5%] left-6 flex items-center space-x-2">
                   <Button
                     Icon={BsFillPlayFill}
                     onClick={handlePlayVideo}
