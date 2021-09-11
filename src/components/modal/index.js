@@ -85,7 +85,7 @@ const Modal = () => {
                   width={16}
                   height={9}
                   objectFit="cover"
-                  quality={75}
+                  quality={40}
                   loading="eager"
                 />
                 <div

@@ -73,9 +73,9 @@ const Banner = ({ movie }) => {
             </h1>
             <div
               className="
-            flex items-center gap-3
-            mt-6
-            "
+              flex items-center space-x-3
+              mt-6
+              "
             >
               <Button
                 Icon={BsFillPlayFill}

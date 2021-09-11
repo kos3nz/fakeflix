@@ -48,12 +48,12 @@ export async function getStaticProps() {
 
     // fetch all the data
     const requests = urls.map((url) => fetch(url));
-    const allMovies = await fetchAll(requests);
+    const allTitles = await fetchAll(requests);
 
     // fetch all the video keys if they are on YouTube
-    for (let i = 0; i < allMovies.length; i++) {
+    for (let i = 0; i < allTitles.length; i++) {
       const type = homeTitles[i] === 'originals' ? 'tv' : 'movie';
-      const results = allMovies[i].results;
+      const results = allTitles[i].results;
       await attachOfficialTrailerKeysToResults(results, type);
     }
 
@@ -61,7 +61,7 @@ export async function getStaticProps() {
     const rows = homeData.map((data, i) => {
       const type = data.slug === 'originals' ? 'tv' : 'movie';
 
-      return { ...data, movies: allMovies[i].results, type };
+      return { ...data, movies: allTitles[i].results, type };
     });
 
     return {

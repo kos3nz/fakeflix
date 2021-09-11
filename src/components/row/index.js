@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Viewport from 'react-responsive';
 import { FiChevronRight } from 'react-icons/fi';
 import RowSwiper from 'components/row-swiper';
 
@@ -28,7 +29,14 @@ const Row = ({ row: { title, movies, isLarge, slug, type } }) => {
           </a>
         </Link>
       </h2>
-      <RowSwiper movies={movies} isLarge={isLarge} />
+      <Viewport minWidth={640}>
+        {(matches) => (
+          <RowSwiper
+            movies={matches ? movies : movies.slice(0, 12)}
+            isLarge={isLarge}
+          />
+        )}
+      </Viewport>
     </div>
   );
 };
