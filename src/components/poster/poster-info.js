@@ -33,7 +33,7 @@ const PosterInfo = ({ movie }) => {
           absolute top-0 left-0
           w-full h-full
           p-2
-          flex flex-col justify-end items-start
+          hidden lg:flex flex-col justify-end items-start
           transform
           transition duration-500 delay-150
           poster-info

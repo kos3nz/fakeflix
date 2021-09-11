@@ -144,7 +144,7 @@ const SearchBar = () => {
               onKeyDown={handleSearchTitles}
             />
             <motion.span
-              className="absolute top-[50%] translate-y-[-50%] right-12 flex justify-center items-center cursor-pointer"
+              className="absolute top-[50%] translate-y-[-50%] right-11 sm:right-12 flex justify-center items-center cursor-pointer"
               initial="hidden"
               animate="visible"
               exit="exit"
