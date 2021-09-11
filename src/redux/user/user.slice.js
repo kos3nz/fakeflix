@@ -7,28 +7,46 @@ const initialState = {
   isProcessing: false,
   currentRequestId: undefined,
   error: undefined,
+  via: undefined,
 };
 
-export const manageUserSession = createAsyncThunk(
-  'user/manageUserSession',
+export const manageUserSessionWithEmail = createAsyncThunk(
+  'user/manageUserSessionWithEmail',
   async ({ email, password, type }, { dispatch }) => {
+    const via = 'email';
+
     if (type === 'signIn') {
       const { session, error } = await supabase.auth.signIn({
         email,
         password,
       });
       if (error) throw new Error(error.message);
-      dispatch(setUserSession(session));
+      dispatch(setUserSession({ session, user: session.user, via }));
     } else if (type === 'signUp') {
       const { session, error } = await supabase.auth.signUp({
         email,
         password,
       });
       if (error) throw new Error(error.message);
-      dispatch(setUserSession(session));
+      dispatch(setUserSession({ session, user: session.user, via }));
     } else if (type === 'signOut') {
       const { error } = await supabase.auth.signOut();
       if (error) throw new Error(error.message);
+      dispatch(setUserSession(null));
+    }
+  }
+);
+
+export const manageAnonymousSession = createAsyncThunk(
+  'user/manageAnonymousSession',
+  async ({ type }, { dispatch }) => {
+    const via = 'anonymous';
+
+    if (type === 'signIn') {
+      const res = await fetch('/api/anonymouslyLogin');
+      const { session } = await res.json();
+      dispatch(setUserSession({ session, user: session.user, via }));
+    } else {
       dispatch(setUserSession(null));
     }
   }
@@ -39,19 +57,20 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserSession: (state, action) => {
-      state.session = action.payload;
+      state.session = action.payload?.session ?? null;
       state.currentUser = action.payload?.user ?? null;
+      state.via = action.payload?.via ?? undefined;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(manageUserSession.pending, (state, action) => {
+      .addCase(manageUserSessionWithEmail.pending, (state, action) => {
         if (!state.isProcessing) {
           state.isProcessing = true;
           state.currentRequestId = action.meta.requestId;
         }
       })
-      .addCase(manageUserSession.fulfilled, (state, action) => {
+      .addCase(manageUserSessionWithEmail.fulfilled, (state, action) => {
         const { requestId } = action.meta;
         if (state.isProcessing && state.currentRequestId === requestId) {
           state.isProcessing = false;
@@ -59,7 +78,7 @@ export const userSlice = createSlice({
           state.error = undefined;
         }
       })
-      .addCase(manageUserSession.rejected, (state, action) => {
+      .addCase(manageUserSessionWithEmail.rejected, (state, action) => {
         const { requestId } = action.meta;
         if (state.isProcessing && state.currentRequestId === requestId) {
           state.isProcessing = false;

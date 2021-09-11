@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import Viewport from 'react-responsive';
 import LogoLink from 'components/link/logo-link';
 import NavMenu from './nav-menu';
-import MobileNavMenu from './mobile-nav-menu';
 import SearchBar from 'components/search-bar';
 import UserIcon from 'components/user-icon';
 

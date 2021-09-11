@@ -4,7 +4,10 @@ import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import AuthInput from '../input/auth-input';
 import AuthButton from '../button/auth-button';
-import { manageUserSession } from 'redux/user/user.slice';
+import {
+  manageUserSessionWithEmail,
+  manageAnonymousSession,
+} from 'redux/user/user.slice';
 
 const SingIn = () => {
   const dispatch = useDispatch();
@@ -13,13 +16,16 @@ const SingIn = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: 'onBlur' });
+  const type = 'signIn';
+  // console .log({ errors });
 
-  const onSubmit = ({ email, password }) => {
-    const type = 'signIn';
-    dispatch(manageUserSession({ email, password, type }));
+  const signInViaEmail = ({ email, password }) => {
+    dispatch(manageUserSessionWithEmail({ email, password, type }));
   };
 
-  // console .log({ errors });
+  const signInAnonymously = () => {
+    dispatch(manageAnonymousSession({ type }));
+  };
 
   const emailRegistration = register('email', {
     required: 'Please enter a valid email address.',
@@ -43,7 +49,7 @@ const SingIn = () => {
 
   return (
     <motion.form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(signInViaEmail)}
       initial="hidden"
       animate="visible"
       variants={form}
@@ -67,7 +73,12 @@ const SingIn = () => {
         />
       </motion.div>
       <motion.div variants={item} className="mb-2">
-        <AuthButton type="submit" text="Sign in" color="primary" />
+        <AuthButton
+          type="submit"
+          text="Sign in"
+          color="primary"
+          label="sign in with email"
+        />
       </motion.div>
       <motion.div variants={item} className="mb-2">
         <AuthButton
@@ -75,6 +86,7 @@ const SingIn = () => {
           text="Sign in with Google"
           color="google"
           Icon={FcGoogle}
+          label="sign in with Google"
         />
       </motion.div>
       <motion.div variants={item}>
@@ -82,6 +94,8 @@ const SingIn = () => {
           type="button"
           text="Sign in anonymously"
           color="anonymous"
+          label="sign in anonymously"
+          onClick={signInAnonymously}
         />
       </motion.div>
     </motion.form>

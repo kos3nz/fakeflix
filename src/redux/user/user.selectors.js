@@ -18,3 +18,5 @@ export const selectIsProcessing = createSelector(
 );
 
 export const selectError = createSelector([selectUser], (user) => user.error);
+
+export const selectVia = createSelector([selectUser], (user) => user.via);

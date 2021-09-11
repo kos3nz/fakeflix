@@ -21,31 +21,33 @@ export default function Login() {
 
   return (
     <Layout title="Fakeflix login">
-      <Image
-        src={signinBg}
-        alt="image background"
-        layout="fill"
-        priority={true}
-        objectFit="cover"
-        quality={75}
-        loading="eager"
-        objectPosition="center"
-      />
+      <div className="absolute top-0 left-0 w-full min-h-screen">
+        <Image
+          src={signinBg}
+          alt="image background"
+          layout="fill"
+          priority={true}
+          objectFit="cover"
+          quality={60}
+          loading="eager"
+          objectPosition="center"
+        />
+      </div>
       <div
         className="
-            relative
-            w-full min-h-screen
-            bg-gray-900 bg-opacity-50
-            flex justify-center items-center
-          "
+          relative
+          w-full min-h-screen
+          bg-gray-900 bg-opacity-50
+          flex justify-center items-center
+        "
       >
         <div className="absolute top-8 left-8 z-10 hidden xs:block">
           <LogoLink href="/login" logoType="desktop" size="sm" />
         </div>
         <motion.div
           className="
-                max-w-90 mx-auto sm:max-w-lg bg-black px-8 py-10 sm:px-12 sm:py-16 bg-opacity-70 rounded-lg z-20
-              "
+            max-w-90 mx-auto sm:max-w-lg bg-black px-8 py-10 sm:px-12 sm:py-16 bg-opacity-70 rounded-lg z-20
+          "
           initial="hidden"
           animate="visible"
           variants={formContainerVariant}

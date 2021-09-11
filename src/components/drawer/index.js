@@ -62,35 +62,12 @@ const Drawer = () => {
   });
 
   return (
-    <>
-      <div
-        ref={handlerRef}
-        className="w-6 h-6 space-y-[6px] z-50 cursor-pointer"
-        onClick={() => {
-          setIsOpen((state) => !state);
-          setHandlerAnimation((state) => !state);
-        }}
-      >
-        <motion.span
-          className="block w-6 h-[2px] bg-gray-200 rounded-sm"
-          animate="toggle"
-          variants={handlerVariants.top}
-        />
-        <motion.span
-          className="block w-6 h-[2px] bg-gray-200 rounded-sm"
-          animate="toggle"
-          variants={handlerVariants.middle}
-        />
-        <motion.span
-          className="block w-6 h-[2px] bg-gray-200 rounded-sm"
-          animate="toggle"
-          variants={handlerVariants.bottom}
-        />
-      </div>
+    <div>
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute top-0 left-0 w-full min-h-screen bg-black/80"
+            className="absolute top-0 left-0 w-full min-h-screen bg-black/80
+            "
             initial="hidden"
             animate="visible"
             exit="exit"
@@ -129,7 +106,31 @@ const Drawer = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+      <div
+        ref={handlerRef}
+        className="w-6 h-6 space-y-[6px] z-50 cursor-pointer"
+        onClick={() => {
+          setIsOpen((state) => !state);
+          setHandlerAnimation((state) => !state);
+        }}
+      >
+        <motion.span
+          className="block w-6 h-[2px] bg-gray-200 rounded-sm"
+          animate="toggle"
+          variants={handlerVariants.top}
+        />
+        <motion.span
+          className="block w-6 h-[2px] bg-gray-200 rounded-sm"
+          animate="toggle"
+          variants={handlerVariants.middle}
+        />
+        <motion.span
+          className="block w-6 h-[2px] bg-gray-200 rounded-sm"
+          animate="toggle"
+          variants={handlerVariants.bottom}
+        />
+      </div>
+    </div>
   );
 };
 

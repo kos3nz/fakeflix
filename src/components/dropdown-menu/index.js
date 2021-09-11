@@ -1,13 +1,19 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
-import { manageUserSession } from 'redux/user/user.slice';
+import {
+  manageUserSessionWithEmail,
+  manageAnonymousSession,
+} from 'redux/user/user.slice';
+import { selectVia } from 'redux/user/user.selectors';
 
 const DropdownMenu = ({ isVisible, ...rest }) => {
   const dispatch = useDispatch();
+  const via = useSelector(selectVia);
 
   const handleSignOut = async () => {
     const type = 'signOut';
-    dispatch(manageUserSession({ type }));
+    if (via === 'email') dispatch(manageUserSessionWithEmail({ type }));
+    else if (via === 'anonymous') dispatch(manageAnonymousSession({ type }));
   };
 
   return (

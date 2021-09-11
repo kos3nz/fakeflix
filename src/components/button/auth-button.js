@@ -3,6 +3,7 @@ const AuthButton = ({
   color = 'primary',
   Icon,
   text,
+  label,
   ...rest
 }) => {
   const colors = {
@@ -24,6 +25,7 @@ const AuthButton = ({
         duration-200
         ${colors[color]}
       `}
+      aria-label={label}
       {...rest}
     >
       {Icon && <Icon className="mr-2 w-5 h-5 xs:w-6 xs:h-6" />}

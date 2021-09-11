@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import AuthInput from '../input/auth-input';
 import AuthButton from '../button/auth-button';
-import { manageUserSession } from 'redux/user/user.slice';
+import { manageUserSessionWithEmail } from 'redux/user/user.slice';
 
 const SignUp = () => {
   const {
@@ -52,7 +52,7 @@ const SignUp = () => {
 
   const onSubmit = async ({ email, password }) => {
     const type = 'signUp';
-    dispatch(manageUserSession({ email, password, type }));
+    dispatch(manageUserSessionWithEmail({ email, password, type }));
   };
 
   return (
@@ -97,7 +97,12 @@ const SignUp = () => {
         />
       </motion.div>
       <motion.div variants={itemVariant}>
-        <AuthButton type="submit" text="Sign up" color="primary" />
+        <AuthButton
+          type="submit"
+          text="Sign up"
+          color="primary"
+          label="sign up"
+        />
       </motion.div>
     </motion.form>
   );
