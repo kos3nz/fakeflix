@@ -8,26 +8,26 @@
   "dependencies": {
     "@netlify/plugin-nextjs": "^3.9.0",
     "@reduxjs/toolkit": "^1.6.1",
-    "@supabase/supabase-js": "^1.22.5",
+    "@supabase/supabase-js": "^1.22.6",
     "framer-motion": "^4.1.17",
-    "next": "latest",
+    "next": "^11.1.2",
     "nextjs-progressbar": "^0.0.11",
     "rc-drawer": "^4.4.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hook-form": "^7.15.0",
+    "react-hook-form": "^7.15.3",
     "react-icons": "^4.2.0",
     "react-redux": "^7.2.5",
     "react-responsive": "^9.0.0-beta.4",
     "redux-logger": "^3.0.6",
     "redux-persist": "^6.0.0",
-    "sass": "^1.39.0",
-    "swiper": " ^6.8.1",
-    "swr": "^1.0.0"
+    "sass": "^1.41.1",
+    "swiper": "^6.8.1",
+    "swr": "^1.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.3.4",
     "postcss": "^8.3.6",
-    "tailwindcss": "^2.2.11"
+    "tailwindcss": "^2.2.15"
   }
 }
