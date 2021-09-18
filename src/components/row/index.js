@@ -1,7 +1,12 @@
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Viewport from 'react-responsive';
 import { FiChevronRight } from 'react-icons/fi';
-import RowSwiper from 'components/row-swiper';
+import Loader from 'components/loader';
+
+const RowSwiper = dynamic(() => import('components/row-swiper'), {
+  loading: () => <Loader />,
+});
 
 const Row = ({ row: { title, movies, isLarge, slug, type } }) => {
   const href =

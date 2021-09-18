@@ -146,4 +146,4 @@ const BannerFallback = () => (
 const BannerContainer = ({ movie }) =>
   movie ? <Banner movie={movie} /> : <BannerFallback />;
 
-export default React.memo(BannerContainer);
+export default BannerContainer;
