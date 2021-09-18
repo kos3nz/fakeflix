@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^3.9.0",
     "@reduxjs/toolkit": "^1.6.1",
     "@supabase/supabase-js": "^1.22.5",
     "framer-motion": "^4.1.17",
