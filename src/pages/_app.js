@@ -10,9 +10,9 @@ import 'styles/intro-animation.scss';
 import 'styles/text-animation.scss';
 import 'styles/row-swiper.scss';
 /* Swiper */
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
+import 'swiper/scss';
+import 'swiper/scss/navigation';
+import 'swiper/scss/pagination';
 
 function MyApp({ Component, pageProps }) {
   return (

@@ -3,11 +3,10 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   mode: 'jit',
-  purge: [
+  content: [
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}',
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {
       xs: '400px',
@@ -19,7 +18,7 @@ module.exports = {
     }),
     extend: {
       colors: {
-        gray: colors.warmGray,
+        gray: colors.stone,
         primary: 'rgba(220, 38, 38, 1)', // primary
         paragraph: 'rgba(231, 229, 228, 1)', // gray-200
         background: 'rgba(28, 25, 23, 1)', // gray-900
