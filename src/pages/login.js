@@ -56,7 +56,7 @@ export default function Login() {
             {isSignedUp ? 'Sign In' : 'Sign Up'}
           </h2>
           <p className="text-primary text-sm font-semibold text-center mt-4 xs:mt-5 mb-2 xs:mb-4">
-            Pay attention: this is not the original Netflix sign in. Don't
+            Pay attention: this is not the original Netflix sign in. Don&apos;t
             insert your real credentials here!!
           </p>
           {isSignedUp ? <SignIn /> : <SignUp />}

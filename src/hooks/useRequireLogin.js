@@ -8,7 +8,7 @@ const useRequireLogin = () => {
   const currentUser = useSelector(selectCurrentUser);
 
   useEffect(() => {
-    if (!currentUser) router.push('/play');
+    if (!currentUser) router.push('/');
   }, [currentUser]);
 
   return currentUser;

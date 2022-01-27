@@ -9,6 +9,7 @@ const DesktopLogo = () => {
       layout="responsive"
       width={65}
       height={18}
+      priority
     />
   );
 };

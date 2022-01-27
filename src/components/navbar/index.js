@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import Viewport from 'react-responsive';
 import LogoLink from 'components/link/logo-link';
 import NavMenu from './nav-menu';
-import SearchBar from 'components/search-bar';
-import UserIcon from 'components/user-icon';
+import SearchBar from 'components/SearchBar';
+import UserIcon from 'components/User-icon';
 
 import { useScrollTop } from 'hooks';
 import Drawer from 'components/drawer';
@@ -32,11 +32,11 @@ const NavBar = () => {
           )
         }
       </Viewport>
-      <nav className="flex-1 flex items-center ml-10">
+      <nav className="flex-1 flex justify-end lg:justify-between items-center ml-10">
         <Viewport minWidth={1024}>
           {(matches) => matches && <NavMenu />}
         </Viewport>
-        <div className="flex-1 flex justify-end items-center space-x-2 sm:space-x-4">
+        <div className="flex items-center space-x-3 sm:space-x-6">
           <SearchBar />
           <UserIcon />
           <Viewport minWidth={1024}>

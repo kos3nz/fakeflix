@@ -1,15 +1,14 @@
-import React from 'react';
 import { useDispatch } from 'react-redux';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { motion } from 'framer-motion';
-import Viewport from 'react-responsive';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
-import MovieBG from 'components/movie-background';
+import MovieBG from 'components/BannerBackground';
 import Button from 'components/button';
 import { truncate } from 'utils';
 import { ORIGINAL_IMAGE_URL } from 'const/request-url';
 import { openModal } from 'redux/modal/modal.slice';
 import { openModalVideo } from 'redux/modal-video/modal-video.slice';
+import { useViewport } from 'hooks';
 
 const wrapperVariants = {
   initial: {
@@ -25,8 +24,9 @@ const wrapperVariants = {
   },
 };
 
-const Banner = ({ movie }) => {
+export const Banner = ({ data }) => {
   const dispatch = useDispatch();
+  const { width } = useViewport();
   const {
     backdrop_path,
     poster_path,
@@ -36,7 +36,7 @@ const Banner = ({ movie }) => {
     original_name,
     overview,
     videoKey,
-  } = movie;
+  } = data;
   const movieTitle = title || name || original_title || original_name;
   const description = truncate(overview, 150);
 
@@ -45,71 +45,67 @@ const Banner = ({ movie }) => {
   };
 
   return (
-    <Viewport minWidth={768}>
-      {(matches) => (
-        <MovieBG
-          imageUrl={`${ORIGINAL_IMAGE_URL}${
-            matches ? backdrop_path : poster_path
-          }`}
-          matches={matches}
-        >
-          <motion.div
-            className="
+    <MovieBG
+      imageUrl={`${ORIGINAL_IMAGE_URL}${
+        width > 768 ? backdrop_path : poster_path
+      }`}
+      matches={width > 768}
+    >
+      <motion.div
+        className="
                 relative z-10
                 max-w-xl pb-[10vh] px-[5vw]
                 flex flex-col items-center
                 lg:items-start lg:pb-0
               "
-            initial="initial"
-            animate="visible"
-            variants={wrapperVariants}
-          >
-            <h1
-              className="
+        initial="initial"
+        animate="visible"
+        variants={wrapperVariants}
+      >
+        <h1
+          className="
           text-paragraph text-3xl xs:text-4xl sm:text-6xl font-bold text-center lg:text-left
             "
-            >
-              {movieTitle}
-            </h1>
-            <div
-              className="
+        >
+          {movieTitle}
+        </h1>
+        <div
+          className="
               flex items-center space-x-3
               mt-6
               "
-            >
-              <Button
-                Icon={BsFillPlayFill}
-                onClick={handlePlayVideo}
-                color={videoKey ? 'primary' : 'disabled'}
-              >
-                Play
-              </Button>
-              <Button
-                color="gray"
-                Icon={AiOutlineInfoCircle}
-                onClick={() => {
-                  dispatch(openModal(movie));
-                }}
-              >
-                More info
-              </Button>
-            </div>
-            <p
-              className="
+        >
+          <Button
+            Icon={BsFillPlayFill}
+            onClick={handlePlayVideo}
+            color={videoKey ? 'primary' : 'disabled'}
+          >
+            Play
+          </Button>
+          <Button
+            color="gray"
+            Icon={AiOutlineInfoCircle}
+            onClick={() => {
+              dispatch(openModal(data));
+            }}
+          >
+            More info
+          </Button>
+        </div>
+        <p
+          className="
             md:max-w-[60vw] lg:max-w-sm mt-4
             text-xs sm:text-base lg:text-sm text-paragraph text-center lg:text-left tracking-wide
             "
-            >
-              {description}
-            </p>
-          </motion.div>
-        </MovieBG>
-      )}
-    </Viewport>
+        >
+          {description}
+        </p>
+      </motion.div>
+    </MovieBG>
   );
 };
 
-const BannerFallback = () => (
+export const BannerFallback = () => (
   <div
     className={`
     w-full h-9/10 lg:h-[80vh]
@@ -142,8 +138,3 @@ const BannerFallback = () => (
     </motion.div>
   </div>
 );
-
-const BannerContainer = ({ movie }) =>
-  movie ? <Banner movie={movie} /> : <BannerFallback />;
-
-export default BannerContainer;

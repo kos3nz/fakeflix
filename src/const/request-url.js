@@ -19,12 +19,12 @@ export const UPCOMING_MOVIES_URL = `${BASE_URL}/movie/upcoming?api_key=${process
 
 export const TRENDING_MOVIES_URL = `${BASE_URL}/trending/movie/week?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&sort_by=popularity.desc&language=${LANG}`;
 
-export const CATEGORY_MOVIES_URL = `${BASE_URL}/discover/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&sort_by=popularity.desc&with_genres=`;
+export const GENRE_MOVIES_URL = `${BASE_URL}/discover/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&sort_by=popularity.desc&with_genres=`;
 
 // TV series
 export const TRENDING_TV_SERIES_URL = `${BASE_URL}/trending/tv/week?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&sort_by=popularity.desc&language=${LANG}`;
 
-export const CATEGORY_TV_SERIES_URL = `${BASE_URL}/discover/tv?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&sort_by=popularity.desc&with_genres=`;
+export const GENRE_TV_SERIES_URL = `${BASE_URL}/discover/tv?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&sort_by=popularity.desc&with_genres=`;
 
 // Search queries
-export const MOVIE_SEARCH_QUERIES_URL = `${BASE_URL}/search/movie?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=${LANG}&query=`;
+export const MOVIE_SEARCH_QUERIES_URL = `${BASE_URL}/search/multi?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}&language=${LANG}&query=`;

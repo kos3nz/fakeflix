@@ -12,7 +12,6 @@ const initialState = {
   query: '',
   page: 1,
   error: null,
-  isVisible: false,
   loading: 'idle',
   currentRequestId: undefined,
 };
@@ -31,7 +30,7 @@ export const searchTitles = createAsyncThunk(
 
       if (errorCode) return { results: [], totalPages: 0 };
 
-      await attachOfficialTrailerKeysToResults(filteredResults, 'movie');
+      await attachOfficialTrailerKeysToResults(filteredResults);
 
       return { results: filteredResults, totalPages };
     } catch (error) {
@@ -62,7 +61,7 @@ export const loadMoreSearchTitles = createAsyncThunk(
 
       if (errorCode) return [];
 
-      await attachOfficialTrailerKeysToResults(filteredResults, 'movie');
+      await attachOfficialTrailerKeysToResults(filteredResults);
 
       return filteredResults;
     } catch (error) {
@@ -80,12 +79,6 @@ export const searchSlice = createSlice({
     },
     clearInputValue: (state) => {
       state.query = '';
-    },
-    showInput: (state) => {
-      state.isVisible = true;
-    },
-    hideInput: (state) => {
-      state.isVisible = false;
     },
   },
   extraReducers: (builder) => {

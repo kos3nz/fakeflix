@@ -1,3 +1,99 @@
+import axios from 'axios';
+import cache from 'memory-cache';
+import { genresDataObj } from 'const/data.config';
+import { MOVIE_SEARCH_QUERIES_URL } from 'const/request-url';
+
+export const axiosFetcher = async (url, option = {}) => {
+  const { data } = await axios.get(url, option);
+  return data;
+};
+
+export const getResults = async (url) => {
+  const data = await axiosFetcher(url);
+  return data.results;
+};
+
+// 第一引数にurl、または [ url, options] を入れます。
+// この関数をgetServerSidePropsの中でdata = await fetchWithCache(url);のように使用します。
+export const fetchWithCache = async (input, fetcher) => {
+  const value = cache.get(input);
+  if (value) {
+    return value;
+  } else {
+    // In case input has multiple value, put value into array.
+    // input: url or input: [ url, options ] are both valid.
+    const args = [].concat(input);
+    const data = await fetcher(...args);
+    cache.put(input, data, 1000 * 60 * 60 * 24 * 7); // 1 week
+    return data;
+  }
+};
+
+export const fetchGenreDataWithCache = async (genre, type) => {
+  const { title, urls } = genresDataObj[genre];
+  const url = urls[type];
+  const value = cache.get(url);
+
+  if (!value) {
+    const { results, total_pages } = await axiosFetcher(url);
+    await attachOfficialTrailerKeysToResults(results, type);
+    const data = { results, totalPages: total_pages };
+    cache.put(url, data, 1000 * 60 * 60 * 24 * 7); // 1 week
+
+    return {
+      title,
+      genre,
+      type,
+      ...data,
+    };
+  }
+
+  return {
+    title,
+    genre,
+    type,
+    ...value,
+  };
+};
+
+export const fetchSearchData = async (keyword, page = 1) => {
+  const { data } = await axios.get(
+    `${MOVIE_SEARCH_QUERIES_URL}${keyword}&page=${page || 1}`
+  );
+  const results = data.results.reduce((results, result) => {
+    if (result.media_type === 'movie' || result.media_type === 'tv') {
+      return results.concat(result);
+    } else if (result.media_type === 'person') {
+      return results.concat(result.known_for);
+    }
+    return results;
+  }, []);
+  await attachOfficialTrailerKeysToResults(results);
+
+  return {
+    results,
+    totalPages: data.total_pages,
+  };
+};
+
+export const fetchSearchDataWithCache = async (keyword) => {
+  const key = `keyword:${keyword}`;
+  const value = cache.get(key);
+
+  if (!value) {
+    const results = await fetchSearchData(keyword);
+    cache.put(key, results, 1000 * 60 * 60 * 24 * 7); // 1 week
+
+    return {
+      ...results,
+    };
+  }
+
+  return {
+    ...value,
+  };
+};
+
 export const fetchResults = async (url) => {
   const res = await fetch(url);
   const errorCode = res.ok ? false : res.status;
@@ -22,17 +118,19 @@ export const attachOfficialTrailerKeysToResults = async (results, type) => {
 export const fetchOfficialTrailerKeys = async (results, type) => {
   const requestsForVideoKey = results.map((movie) =>
     fetch(
-      `https://api.themoviedb.org/3/${type}/${movie.id}/videos?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
+      `https://api.themoviedb.org/3/${type || movie.media_type}/${
+        movie.id
+      }/videos?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY}`
     )
   );
   const videosData = await fetchAll(requestsForVideoKey);
-  const videoKeys = getOfficialTrailerKeys(videosData);
+  const videoKeys = getYoutubeTrailerKeys(videosData);
 
   return videoKeys;
 };
 
-export const getOfficialTrailerKeys = (videosData) => {
-  const videoKeys = videosData.map((data) => {
+export const getYoutubeTrailerKeys = (videosData) => {
+  return videosData.map((data) => {
     const officialTrailer = data.results.filter((videoData) => {
       return (
         videoData.key &&
@@ -40,9 +138,9 @@ export const getOfficialTrailerKeys = (videosData) => {
         videoData.type === 'Trailer'
       );
     });
+
     return officialTrailer.length !== 0 ? officialTrailer[0].key : '';
   });
-  return videoKeys;
 };
 
 export const loadMore = async (url, page, setPage, setTitle, type) => {
@@ -77,6 +175,6 @@ export const capitalize = (...words) => {
 // capitalize(...'action_adventure'.replace('_', '_&_').split('_')) → Action & Adventure
 
 export const removeSymbols = (str) => {
-  // just keep characters, numbers, and spaces between characters
+  // keep only characters, numbers, and spaces
   return str.replace(/[^a-z0-9 ]/gi, '').trim();
 };

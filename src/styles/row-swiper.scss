@@ -151,6 +151,10 @@
       @apply md:opacity-100 md:scale-150;
     }
 
+    &:hover ~ .swiper .swiper-pagination {
+      @apply sm:opacity-100;
+    }
+
     &.prev {
       @apply left-0 rounded-tr-md rounded-br-md;
     }

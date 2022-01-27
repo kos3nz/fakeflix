@@ -10,6 +10,7 @@ const MobileLogo = () => {
       width={1}
       height={1}
       quality={40}
+      priority
     />
   );
 };

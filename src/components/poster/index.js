@@ -39,7 +39,7 @@ const Poster = ({ movie }) => {
             layout="responsive"
             quality={matches ? 40 : 20}
             objectFit="cover"
-            // loading="lazy"
+            priority
           />
         )}
       </Viewport>

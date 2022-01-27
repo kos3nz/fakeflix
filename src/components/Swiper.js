@@ -1,18 +1,25 @@
 import { useEffect, useRef } from 'react';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper as SwiperContainer, SwiperSlide } from 'swiper/react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import RowPoster from 'components/poster/row-poster';
 import { useViewport, useSwiperRef } from 'hooks';
+import useSWR from 'swr';
+import { axiosFetcher } from 'utils';
+
+import dynamic from 'next/dynamic';
+import Loader from 'components/loader';
 
 /* Swiper */
 SwiperCore.use([Pagination, Navigation]);
 
-const RowSwiper = ({ movies, isLarge }) => {
-  const swiperRef = useRef(null);
+const Swiper = ({ genre, type }) => {
+  const { data } = useSWR(`/api/titles/${type}/${genre}`, axiosFetcher);
   const { width } = useViewport();
+  const swiperRef = useRef(null);
   const [prevEl, prevElRef] = useSwiperRef();
   const [nextEl, nextElRef] = useSwiperRef();
+  const isLarge = genre === 'originals' ? true : false;
 
   const groupNum =
     width >= 1650
@@ -36,7 +43,6 @@ const RowSwiper = ({ movies, isLarge }) => {
     },
     grabCursor: false,
     freeMode: true,
-    freeModeSticky: true,
     preventClicksPropagation: true,
     preventClicks: true,
     slideToClickedSlide: false,
@@ -48,8 +54,6 @@ const RowSwiper = ({ movies, isLarge }) => {
     },
     pagination: { clickable: true },
     onSlideChangeTransitionEnd: (swiper) => {
-      // console.log('onSlideChangeTransitionEnd fired');
-      // console.log(swiper);
       const activeIndex = swiper.activeIndex;
       const slides = swiper.slides;
       const visibleSliders = slides.slice(activeIndex, activeIndex + groupNum);
@@ -61,16 +65,6 @@ const RowSwiper = ({ movies, isLarge }) => {
       });
     },
     draggable: false,
-    // observer: true,
-    // observeParents: true,
-    // touchRatio: 0.03,
-    // onSwiper: (swiper) => setSwiperInstance(swiper),
-    // ↓ use case
-    // const[swiperInstance, setSwiperInstance] = useState(null)
-    // const slideTo = (index) => {
-    // if (!swiperInstance) return;
-    // swiperInstance.slideTo(index);
-    // };
   };
 
   const onMouseOver = (e) => {
@@ -107,14 +101,16 @@ const RowSwiper = ({ movies, isLarge }) => {
     // swiperRef.current.childNodes[1] = swiper-wrapper
     // swiperRef.current.childNodes[1].childNodes = swiper-slider
     // NOTE: childrenやchildNodesのままだとarray methodが使えないのでArray.fromでiterable objectに変更 (childNodesの場合はforEach methodは使える)
-    const visibleSlides = Array.from(
-      swiperRef.current.childNodes[1].childNodes
-    ).slice(0, groupNum);
+    if (swiperRef.current) {
+      const visibleSlides = Array.from(
+        swiperRef.current.childNodes[1].childNodes
+      ).slice(0, groupNum);
 
-    visibleSlides.forEach((slide, i) => {
-      const pos = insertPosClassName(i);
-      slide.classList.add(pos);
-    });
+      visibleSlides.forEach((slide, i) => {
+        const pos = insertPosClassName(i);
+        slide.classList.add(pos);
+      });
+    }
   }, [swiperRef, groupNum]);
 
   return (
@@ -125,21 +121,22 @@ const RowSwiper = ({ movies, isLarge }) => {
       <div ref={nextElRef} className="swiper-button next">
         <FiChevronRight />
       </div>
-      <Swiper ref={swiperRef} {...swiperProps}>
-        {movies.map((movie, i) => {
-          return (
-            <SwiperSlide
-              key={i}
-              onMouseOver={onMouseOver}
-              onMouseLeave={onMouseLeave}
-            >
-              <RowPoster key={movie.title} movie={movie} isLarge={isLarge} />
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
+      <SwiperContainer ref={swiperRef} {...swiperProps}>
+        {data &&
+          data.results.map((movie, i) => {
+            return (
+              <SwiperSlide
+                key={i}
+                onMouseOver={onMouseOver}
+                onMouseLeave={onMouseLeave}
+              >
+                <RowPoster key={movie.title} movie={movie} isLarge={isLarge} />
+              </SwiperSlide>
+            );
+          })}
+      </SwiperContainer>
     </div>
   );
 };
 
-export default RowSwiper;
+export default Swiper;

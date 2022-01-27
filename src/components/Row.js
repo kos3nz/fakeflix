@@ -1,23 +1,30 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import Viewport from 'react-responsive';
+import useInView from 'react-cool-inview';
 import { FiChevronRight } from 'react-icons/fi';
 import Loader from 'components/loader';
+import { genresDataObj } from 'const/data.config';
 
-const RowSwiper = dynamic(() => import('components/row-swiper'), {
+const RowSwiper = dynamic(() => import('components/Swiper'), {
   loading: () => <Loader />,
 });
 
-const Row = ({ row: { title, movies, isLarge, slug, type } }) => {
+export const Row = ({ genre, type }) => {
+  const { title } = genresDataObj[genre];
+  const { observe, inView } = useInView({
+    unobserveOnEnter: true,
+    rootMargin: '50px',
+  });
+
   const href =
     type === 'movie'
-      ? `/movies/${slug}`
+      ? `/movies/${genre}`
       : type === 'tv'
-      ? `/tvseries/${slug}`
-      : `/all/${slug}`;
+      ? `/tvseries/${genre}`
+      : `/all/${genre}`;
 
   return (
-    <div className="py-[2vh]">
+    <div className="py-[2vh]" ref={observe}>
       <h2
         className="
         mb-2 xs:mb-3 px-[7%] sm:px-[5%]
@@ -34,16 +41,7 @@ const Row = ({ row: { title, movies, isLarge, slug, type } }) => {
           </a>
         </Link>
       </h2>
-      <Viewport minWidth={640}>
-        {(matches) => (
-          <RowSwiper
-            movies={matches ? movies : movies.slice(0, 10)}
-            isLarge={isLarge}
-          />
-        )}
-      </Viewport>
+      {inView && <RowSwiper genre={genre} type={type} />}
     </div>
   );
 };
-
-export default Row;

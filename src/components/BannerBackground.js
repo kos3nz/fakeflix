@@ -22,10 +22,10 @@ const MovieBG = ({ imageUrl, matches, children }) => {
       />
       <div
         className="
-            absolute top-0 left-0
-            w-full h-full
-          bg-gray-900 opacity-20
-          "
+          absolute top-0 left-0
+          w-full h-full
+        bg-gray-900 opacity-20
+        "
       />
       <div
         className="

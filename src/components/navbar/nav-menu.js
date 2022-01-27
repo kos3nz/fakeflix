@@ -9,9 +9,9 @@ const NavMenu = () => {
   return (
     <ul
       className="
-    flex space-x-6
-    text-gray-300
-    "
+        flex space-x-5
+        text-gray-300
+      "
     >
       {items.map((item) => (
         <NavMenuItem

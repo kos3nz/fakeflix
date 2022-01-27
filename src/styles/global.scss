@@ -58,7 +58,7 @@
   }
 }
 
-.category-grid {
+.genre-grid {
   // @apply grid gap-x-2 gap-y-8 grid-cols-[repeat(2,1fr)];
   @apply grid gap-x-2 gap-y-4 sm:gap-y-6 lg:gap-y-8;
   grid-template-columns: repeat(2, 1fr);
