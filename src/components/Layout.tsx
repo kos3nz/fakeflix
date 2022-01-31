@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { type User } from '@supabase/supabase-js';
 import { NavBar } from 'components/NavBar';
 import { Modal } from 'components/Modal';
 import { ModalVideo } from 'components/ModalVideo';

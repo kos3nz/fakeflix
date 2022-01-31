@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Viewport from 'react-responsive';
 import { PosterInfo } from 'components/PosterInfo';
-import { type TitleData, W780_IMAGE_URL } from 'const/request-url';
+import { type TitleData, W780_IMAGE_URL } from 'constants/request-url';
 import fallbackImage from 'images/Fakeflix_fallback.png';
 import { useAppDispatch } from 'redux/hooks';
 import { openModal } from 'redux/modal/modal.slice';

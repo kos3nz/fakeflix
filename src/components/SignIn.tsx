@@ -4,10 +4,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { AuthInput } from './AuthInput';
 import { Button as AuthButton } from 'components/Button';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import {
-  manageUserSessionWithEmail,
-  manageAnonymousSession,
-} from 'redux/user/user.slice';
+import { manageUserSessionWithSupabase, authType } from 'redux/user/user.slice';
 import { selectIsProcessing } from 'redux/user/user.selectors';
 
 type FormValue = {
@@ -23,14 +20,21 @@ export const SignIn = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValue>({ mode: 'onBlur' });
-  const type = 'signIn';
 
   const signInViaEmail = handleSubmit(({ email, password }) => {
-    dispatch(manageUserSessionWithEmail({ email, password, type }));
+    dispatch(
+      manageUserSessionWithSupabase({ email, password, type: authType.SIGN_IN })
+    );
   });
 
-  const signInAnonymously = () => {
-    dispatch(manageAnonymousSession({ type }));
+  const signInAsGuest = () => {
+    dispatch(
+      manageUserSessionWithSupabase({
+        email: process.env.NEXT_PUBLIC_GUEST_EMAIL,
+        password: process.env.NEXT_PUBLIC_GUEST_PASSWORD,
+        type: authType.SIGN_IN,
+      })
+    );
   };
 
   const emailRegistration = register('email', {
@@ -109,7 +113,7 @@ export const SignIn = () => {
             type="button"
             color="anonymous"
             aria-label="sign in anonymously"
-            onClick={signInAnonymously}
+            onClick={signInAsGuest}
             isProcessing={isProcessing}
           >
             Try it as a Guest

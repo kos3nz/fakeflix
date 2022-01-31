@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { AuthInput } from './AuthInput';
 import { Button as AuthButton } from 'components/Button';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { manageUserSessionWithEmail } from 'redux/user/user.slice';
+import { authType, manageUserSessionWithSupabase } from 'redux/user/user.slice';
 import { selectIsProcessing } from 'redux/user/user.selectors';
 
 type FormValues = {
@@ -60,8 +60,9 @@ export const SignUp = () => {
   });
 
   const onSubmit = handleSubmit(({ email, password }) => {
-    const type = 'signUp';
-    dispatch(manageUserSessionWithEmail({ email, password, type }));
+    dispatch(
+      manageUserSessionWithSupabase({ email, password, type: authType.SIGN_UP })
+    );
   });
 
   return (

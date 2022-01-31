@@ -10,8 +10,8 @@ import { Poster } from 'components/Poster';
 import { useViewport } from 'hooks';
 import useSWR from 'swr';
 import { axiosFetcher } from 'utils';
-import { Genres, MediaType } from 'const/data.config';
-import { TitleData } from 'const/request-url';
+import { Genres, MediaType } from 'constants/data.config';
+import { TitleData } from 'constants/request-url';
 
 /* Swiper */
 SwiperCore.use([Pagination, Navigation]);

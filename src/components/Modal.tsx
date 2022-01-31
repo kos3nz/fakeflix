@@ -6,7 +6,7 @@ import { VscChromeClose } from 'react-icons/vsc';
 import { FaPlus } from 'react-icons/fa';
 import { Button } from 'components/Button';
 import { useOutsideClick, useConvertGenreIds } from 'hooks';
-import { TitleData, W1280_IMAGE_URL } from 'const/request-url';
+import { TitleData, W1280_IMAGE_URL } from 'constants/request-url';
 import fallbackImage from 'images/Fakeflix_fallback.png';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import {

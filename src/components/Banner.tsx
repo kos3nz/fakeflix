@@ -4,7 +4,7 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { BannerBackground } from 'components/BannerBackground';
 import { Button } from 'components/Button';
 import { truncate } from 'utils';
-import { ORIGINAL_IMAGE_URL, type TitleData } from 'const/request-url';
+import { ORIGINAL_IMAGE_URL, type TitleData } from 'constants/request-url';
 import { useAppDispatch } from 'redux/hooks';
 import { openModal } from 'redux/modal/modal.slice';
 import { openModalVideo } from 'redux/modalVideo/modalVideo.slice';

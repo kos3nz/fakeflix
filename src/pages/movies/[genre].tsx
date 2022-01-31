@@ -7,23 +7,22 @@ import { Spinner } from 'components/Spinner';
 import { useRequireLogin } from 'hooks';
 import { fetchGenreDataWithCache, getResults } from 'utils';
 import { GetServerSideProps } from 'next';
-import type { Genres, MediaType } from 'const/data.config';
-import type { TitleData } from 'const/request-url';
+import type { Genres, MediaType } from 'constants/data.config';
+import { type TitleData } from 'constants/request-url';
+import { checkUser } from 'db/supabaseClient';
 
 type MovieGenreProps = {
-  title: string;
-  type: MediaType;
-  genre: string;
-  results: TitleData[];
-  totalPages: number;
+  data: {
+    title: string;
+    type: MediaType;
+    genre: string;
+    results: TitleData[];
+    totalPages: number;
+  };
 };
 
 export default function MovieGenre({
-  title,
-  type,
-  genre,
-  results,
-  totalPages,
+  data: { title, type, genre, results, totalPages },
 }: MovieGenreProps) {
   useRequireLogin();
 
@@ -62,15 +61,21 @@ export default function MovieGenre({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
   try {
+    const { user, redirect } = await checkUser(req);
+    if (!user) return redirect;
+
     const data = await fetchGenreDataWithCache(
       params?.genre as Genres,
       'movie'
     );
 
     return {
-      props: { ...data },
+      props: { data, user },
     };
   } catch (error) {
     console.error(error);

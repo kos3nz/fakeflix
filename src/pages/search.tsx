@@ -1,6 +1,7 @@
 import type { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { type User } from '@supabase/supabase-js';
 import useSWRInfinite from 'swr/infinite';
 import useInView from 'react-cool-inview';
 import { Layout } from 'components/Layout';
@@ -8,14 +9,14 @@ import { Poster } from 'components/Poster';
 import { Spinner } from 'components/Spinner';
 import { useRequireLogin } from 'hooks';
 import { fetchSearchDataWithCache, getResults } from 'utils';
-import type { TitleData } from 'const/request-url';
+import type { TitleData } from 'constants/request-url';
+import { checkUser } from 'db/supabaseClient';
 
 type SearchProps = {
-  results: TitleData[];
-  totalPages: number;
+  data: { results: TitleData[]; totalPages: number };
 };
 
-const Search = ({ results, totalPages }: SearchProps) => {
+const Search = ({ data: { results, totalPages } }: SearchProps) => {
   useRequireLogin();
 
   const { observe, inView } = useInView({
@@ -62,13 +63,20 @@ const Search = ({ results, totalPages }: SearchProps) => {
 
 export default Search;
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  query,
+  req,
+}) => {
   try {
+    const { user, redirect } = await checkUser(req);
+    if (!user) return redirect;
+
     const data = await fetchSearchDataWithCache(query.keyword as string);
 
     return {
       props: {
-        ...data,
+        data,
+        user,
       },
     };
   } catch (error) {

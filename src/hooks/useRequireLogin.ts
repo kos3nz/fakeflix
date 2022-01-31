@@ -5,11 +5,9 @@ import { selectCurrentUser } from 'redux/user/user.selectors';
 
 export const useRequireLogin = () => {
   const router = useRouter();
-  const currentUser = useAppSelector(selectCurrentUser);
+  const user = useAppSelector(selectCurrentUser);
 
   useEffect(() => {
-    if (!currentUser) router.push('/play');
-  }, [currentUser]);
-
-  return currentUser;
+    if (!user) router.push('/play');
+  }, [user]);
 };

@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { TitleData } from 'const/request-url';
+import { TitleData } from 'constants/request-url';
 
 interface ModalState {
   isModalOpen: boolean;

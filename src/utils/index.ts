@@ -1,15 +1,15 @@
 import type { Dispatch, SetStateAction } from 'react';
 import axios, { type AxiosRequestConfig } from 'axios';
 import cache from 'memory-cache';
-import { genresDataObj } from 'const/data.config';
-import type { Genres, MediaType } from 'const/data.config';
+import { genresDataObj } from 'constants/data.config';
+import type { Genres, MediaType } from 'constants/data.config';
 import {
   MOVIE_SEARCH_QUERIES_URL,
   type PersonData,
   type TitleData,
   type SearchResponse,
   type VideoResponse,
-} from 'const/request-url';
+} from 'constants/request-url';
 
 export const axiosFetcher = async (
   url: string,

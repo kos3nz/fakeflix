@@ -3,7 +3,11 @@ import Link from 'next/link';
 import useInView from 'react-cool-inview';
 import { FiChevronRight } from 'react-icons/fi';
 import { Spinner } from 'components/Spinner';
-import { type Genres, type MediaType, genresDataObj } from 'const/data.config';
+import {
+  type Genres,
+  type MediaType,
+  genresDataObj,
+} from 'constants/data.config';
 import { MySwiperProps } from 'components/Swiper';
 
 const Swiper = dynamic<MySwiperProps>(

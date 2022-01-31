@@ -6,7 +6,7 @@ import {
   NETFLIX_ORIGINALS_URL,
   TRENDING_TV_SERIES_URL,
   GENRE_TV_SERIES_URL,
-} from 'const/request-url';
+} from 'constants/request-url';
 
 export type MediaType = 'movie' | 'tv';
 

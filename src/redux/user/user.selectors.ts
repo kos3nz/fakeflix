@@ -22,5 +22,3 @@ export const selectError = createSelector(
   [selectUser],
   (user) => user.errorMessage
 );
-
-export const selectVia = createSelector([selectUser], (user) => user.via);

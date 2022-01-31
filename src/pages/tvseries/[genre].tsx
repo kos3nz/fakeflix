@@ -7,24 +7,25 @@ import { Spinner } from 'components/Spinner';
 import { useRequireLogin } from 'hooks';
 import { fetchGenreDataWithCache, getResults } from 'utils';
 import type { GetServerSideProps } from 'next';
-import type { Genres, MediaType } from 'const/data.config';
-import type { TitleData } from 'const/request-url';
+import type { Genres, MediaType } from 'constants/data.config';
+import type { TitleData } from 'constants/request-url';
+import { checkUser } from 'db/supabaseClient';
 
 type TVGenreProps = {
-  title: string;
-  type: MediaType;
-  genre: string;
-  results: TitleData[];
-  totalPages: number;
+  data: {
+    title: string;
+    type: MediaType;
+    genre: string;
+    results: TitleData[];
+    totalPages: number;
+  };
 };
 
 export default function TVGenre({
-  title,
-  type,
-  genre,
-  results,
-  totalPages,
+  data: { title, type, genre, results, totalPages },
 }: TVGenreProps) {
+  useRequireLogin();
+
   const { data, size, setSize } = useSWRInfinite<TitleData>(
     (index) => `/api/titles/${type}/${genre}?page=${index + 2}`, // start fetching from page 2
     getResults
@@ -40,8 +41,6 @@ export default function TVGenre({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
-
-  useRequireLogin();
 
   return (
     <Layout>
@@ -62,13 +61,20 @@ export default function TVGenre({
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  params,
+  req,
+}) => {
   try {
+    const { user, redirect } = await checkUser(req);
+    if (!user) return redirect;
+
     const data = await fetchGenreDataWithCache(params?.genre as Genres, 'tv');
 
     return {
       props: {
-        ...data,
+        data,
+        user,
       },
     };
   } catch (error) {

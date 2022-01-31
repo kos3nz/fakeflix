@@ -1,11 +1,12 @@
+import { type GetServerSideProps } from 'next';
 import { Layout } from 'components/Layout';
 import { Banner, BannerFallback } from 'components/Banner';
 import { Row } from 'components/Row';
 import { useRequireLogin } from 'hooks';
-import { homeGenres } from 'const/data.config';
+import { homeGenres } from 'constants/data.config';
 import { fetchGenreDataWithCache, randomPick } from 'utils';
-import { type TitleData } from 'const/request-url';
-import { GetServerSideProps } from 'next';
+import { type TitleData } from 'constants/request-url';
+import { checkUser } from 'db/supabaseClient';
 
 type HomeProps = {
   data: TitleData;
@@ -28,20 +29,24 @@ export default function Home({ data }: HomeProps) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   try {
+    const { user, redirect } = await checkUser(req);
+    if (!user) return redirect;
+
     const { results } = await fetchGenreDataWithCache('trending', 'movie');
     const bannerData = randomPick(results);
 
     return {
       props: {
+        user,
         data: bannerData,
       },
     };
   } catch (error) {
     console.error(error);
     return {
-      props: { data: null },
+      props: {},
     };
   }
 };

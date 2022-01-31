@@ -1,22 +1,14 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  manageUserSessionWithEmail,
-  manageAnonymousSession,
-} from 'redux/user/user.slice';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { selectVia } from 'redux/user/user.selectors';
+import { useAppDispatch } from 'redux/hooks';
+import { authType, manageUserSessionWithSupabase } from 'redux/user/user.slice';
 
 type DropdownMenuProps = { isVisible: boolean };
 
 export const DropdownMenu = ({ isVisible }: DropdownMenuProps) => {
   const dispatch = useAppDispatch();
-  const via = useAppSelector(selectVia);
 
   const handleSignOut = async () => {
-    const type = 'signOut';
-    if (via === 'email') await dispatch(manageUserSessionWithEmail({ type }));
-    else if (via === 'anonymous')
-      await dispatch(manageAnonymousSession({ type }));
+    dispatch(manageUserSessionWithSupabase({ type: authType.SIGN_OUT }));
   };
 
   return (

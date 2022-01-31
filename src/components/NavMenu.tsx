@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { navMenuList } from 'const/nav-menu-list';
+import { navMenuList } from 'constants/nav-menu-list';
 
 export const NavMenu = () => {
   const router = useRouter();

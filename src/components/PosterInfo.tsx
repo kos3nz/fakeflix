@@ -5,7 +5,7 @@ import { useConvertGenreIds } from 'hooks';
 import { useAppDispatch } from 'redux/hooks';
 import { openModal } from 'redux/modal/modal.slice';
 import { openModalVideo } from 'redux/modalVideo/modalVideo.slice';
-import { TitleData } from 'const/request-url';
+import { TitleData } from 'constants/request-url';
 
 export const PosterInfo = ({ data }: { data: TitleData }) => {
   const dispatch = useAppDispatch();

@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { MediaType, Genres } from 'const/data.config';
-import type { GenreResponse } from 'const/request-url';
+import type { MediaType, Genres } from 'constants/data.config';
+import type { GenreResponse } from 'constants/request-url';
 import axios from 'axios';
-import { genresDataObj } from 'const/data.config';
+import { genresDataObj } from 'constants/data.config';
 import { attachOfficialTrailerKeysToResults } from 'utils';
 
 export type Slug = [Extract<MediaType, 'movie' | 'tv'>, Genres];
