@@ -3,7 +3,6 @@ import { Layout } from 'components/Layout';
 import { Banner, BannerFallback } from 'components/Banner';
 import { Row } from 'components/Row';
 import { fetchGenreDataWithCache, randomPick } from 'utils';
-import { useRequireLogin } from 'hooks';
 import { movieGenres } from 'constants/data.config';
 import { type TitleData } from 'constants/request-url';
 import { checkUser } from 'db/supabaseClient';
@@ -13,8 +12,6 @@ type MoviesProps = {
 };
 
 export default function Movies({ data }: MoviesProps) {
-  useRequireLogin();
-
   return (
     <Layout containsFooter>
       {data ? <Banner data={data} /> : <BannerFallback />}

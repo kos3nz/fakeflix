@@ -1,13 +1,11 @@
 import type { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { type User } from '@supabase/supabase-js';
 import useSWRInfinite from 'swr/infinite';
 import useInView from 'react-cool-inview';
 import { Layout } from 'components/Layout';
 import { Poster } from 'components/Poster';
 import { Spinner } from 'components/Spinner';
-import { useRequireLogin } from 'hooks';
 import { fetchSearchDataWithCache, getResults } from 'utils';
 import type { TitleData } from 'constants/request-url';
 import { checkUser } from 'db/supabaseClient';
@@ -17,8 +15,6 @@ type SearchProps = {
 };
 
 const Search = ({ data: { results, totalPages } }: SearchProps) => {
-  useRequireLogin();
-
   const { observe, inView } = useInView({
     rootMargin: '300px',
   });

@@ -4,7 +4,6 @@ import useInView from 'react-cool-inview';
 import { Layout } from 'components/Layout';
 import { Poster } from 'components/Poster';
 import { Spinner } from 'components/Spinner';
-import { useRequireLogin } from 'hooks';
 import { fetchGenreDataWithCache, getResults } from 'utils';
 import { GetServerSideProps } from 'next';
 import type { Genres, MediaType } from 'constants/data.config';
@@ -24,8 +23,6 @@ type MovieGenreProps = {
 export default function MovieGenre({
   data: { title, type, genre, results, totalPages },
 }: MovieGenreProps) {
-  useRequireLogin();
-
   const { data, size, setSize } = useSWRInfinite<TitleData>(
     (index) => `/api/titles/${type}/${genre}?page=${index + 2}`, // start fetching from page 2
     getResults

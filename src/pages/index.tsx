@@ -2,7 +2,6 @@ import { type GetServerSideProps } from 'next';
 import { Layout } from 'components/Layout';
 import { Banner, BannerFallback } from 'components/Banner';
 import { Row } from 'components/Row';
-import { useRequireLogin } from 'hooks';
 import { homeGenres } from 'constants/data.config';
 import { fetchGenreDataWithCache, randomPick } from 'utils';
 import { type TitleData } from 'constants/request-url';
@@ -13,8 +12,6 @@ type HomeProps = {
 };
 
 export default function Home({ data }: HomeProps) {
-  useRequireLogin();
-
   return (
     <Layout containsFooter>
       {data ? <Banner data={data} /> : <BannerFallback />}

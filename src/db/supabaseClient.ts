@@ -18,7 +18,7 @@ export const checkUser = async (
   const redirect = {
     props: {},
     redirect: {
-      destination: '/play',
+      destination: '/login',
       permanent: false,
     },
   };

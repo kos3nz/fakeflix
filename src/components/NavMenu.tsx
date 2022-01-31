@@ -37,7 +37,7 @@ type NavMenuItemProps = {
 
 const NavMenuItem = ({ text, href, active, unavailable }: NavMenuItemProps) => {
   return unavailable ? (
-    <li className="p-1 text-gray-700">{text}</li>
+    <li className="p-1 text-gray-500">{text}</li>
   ) : active ? (
     <li className="p-1 font-bold text-red-500">{text}</li>
   ) : (
