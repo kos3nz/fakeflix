@@ -30,8 +30,9 @@
   }
 }
 
-.row-poster,
 .poster {
+  @apply w-full h-full relative rounded-md overflow-hidden cursor-pointer;
+
   .poster-info {
     @apply opacity-0 translate-y-10;
   }
@@ -41,7 +42,8 @@
   }
 
   @media only screen and (min-width: 1024px) {
-    &:hover {
+    &:hover,
+    &:focus {
       .poster-info {
         @apply opacity-100 translate-y-0;
       }
@@ -58,7 +60,7 @@
   }
 }
 
-.category-grid {
+.genre-grid {
   // @apply grid gap-x-2 gap-y-8 grid-cols-[repeat(2,1fr)];
   @apply grid gap-x-2 gap-y-4 sm:gap-y-6 lg:gap-y-8;
   grid-template-columns: repeat(2, 1fr);
@@ -81,7 +83,8 @@
       transition: all 0.3s;
       z-index: 1;
 
-      &:hover {
+      &:hover,
+      &:focus {
         transform: scale(1.2);
         z-index: 5;
 
