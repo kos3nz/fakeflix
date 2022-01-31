@@ -65,61 +65,66 @@ export const SignUp = () => {
   });
 
   return (
-    <motion.form
-      onSubmit={onSubmit}
-      initial="hidden"
-      animate="visible"
-      variants={formVariant}
-    >
-      <motion.div variants={itemVariant} className="mb-3 xs:mb-4">
-        <AuthInput
-          id="username"
-          placeholder="Your name"
-          error={errors.username}
-          registration={usernameRegistration}
-          disabled={isProcessing}
-        />
-      </motion.div>
-      <motion.div variants={itemVariant} className="mb-3 xs:mb-4">
-        <AuthInput
-          id="email"
-          placeholder="E-mail"
-          error={errors.email}
-          registration={emailRegistration}
-          disabled={isProcessing}
-        />
-      </motion.div>
-      <motion.div variants={itemVariant} className="mb-3 xs:mb-4">
-        <AuthInput
-          type="password"
-          id="password"
-          placeholder="Password"
-          error={errors.password}
-          registration={passwordRegistration}
-          disabled={isProcessing}
-        />
-      </motion.div>
-      <motion.div variants={itemVariant} className="mb-8">
-        <AuthInput
-          type="password"
-          id="passwordConfirmation"
-          placeholder="Repeat your password"
-          error={errors.passwordConfirmation}
-          registration={passwordConfirmationRegistration}
-          disabled={isProcessing}
-        />
-      </motion.div>
-      <motion.div variants={itemVariant}>
-        <AuthButton
-          type="submit"
-          color="primary"
-          aria-label="sign up"
-          disabled={isProcessing}
-        >
-          Sign up
-        </AuthButton>
-      </motion.div>
-    </motion.form>
+    <>
+      <h2 className="text-paragraph text-xl xs:text-2xl font-semibold mb-4">
+        Sign Up
+      </h2>
+      <motion.form
+        onSubmit={onSubmit}
+        initial="hidden"
+        animate="visible"
+        variants={formVariant}
+      >
+        <motion.div variants={itemVariant} className="mb-3 xs:mb-4">
+          <AuthInput
+            id="username"
+            placeholder="Your name"
+            error={errors.username}
+            registration={usernameRegistration}
+            disabled={isProcessing}
+          />
+        </motion.div>
+        <motion.div variants={itemVariant} className="mb-3 xs:mb-4">
+          <AuthInput
+            id="email"
+            placeholder="E-mail"
+            error={errors.email}
+            registration={emailRegistration}
+            disabled={isProcessing}
+          />
+        </motion.div>
+        <motion.div variants={itemVariant} className="mb-3 xs:mb-4">
+          <AuthInput
+            type="password"
+            id="password"
+            placeholder="Password"
+            error={errors.password}
+            registration={passwordRegistration}
+            disabled={isProcessing}
+          />
+        </motion.div>
+        <motion.div variants={itemVariant} className="mb-8">
+          <AuthInput
+            type="password"
+            id="passwordConfirmation"
+            placeholder="Repeat your password"
+            error={errors.passwordConfirmation}
+            registration={passwordConfirmationRegistration}
+            disabled={isProcessing}
+          />
+        </motion.div>
+        <motion.div variants={itemVariant}>
+          <AuthButton
+            type="submit"
+            color="primary"
+            aria-label="sign up"
+            disabled={isProcessing}
+          >
+            Sign up
+          </AuthButton>
+        </motion.div>
+      </motion.form>
+    </>
   );
 };
 

@@ -45,18 +45,15 @@ export default function Login() {
         </div>
         <motion.div
           className="
-            max-w-90 mx-auto sm:max-w-lg bg-black px-8 py-10 sm:px-12 sm:py-16 bg-opacity-70 rounded-lg z-20
+            max-w-90 mx-auto sm:max-w-lg bg-black px-8 py-10 sm:px-12 sm:py-14 bg-opacity-70 rounded-lg z-20
           "
           initial="hidden"
           animate="visible"
           variants={formContainerVariant}
         >
-          <h2 className="text-paragraph text-xl xs:text-2xl font-semibold">
-            {isSignedUp ? 'Sign In' : 'Sign Up'}
-          </h2>
-          <p className="text-primary text-sm font-semibold text-center mt-4 xs:mt-5 mb-2 xs:mb-4">
-            Pay attention: this is not the original Netflix sign in. Don&apos;t
-            insert your real credentials here!!
+          <p className="text-primary text-sm font-semibold text-center mb-2 xs:mb-5">
+            Pay attention: this is not the original Netflix sign in. <br />
+            Don&apos;t insert your real credentials here!!
           </p>
           {isSignedUp ? <SignIn /> : <SignUp />}
           <hr className="mt-6 w-11/12 mx-auto text-gray-500" />

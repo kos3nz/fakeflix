@@ -54,64 +54,69 @@ export const SignIn = () => {
   });
 
   return (
-    <motion.form
-      onSubmit={signInViaEmail}
-      initial="hidden"
-      animate="visible"
-      variants={form}
-    >
-      <motion.div variants={item} className="mb-3 xs:mb-4">
-        <AuthInput
-          id="email"
-          placeholder="E-mail"
-          error={errors.email}
-          registration={emailRegistration}
-          disabled={isProcessing}
-        />
-      </motion.div>
-      <motion.div variants={item} className="mb-4 xs:mb-6">
-        <AuthInput
-          type="password"
-          id="password"
-          placeholder="Password"
-          error={errors.password}
-          registration={passwordRegistration}
-          disabled={isProcessing}
-        />
-      </motion.div>
-      <motion.div variants={item} className="mb-3 xs:mb-4">
-        <AuthButton
-          type="submit"
-          color="primary"
-          aria-label="sign in with email"
-          isProcessing={isProcessing}
-        >
-          Sign in
-        </AuthButton>
-      </motion.div>
-      <motion.div variants={item} className="mb-3 xs:mb-4">
-        <AuthButton
-          type="button"
-          color="google"
-          Icon={FcGoogle}
-          aria-label="sign in with Google"
-          isProcessing={isProcessing}
-        >
-          Sign in with Google
-        </AuthButton>
-      </motion.div>
-      <motion.div variants={item}>
-        <AuthButton
-          type="button"
-          color="anonymous"
-          aria-label="sign in anonymously"
-          onClick={signInAnonymously}
-          isProcessing={isProcessing}
-        >
-          Try it as a Guest
-        </AuthButton>
-      </motion.div>
-    </motion.form>
+    <>
+      <h2 className="text-paragraph text-xl xs:text-2xl font-semibold mb-4">
+        Sign In
+      </h2>
+      <motion.form
+        onSubmit={signInViaEmail}
+        initial="hidden"
+        animate="visible"
+        variants={form}
+      >
+        <motion.div variants={item} className="mb-3 xs:mb-4">
+          <AuthInput
+            id="email"
+            placeholder="E-mail"
+            error={errors.email}
+            registration={emailRegistration}
+            disabled={isProcessing}
+          />
+        </motion.div>
+        <motion.div variants={item} className="mb-4 xs:mb-6">
+          <AuthInput
+            type="password"
+            id="password"
+            placeholder="Password"
+            error={errors.password}
+            registration={passwordRegistration}
+            disabled={isProcessing}
+          />
+        </motion.div>
+        <motion.div variants={item} className="mb-3 xs:mb-4">
+          <AuthButton
+            type="submit"
+            color="primary"
+            aria-label="sign in with email"
+            isProcessing={isProcessing}
+          >
+            Sign in
+          </AuthButton>
+        </motion.div>
+        <motion.div variants={item} className="mb-3 xs:mb-4">
+          <AuthButton
+            type="button"
+            color="google"
+            Icon={FcGoogle}
+            aria-label="sign in with Google"
+            isProcessing={isProcessing}
+          >
+            Sign in with Google
+          </AuthButton>
+        </motion.div>
+        <motion.div variants={item}>
+          <AuthButton
+            type="button"
+            color="anonymous"
+            aria-label="sign in anonymously"
+            onClick={signInAnonymously}
+            isProcessing={isProcessing}
+          >
+            Try it as a Guest
+          </AuthButton>
+        </motion.div>
+      </motion.form>
+    </>
   );
 };
 
