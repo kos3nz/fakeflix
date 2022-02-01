@@ -3,11 +3,7 @@ import Link from 'next/link';
 import useInView from 'react-cool-inview';
 import { FiChevronRight } from 'react-icons/fi';
 import { Spinner } from 'components/Spinner';
-import {
-  type Genres,
-  type MediaType,
-  genresDataObj,
-} from 'constants/data.config';
+import { type Genres, type MediaType, genresData } from 'constants/data.config';
 import { MySwiperProps } from 'components/Swiper';
 
 const Swiper = dynamic<MySwiperProps>(
@@ -23,7 +19,7 @@ type RowProps = {
 };
 
 export const Row = ({ genre, type }: RowProps) => {
-  const { title } = genresDataObj[genre];
+  const { title } = genresData[genre];
   const { observe, inView } = useInView({
     unobserveOnEnter: true,
     rootMargin: '50px',

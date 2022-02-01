@@ -1,20 +1,24 @@
-import { type GetServerSideProps } from 'next';
+import useSWR from 'swr';
 import { Layout } from 'components/Layout';
 import { Banner, BannerFallback } from 'components/Banner';
 import { Row } from 'components/Row';
+import { axiosFetcher, randomPick } from 'utils';
 import { homeGenres } from 'constants/data.config';
-import { fetchGenreDataWithCache, randomPick } from 'utils';
-import { type TitleData } from 'constants/request-url';
-import { checkUser } from 'db/supabaseClient';
+import { type GenreResponse } from 'constants/request-url';
+import { useRequireLogin } from 'hooks';
 
-type HomeProps = {
-  data: TitleData;
-};
+export default function Home() {
+  useRequireLogin();
 
-export default function Home({ data }: HomeProps) {
+  const { data } = useSWR<GenreResponse>(
+    `/api/titles/movie/trending`,
+    axiosFetcher
+  );
+  const bannerData = data && randomPick(data.results);
+
   return (
     <Layout containsFooter>
-      {data ? <Banner data={data} /> : <BannerFallback />}
+      {bannerData ? <Banner data={bannerData} /> : <BannerFallback />}
       {homeGenres.map((genre) => (
         <Row
           key={genre}
@@ -25,25 +29,3 @@ export default function Home({ data }: HomeProps) {
     </Layout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  try {
-    const { user, redirect } = await checkUser(req);
-    if (!user) return redirect;
-
-    const { results } = await fetchGenreDataWithCache('trending', 'movie');
-    const bannerData = randomPick(results);
-
-    return {
-      props: {
-        user,
-        data: bannerData,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {},
-    };
-  }
-};

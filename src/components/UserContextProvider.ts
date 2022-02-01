@@ -8,8 +8,8 @@ const UserContextProviderWithRedux = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const session = supabase.auth.session();
-    dispatch(setUserSession({ session, user: session?.user }));
+    // const session = supabase.auth.session();
+    // dispatch(setUserSession({ session, user: session?.user }));
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {

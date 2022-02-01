@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from 'redux/hooks';
 import { authType, manageUserSessionWithSupabase } from 'redux/user/user.slice';
@@ -7,11 +6,9 @@ type DropdownMenuProps = { isVisible: boolean };
 
 export const DropdownMenu = ({ isVisible }: DropdownMenuProps) => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   const handleSignOut = async () => {
     dispatch(manageUserSessionWithSupabase({ type: authType.SIGN_OUT }));
-    router.push('/play');
   };
 
   return (

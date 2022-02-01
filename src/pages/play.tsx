@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 const Play = () => {
@@ -12,7 +12,7 @@ const Play = () => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     handleAudio();
     setTimeout(() => {
       router.push('/login');

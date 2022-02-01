@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react';
 import axios, { type AxiosRequestConfig } from 'axios';
 import cache from 'memory-cache';
-import { genresDataObj } from 'constants/data.config';
+import { genresData } from 'constants/data.config';
 import type { Genres, MediaType } from 'constants/data.config';
 import {
   MOVIE_SEARCH_QUERIES_URL,
@@ -53,15 +53,15 @@ export const fetchGenreDataWithCache = async (
   results: TitleData[];
   totalPages: number;
 }> => {
-  const { title, urls } = genresDataObj[genre];
-  const url = urls[type];
-  const value = cache.get(url);
+  const { title, url } = genresData[genre];
+  const genreUrl = url[type];
+  const value = cache.get(genreUrl);
 
   if (!value) {
-    const { results, total_pages } = await axiosFetcher(url as string);
+    const { results, total_pages } = await axiosFetcher(genreUrl as string);
     await attachOfficialTrailerKeysToResults(results, type);
     const data = { results, totalPages: total_pages };
-    cache.put(url, data, 1000 * 60 * 60 * 24 * 7); // 1 week
+    cache.put(genreUrl, data, 1000 * 60 * 60 * 24 * 7); // 1 week
 
     return {
       title,
@@ -179,6 +179,16 @@ export const getYoutubeTrailerKeys = (videosData: VideoResponse[]) => {
 
     return officialTrailer.length !== 0 ? officialTrailer[0].key : '';
   });
+};
+
+export const getPaths = (type: MediaType) => {
+  return (Object.keys(genresData) as Genres[])
+    .filter((genre) => genresData[genre].url[type])
+    .map((genre) => {
+      return {
+        params: { genre },
+      };
+    });
 };
 
 export const loadMore = async (

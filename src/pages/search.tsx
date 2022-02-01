@@ -1,4 +1,4 @@
-import type { GetServerSideProps } from 'next';
+import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import useSWRInfinite from 'swr/infinite';
@@ -6,29 +6,37 @@ import useInView from 'react-cool-inview';
 import { Layout } from 'components/Layout';
 import { Poster } from 'components/Poster';
 import { Spinner } from 'components/Spinner';
-import { fetchSearchDataWithCache, getResults } from 'utils';
-import type { TitleData } from 'constants/request-url';
-import { checkUser } from 'db/supabaseClient';
+import { axiosFetcher, getResults } from 'utils';
+import type { GenreResponse, TitleData } from 'constants/request-url';
+import { useRequireLogin } from 'hooks';
 
-type SearchProps = {
-  data: { results: TitleData[]; totalPages: number };
-};
+const Search = () => {
+  useRequireLogin();
 
-const Search = ({ data: { results, totalPages } }: SearchProps) => {
-  const { observe, inView } = useInView({
-    rootMargin: '300px',
-  });
   const { query } = useRouter();
-  const { data, size, setSize } = useSWRInfinite<TitleData>(
+  const { data } = useSWR<GenreResponse>(
+    `/api/titles/search/${query.keyword}`,
+    axiosFetcher
+  );
+  const {
+    data: results,
+    size,
+    setSize,
+  } = useSWRInfinite<TitleData>(
     (index) => `/api/titles/search/${query.keyword}?page=${index + 2}`,
     getResults
   );
-  const titles = data ? results.concat(...data) : results;
-  const noResult = titles.length === 0;
+  const totalPages = data && data.total_pages;
+  const titles = data && results && data.results.concat(...results);
+  const noResult = titles?.length === 0;
   const reachedEnd = size === totalPages || noResult;
 
+  const { observe, inView } = useInView({
+    rootMargin: '300px',
+  });
+
   useEffect(() => {
-    if (inView && size < totalPages) setSize(size + 1);
+    if (totalPages && inView && size < totalPages) setSize(size + 1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
@@ -38,7 +46,8 @@ const Search = ({ data: { results, totalPages } }: SearchProps) => {
         <div className="py-8 px-[4vw]">
           <h2 className="text-xl font-bold mb-6">{`Search results for : " ${query.keyword} "`}</h2>
           <div className="genre-grid">
-            {!noResult &&
+            {titles &&
+              !noResult &&
               titles.map((data) => <Poster key={data.id} data={data} />)}
           </div>
           {!reachedEnd && (
@@ -58,27 +67,3 @@ const Search = ({ data: { results, totalPages } }: SearchProps) => {
 };
 
 export default Search;
-
-export const getServerSideProps: GetServerSideProps = async ({
-  query,
-  req,
-}) => {
-  try {
-    const { user, redirect } = await checkUser(req);
-    if (!user) return redirect;
-
-    const data = await fetchSearchDataWithCache(query.keyword as string);
-
-    return {
-      props: {
-        data,
-        user,
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {},
-    };
-  }
-};

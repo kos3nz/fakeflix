@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const Intro = () => {
@@ -31,7 +31,7 @@ const Intro = () => {
     };
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setTimeout(() => {
       playIntroSound();
     }, 200);
