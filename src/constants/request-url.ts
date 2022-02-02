@@ -67,6 +67,8 @@ export const IMAGE_BASE_URL = 'https://image.tmdb.org/t/p';
 export const ORIGINAL_IMAGE_URL = `${IMAGE_BASE_URL}/original`;
 export const W1280_IMAGE_URL = `${IMAGE_BASE_URL}/w1280`;
 export const W780_IMAGE_URL = `${IMAGE_BASE_URL}/w780`;
+export const W500_IMAGE_URL = `${IMAGE_BASE_URL}/w500`;
+export const W300_IMAGE_URL = `${IMAGE_BASE_URL}/w300`;
 export const LANG = 'en-US';
 
 // Originals

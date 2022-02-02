@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 type BannerBGProps = {
   imageUrl: string;
   matches: boolean;
@@ -21,14 +19,10 @@ export const BannerBackground = ({
           lg:items-center lg:justify-start
         `}
     >
-      <Image
+      <img
         src={imageUrl}
-        alt="image background"
-        layout="fill"
-        priority={true}
-        objectFit="cover"
-        quality={matches ? 60 : 30}
-        loading="eager"
+        alt="background"
+        className="absolute w-full h-full object-cover"
       />
       <div
         className="
