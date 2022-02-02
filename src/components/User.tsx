@@ -1,10 +1,8 @@
-import Image from 'next/image';
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import { DropdownMenu } from 'components/DropdownMenu';
 import { useOutsideClick } from 'hooks';
-import profileImage from 'images/Fakeflix_profilepic.png';
 
 const iconVariants = {
   up: {
@@ -38,13 +36,7 @@ export const User = () => {
         onClick={() => setIsVisible((isVisible) => !isVisible)}
       >
         <div className="w-[32px] sm:w-[40px]">
-          <Image
-            src={profileImage}
-            alt="user"
-            width={1}
-            height={1}
-            layout="responsive"
-          />
+          <img src="/images/Fakeflix_profilepic.png" alt="user" />
         </div>
         <motion.div animate={isVisible ? 'up' : 'down'} variants={iconVariants}>
           <IoMdArrowDropdown className="w-5 h-5" />
