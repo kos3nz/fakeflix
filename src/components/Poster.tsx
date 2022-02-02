@@ -5,6 +5,7 @@ import { type TitleData, W780_IMAGE_URL } from 'constants/request-url';
 import fallbackImage from 'images/Fakeflix_fallback.png';
 import { useAppDispatch } from 'redux/hooks';
 import { openModal } from 'redux/modal/modal.slice';
+import MyImage from './MyImage';
 
 type PosterProps = {
   data: TitleData;
@@ -34,7 +35,7 @@ export const Poster = ({ data, isLarge = false }: PosterProps) => {
     >
       <Viewport minWidth={640}>
         {(matches: boolean) => (
-          <Image
+          <MyImage
             src={imageType ? `${W780_IMAGE_URL}${imageType}` : fallbackImage}
             alt="movie"
             width={aspectRatio.width}

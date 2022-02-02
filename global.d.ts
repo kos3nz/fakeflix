@@ -7,5 +7,6 @@ declare namespace NodeJS {
     readonly NEXT_PUBLIC_SUPABASE_ANON_KEY: string;
     readonly NEXT_PUBLIC_GUEST_EMAIL: string;
     readonly NEXT_PUBLIC_GUEST_PASSWORD: string;
+    readonly NEXT_PUBLIC_CLOUD_NAME: string;
   }
 }

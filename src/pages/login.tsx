@@ -9,6 +9,7 @@ import { SignUp } from 'components/SignUp';
 import signinBg from 'images/Fakeflix_signin_bg.jpg';
 import { useAppSelector } from 'redux/hooks';
 import { selectCurrentUser } from 'redux/user/user.selectors';
+import MyImage from 'components/MyImage';
 
 export default function Login() {
   const [isSignedUp, setIsSignedUp] = useState(true);
@@ -22,8 +23,8 @@ export default function Login() {
   return (
     <Layout title="Fakeflix login">
       <div className="absolute top-0 left-0 w-full min-h-screen">
-        <Image
-          src={signinBg}
+        <MyImage
+          src={'/images/Fakeflix_signin_bg.jpg'}
           alt="image background"
           layout="fill"
           priority={true}
