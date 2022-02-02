@@ -9,6 +9,7 @@ import {
   type TitleData,
   type SearchResponse,
   type VideoResponse,
+  GenreResponse,
 } from 'constants/request-url';
 
 export const axiosFetcher = async (
@@ -17,11 +18,6 @@ export const axiosFetcher = async (
 ) => {
   const { data } = await axios.get(url, option);
   return data;
-};
-
-export const getResults = async (url: string) => {
-  const data = await axiosFetcher(url);
-  return data.results;
 };
 
 // 第一引数にurl、または [ url, options] を入れます。
@@ -79,16 +75,42 @@ export const fetchGenreDataWithCache = async (
   };
 };
 
+export const getResults = async (
+  key: string,
+  page: number | string = 1,
+  type: MediaType | 'search'
+) => {
+  const data =
+    type === 'search'
+      ? await fetchSearchData(key, page)
+      : await fetchGenreData(key, page, type);
+  return data.results;
+};
+
+export const fetchGenreData = async (
+  url: string,
+  page: string | number = 1,
+  type: MediaType
+) => {
+  const { data } = await axios.get<GenreResponse>(url + `&page=${page}`);
+  await attachOfficialTrailerKeysToResults(data.results, type);
+
+  return {
+    results: data.results,
+    total_pages: data.total_pages,
+  };
+};
+
 const isPerson = (data: TitleData | PersonData): data is PersonData => {
   return data.media_type === 'person';
 };
 
 export const fetchSearchData = async (
   keyword: string,
-  page?: string | number
+  page: string | number = 1
 ) => {
   const { data } = await axios.get<SearchResponse>(
-    `${MOVIE_SEARCH_QUERIES_URL}${keyword}&page=${page || 1}`
+    `${MOVIE_SEARCH_QUERIES_URL}${keyword}&page=${page}`
   );
   const results = data.results.reduce<TitleData[]>((results, result) => {
     if (isPerson(result)) return results.concat(result.known_for);
@@ -99,7 +121,7 @@ export const fetchSearchData = async (
 
   return {
     results,
-    totalPages: data.total_pages,
+    total_pages: data.total_pages,
   };
 };
 
@@ -107,7 +129,7 @@ export const fetchSearchDataWithCache = async (
   keyword: string
 ): Promise<{
   results: TitleData[];
-  totalPages: number;
+  total_pages: number;
 }> => {
   const key = `keyword:${keyword}`;
   const value = cache.get(key);

@@ -2,18 +2,18 @@ import useSWR from 'swr';
 import { Layout } from 'components/Layout';
 import { Banner, BannerFallback } from 'components/Banner';
 import { Row } from 'components/Row';
-import { axiosFetcher, randomPick } from 'utils';
-import { homeGenres } from 'constants/data.config';
+import { fetchGenreData, randomPick } from 'utils';
+import { genresData, homeGenres } from 'constants/data.config';
 import { type GenreResponse } from 'constants/request-url';
 import { useRequireLogin } from 'hooks';
+
+const type = 'movie';
+const url = genresData.trending.url[type];
 
 export default function Home() {
   useRequireLogin();
 
-  const { data } = useSWR<GenreResponse>(
-    `/api/titles/movie/trending`,
-    axiosFetcher
-  );
+  const { data } = useSWR([url, 1, type], fetchGenreData);
   const bannerData = data && randomPick(data.results);
 
   return (

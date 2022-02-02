@@ -9,7 +9,7 @@ import { store, persistor } from 'redux/store';
 import 'styles/global.scss';
 import 'styles/intro-animation.scss';
 import 'styles/text-animation.scss';
-import 'styles/row-swiper.scss';
+import 'styles/swiper.scss';
 /* Swiper Styles */
 import 'swiper/scss';
 import 'swiper/scss/navigation';

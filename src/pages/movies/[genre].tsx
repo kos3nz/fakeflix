@@ -1,45 +1,27 @@
+import type { GetStaticPaths, GetStaticProps } from 'next';
 import { useEffect } from 'react';
-import useSWR from 'swr';
-import useSWRInfinite from 'swr/infinite';
 import useInView from 'react-cool-inview';
 import { Layout } from 'components/Layout';
 import { Poster } from 'components/Poster';
 import { Spinner } from 'components/Spinner';
-import { axiosFetcher, getPaths, getResults } from 'utils';
-import type { GetStaticPaths, GetStaticProps } from 'next';
+import { getPaths } from 'utils';
 import { genresData, type Genres, type MediaType } from 'constants/data.config';
-import { type GenreResponse, type TitleData } from 'constants/request-url';
-import { useRequireLogin } from 'hooks';
+import { useInfiniteFetchData, useRequireLogin } from 'hooks';
 
 type MovieGenreProps = {
-  genre: Genres;
-  type: MediaType;
+  url: string;
   title: string;
+  type: MediaType;
 };
 
-export default function MovieGenre({ genre, type, title }: MovieGenreProps) {
+export default function MovieGenre({ url, title, type }: MovieGenreProps) {
   useRequireLogin();
 
-  const { data } = useSWR<GenreResponse>(
-    `/api/titles/${type}/${genre}`,
-    axiosFetcher
-  );
-  const {
-    data: results,
-    size,
-    setSize,
-  } = useSWRInfinite<TitleData>(
-    (index) => `/api/titles/${type}/${genre}?page=${index + 2}`,
-    getResults
-  );
-  const totalPages = data && data.total_pages;
-  const titles = data && results && data.results.concat(...results);
-  const reachedEnd = size === totalPages;
-
-  console.log({ totalPages });
+  const { titles, totalPages, reachedEnd, size, setSize } =
+    useInfiniteFetchData(url, type);
 
   const { observe, inView } = useInView({
-    rootMargin: '300px',
+    rootMargin: '150px',
   });
 
   useEffect(() => {
@@ -78,13 +60,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const genre = params?.genre as Genres;
-  const title = genresData[genre].title;
+  const type = 'movie';
+  const { title, url } = genresData[genre];
+  const genreUrl = url[type];
 
   return {
     props: {
       title,
-      genre,
-      type: 'movie',
+      url: genreUrl,
+      type,
     },
   };
 };

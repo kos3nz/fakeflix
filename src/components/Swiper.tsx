@@ -5,13 +5,12 @@ import {
   SwiperProps,
   SwiperSlide,
 } from 'swiper/react';
+import useSWR from 'swr';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Poster } from 'components/Poster';
 import { useViewport } from 'hooks';
-import useSWR from 'swr';
-import { axiosFetcher } from 'utils';
-import { Genres, MediaType } from 'constants/data.config';
-import { TitleData } from 'constants/request-url';
+import { fetchGenreData } from 'utils';
+import { genresData, type Genres, type MediaType } from 'constants/data.config';
 
 /* Swiper */
 SwiperCore.use([Pagination, Navigation]);
@@ -22,10 +21,8 @@ export interface MySwiperProps {
 }
 
 export const Swiper = ({ genre, type }: MySwiperProps) => {
-  const { data } = useSWR<{ results: TitleData[] }>(
-    `/api/titles/${type}/${genre}`,
-    axiosFetcher
-  );
+  const url = genresData[genre].url[type];
+  const { data } = useSWR([url, 1, type], fetchGenreData);
   const { width } = useViewport();
   const swiperRef = useRef<HTMLDivElement>(null);
   const prevEl = useRef<HTMLDivElement>(null);
