@@ -75,7 +75,7 @@ export const Modal = () => {
           >
             <motion.div
               ref={modalRef}
-              className="w-[90%] sm:w-[80%] md:w-[65vw] max-w-xl 2xl:max-w-2xl h-[90vh] bg-gray-900 rounded-md overflow-hidden overflow-y-scroll scrollbar-hidden outline-none"
+              className="w-[80%] md:w-[65vw] max-w-xl 2xl:max-w-2xl h-[85vh] sm:h-[90vh] bg-gray-900 rounded-md overflow-hidden overflow-y-scroll scrollbar-hidden outline-none"
               variants={modalVariants}
               tabIndex={-1}
             >

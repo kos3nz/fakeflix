@@ -19,15 +19,13 @@ export const Poster = ({ data, isLarge = false }: PosterProps) => {
   const { backdrop_path, poster_path } = data;
   const imageType = isLarge ? poster_path : backdrop_path;
 
-  const handleOpenModal = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleOpenModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
     dispatch(openModal(data));
   };
 
   return (
-    <button
+    <div
       className="poster relative rounded-md overflow-hidden cursor-pointer"
       onClick={handleOpenModal}
     >
@@ -47,7 +45,7 @@ export const Poster = ({ data, isLarge = false }: PosterProps) => {
       </Viewport>
       <PosterBackground />
       <PosterInfo data={data} />
-    </button>
+    </div>
   );
 };
 

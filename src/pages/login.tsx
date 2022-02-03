@@ -27,11 +27,11 @@ export default function Login() {
         />
         <div
           className="
-          relative
-          w-full min-h-screen
-          bg-gray-900 bg-opacity-50
-          flex justify-center items-center
-        "
+            relative
+            w-full min-h-screen
+            bg-gray-900 bg-opacity-50
+            flex justify-center items-center
+          "
         >
           <div className="absolute top-8 left-8 z-10 hidden xs:block">
             <Logo href="/login" logoType="desktop" size="sm" />

@@ -46,15 +46,15 @@ export const Row = ({ genre, type }: RowProps) => {
         "
       >
         <Link href={href}>
-          <a className="flex items-baseline gap-1 row-showmore">
+          <a className="flex items-baseline space-x-1 row-showmore">
             {title}
-            <span className="flex items-center text-[10px] sm:text-xs lg:text-sm opacity-0 transition-all duration-700">
+            <span className="hidden sm:flex items-center text-[10px] sm:text-xs lg:text-sm opacity-0 transition-all duration-700">
               Show all <FiChevronRight />
             </span>
           </a>
         </Link>
       </h2>
-      <div className="min-h-[100px] sm:min-h-[125px] lg:min-h-[200px">
+      <div className="min-h-[100px] sm:min-h-[125px] lg:min-h-[250px">
         {inView && <Swiper genre={genre} type={type} />}
       </div>
     </div>

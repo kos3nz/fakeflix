@@ -1,4 +1,5 @@
 export { useConvertGenreIds } from 'hooks/useConvertGenreIds';
+export { useInfiniteFetchData } from 'hooks/useInfiniteFetchData';
 export { useIntersectionObserver } from 'hooks/useIntersectionObserver';
 export { useOutsideClick } from 'hooks/useOutsideClick';
 export { useRequireLogin } from 'hooks/useRequireLogin';

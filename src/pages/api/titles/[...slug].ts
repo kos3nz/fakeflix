@@ -5,7 +5,7 @@ import axios from 'axios';
 import { genresData } from 'constants/data.config';
 import { attachOfficialTrailerKeysToResults } from 'utils';
 
-export type Slug = [Extract<MediaType, 'movie' | 'tv'>, Genres];
+export type Slug = [MediaType, Genres];
 
 export default async function fetchMovies(
   req: NextApiRequest,
@@ -23,7 +23,7 @@ export default async function fetchMovies(
 
     res.status(200).json({
       results,
-      totalPages: total_pages,
+      total_pages,
     });
   } catch (error) {
     console.error(error);

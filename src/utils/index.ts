@@ -11,21 +11,16 @@ import {
   type VideoResponse,
 } from 'constants/request-url';
 
-export const axiosFetcher = async (
-  url: string,
-  option: AxiosRequestConfig = {}
-) => {
+export const fetcher = async (url: string, option: AxiosRequestConfig = {}) => {
   const { data } = await axios.get(url, option);
   return data;
 };
 
 export const getResults = async (url: string) => {
-  const data = await axiosFetcher(url);
+  const data = await fetcher(url);
   return data.results;
 };
 
-// 第一引数にurl、または [ url, options] を入れます。
-// この関数をgetServerSidePropsの中でdata = await fetchWithCache(url);のように使用します。
 export const fetchWithCache = async <Data = any>(
   input: any,
   fetcher: (...args: any[]) => Data | Promise<Data>
@@ -58,7 +53,7 @@ export const fetchGenreDataWithCache = async (
   const value = cache.get(genreUrl);
 
   if (!value) {
-    const { results, total_pages } = await axiosFetcher(genreUrl as string);
+    const { results, total_pages } = await fetcher(genreUrl as string);
     await attachOfficialTrailerKeysToResults(results, type);
     const data = { results, totalPages: total_pages };
     cache.put(genreUrl, data, 1000 * 60 * 60 * 24 * 7); // 1 week
@@ -99,7 +94,7 @@ export const fetchSearchData = async (
 
   return {
     results,
-    totalPages: data.total_pages,
+    total_pages: data.total_pages,
   };
 };
 
@@ -107,7 +102,7 @@ export const fetchSearchDataWithCache = async (
   keyword: string
 ): Promise<{
   results: TitleData[];
-  totalPages: number;
+  total_pages: number;
 }> => {
   const key = `keyword:${keyword}`;
   const value = cache.get(key);

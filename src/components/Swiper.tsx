@@ -1,4 +1,4 @@
-import { MouseEventHandler, PropsWithChildren, useEffect, useRef } from 'react';
+import { MouseEventHandler, useEffect, useRef } from 'react';
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import {
   Swiper as SwiperContainer,
@@ -9,7 +9,7 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Poster } from 'components/Poster';
 import { useViewport } from 'hooks';
 import useSWR from 'swr';
-import { axiosFetcher } from 'utils';
+import { getResults } from 'utils';
 import { Genres, MediaType } from 'constants/data.config';
 import { TitleData } from 'constants/request-url';
 
@@ -22,9 +22,9 @@ export interface MySwiperProps {
 }
 
 export const Swiper = ({ genre, type }: MySwiperProps) => {
-  const { data } = useSWR<{ results: TitleData[] }>(
+  const { data } = useSWR<TitleData[]>(
     `/api/titles/${type}/${genre}`,
-    axiosFetcher
+    getResults
   );
   const { width } = useViewport();
   const swiperRef = useRef<HTMLDivElement>(null);
@@ -135,7 +135,7 @@ export const Swiper = ({ genre, type }: MySwiperProps) => {
       </div>
       <SwiperContainer {...swiperProps}>
         {data &&
-          data.results.map((movie, i) => {
+          data.map((movie, i) => {
             return (
               <SwiperSlide
                 key={i}
