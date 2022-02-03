@@ -3,8 +3,8 @@ import useSWR from 'swr';
 import { Layout } from 'components/Layout';
 import { Banner, BannerFallback } from 'components/Banner';
 import { Row } from 'components/Row';
-import { fetcher, getGenres, getResults, randomPick } from 'utils';
-import { GenreResponse, type TitleData } from 'constants/request-url';
+import { fetcher, getGenres, randomPick } from 'utils';
+import { GenreResponse } from 'constants/request-url';
 import { checkUser } from 'db/supabaseClient';
 
 const type = 'movie';

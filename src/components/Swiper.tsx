@@ -9,9 +9,9 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Poster } from 'components/Poster';
 import { useViewport } from 'hooks';
 import useSWR from 'swr';
-import { fetcher, getResults } from 'utils';
+import { fetcher } from 'utils';
 import { Genres, MediaType } from 'constants/data.config';
-import { GenreResponse, TitleData } from 'constants/request-url';
+import { GenreResponse } from 'constants/request-url';
 
 /* Swiper */
 SwiperCore.use([Pagination, Navigation]);
@@ -31,9 +31,6 @@ export const Swiper = ({ genre, type }: MySwiperProps) => {
   const prevEl = useRef<HTMLDivElement>(null);
   const nextEl = useRef<HTMLDivElement>(null);
   const isLarge = genre === 'originals' ? true : false;
-
-  console.log({ data });
-  // console.log({ error });
 
   const groupNum =
     width >= 1650

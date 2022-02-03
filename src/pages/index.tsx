@@ -4,8 +4,8 @@ import { Layout } from 'components/Layout';
 import { Banner, BannerFallback } from 'components/Banner';
 import { Row } from 'components/Row';
 import { homeGenres } from 'constants/data.config';
-import { fetcher, getResults, randomPick } from 'utils';
-import { GenreResponse, type TitleData } from 'constants/request-url';
+import { fetcher, randomPick } from 'utils';
+import { type GenreResponse } from 'constants/request-url';
 import { checkUser } from 'db/supabaseClient';
 
 const type = 'movie';
