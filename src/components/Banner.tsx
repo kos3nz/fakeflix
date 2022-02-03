@@ -4,7 +4,12 @@ import { AiOutlineInfoCircle } from 'react-icons/ai';
 import { BannerBackground } from 'components/BannerBackground';
 import { Button } from 'components/Button';
 import { truncate } from 'utils';
-import { ORIGINAL_IMAGE_URL, type TitleData } from 'constants/request-url';
+import {
+  ORIGINAL_IMAGE_URL,
+  W1280_IMAGE_URL,
+  W780_IMAGE_URL,
+  type TitleData,
+} from 'constants/request-url';
 import { useAppDispatch } from 'redux/hooks';
 import { openModal } from 'redux/modal/modal.slice';
 import { openModalVideo } from 'redux/modalVideo/modalVideo.slice';
@@ -29,24 +34,27 @@ export const Banner = ({ data }: BannerProps) => {
   } = data;
   const movieTitle = title || name || original_title || original_name;
   const description = truncate(overview, 150);
+  const imageSize =
+    width > 1024 // wider than 1280px, provide original image
+      ? ORIGINAL_IMAGE_URL
+      : width > 640 // wider than 768px, provide w1280 image
+      ? W1280_IMAGE_URL
+      : W780_IMAGE_URL; // otherwise, provide w780 image
+  const imageType = width > 768 ? backdrop_path : poster_path;
 
   const handlePlayVideo = () => {
     if (videoKey) dispatch(openModalVideo(videoKey));
   };
 
   return (
-    <BannerBackground
-      imageUrl={`${ORIGINAL_IMAGE_URL}${
-        width > 768 ? backdrop_path : poster_path
-      }`}
-      matches={width > 768}
-    >
+    <BannerBackground imageUrl={`${imageSize}${imageType}`}>
       <motion.div
         className="
           relative z-10
           max-w-xl pb-[10vh] px-[5vw]
           flex flex-col items-center
           lg:items-start lg:pb-0
+          md
         "
         initial="initial"
         animate="visible"

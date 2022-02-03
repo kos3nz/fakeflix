@@ -3,17 +3,17 @@ import Link from 'next/link';
 import useInView from 'react-cool-inview';
 import { FiChevronRight } from 'react-icons/fi';
 import { Spinner } from 'components/Spinner';
-import {
-  type Genres,
-  type MediaType,
-  genresDataObj,
-} from 'constants/data.config';
+import { type Genres, type MediaType, genresData } from 'constants/data.config';
 import { MySwiperProps } from 'components/Swiper';
 
 const Swiper = dynamic<MySwiperProps>(
   () => import('components/Swiper').then((mod) => mod.Swiper),
   {
-    loading: () => <Spinner />,
+    loading: () => (
+      <div className="min-h-[100px] flex justify-center items-center">
+        <Spinner />
+      </div>
+    ),
   }
 );
 
@@ -23,7 +23,7 @@ type RowProps = {
 };
 
 export const Row = ({ genre, type }: RowProps) => {
-  const { title } = genresDataObj[genre];
+  const { title } = genresData[genre];
   const { observe, inView } = useInView({
     unobserveOnEnter: true,
     rootMargin: '50px',
@@ -37,7 +37,7 @@ export const Row = ({ genre, type }: RowProps) => {
       : `/all/${genre}`;
 
   return (
-    <div className="py-[2vh]" ref={observe}>
+    <div className="pb-2 sm:pb-3 lg:pb-4" ref={observe}>
       <h2
         className="
         mb-2 xs:mb-3 px-[7%] sm:px-[5%]
@@ -54,7 +54,9 @@ export const Row = ({ genre, type }: RowProps) => {
           </a>
         </Link>
       </h2>
-      {inView && <Swiper genre={genre} type={type} />}
+      <div className="min-h-[100px] sm:min-h-[125px] lg:min-h-[200px">
+        {inView && <Swiper genre={genre} type={type} />}
+      </div>
     </div>
   );
 };

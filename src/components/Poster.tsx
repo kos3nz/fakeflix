@@ -1,6 +1,11 @@
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Viewport from 'react-responsive';
 import { PosterInfo } from 'components/PosterInfo';
-import { type TitleData, W500_IMAGE_URL } from 'constants/request-url';
+import {
+  type TitleData,
+  W500_IMAGE_URL,
+  W300_IMAGE_URL,
+} from 'constants/request-url';
 import { useAppDispatch } from 'redux/hooks';
 import { openModal } from 'redux/modal/modal.slice';
 
@@ -28,10 +33,12 @@ export const Poster = ({ data, isLarge = false }: PosterProps) => {
     >
       <Viewport minWidth={640}>
         {(matches: boolean) => (
-          <img
+          <LazyLoadImage
             src={
-              imageType
+              imageType && matches
                 ? `${W500_IMAGE_URL}${imageType}`
+                : imageType && !matches
+                ? `${W300_IMAGE_URL}${imageType}`
                 : '/images/fallback.png'
             }
             alt="poster"

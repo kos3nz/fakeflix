@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <UserContextProviderWithRedux />
       <ScrollLock />
       <NextProgress
-        height={5}
+        height={3}
         color="hsl(0 72% 51%)"
         startPosition={0.2}
         options={{ showSpinner: false }}

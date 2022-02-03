@@ -84,7 +84,7 @@ export const Modal = () => {
                   src={
                     backdrop_path
                       ? `${W780_IMAGE_URL}${backdrop_path}`
-                      : '/images/Fakeflix_fallback.png'
+                      : '/images/fallback.png'
                   }
                   alt="poster"
                 />

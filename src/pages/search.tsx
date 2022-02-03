@@ -29,7 +29,6 @@ const Search = ({ data: { results, totalPages } }: SearchProps) => {
 
   useEffect(() => {
     if (inView && size < totalPages) setSize(size + 1);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
   return (

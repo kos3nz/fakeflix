@@ -36,7 +36,6 @@ export default function TVGenre({
     if (inView && size < totalPages) {
       setSize(size + 1);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inView]);
 
   return (

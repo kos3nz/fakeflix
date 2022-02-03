@@ -19,11 +19,11 @@ export default function Login() {
 
   return (
     <Layout title="Fakeflix login">
-      <div className="relative">
+      <div className="relative w-full min-h-screen">
         <img
           src="/images/login_bg.jpg"
           alt="background"
-          className="absolute top-0 left-0 w-full min-h-screen object-cover"
+          className="absolute top-0 left-0 w-full h-full object-cover"
         />
         <div
           className="

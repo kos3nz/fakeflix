@@ -1,14 +1,9 @@
 type BannerBGProps = {
   imageUrl: string;
-  matches: boolean;
   children: React.ReactNode;
 };
 
-export const BannerBackground = ({
-  imageUrl,
-  matches,
-  children,
-}: BannerBGProps) => {
+export const BannerBackground = ({ imageUrl, children }: BannerBGProps) => {
   return (
     <div
       className={`

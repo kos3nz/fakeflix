@@ -43,11 +43,11 @@ export type Genres =
   | 'war_politics'
   | 'upcoming';
 
-type GenresDataObject = {
+type GenresData = {
   [key in Genres]: {
     title: string;
-    urls: {
-      [key in Extract<MediaType, 'movie' | 'tv'>]?: string;
+    url: {
+      [key in MediaType]?: string;
     };
     slug: Genres;
   };
@@ -158,17 +158,17 @@ export const genresIdByTitle = {
   war_politics: 10768,
 } as const;
 
-export const genresDataObj: GenresDataObject = {
+export const genresData: GenresData = {
   top_rated: {
     title: 'Top Rated on Fakeflix',
-    urls: {
+    url: {
       movie: TOP_RATED_MOVIES_URL,
     },
     slug: 'top_rated',
   },
   trending: {
     title: 'Trending Now',
-    urls: {
+    url: {
       movie: TRENDING_MOVIES_URL,
       tv: TRENDING_TV_SERIES_URL,
     },
@@ -176,28 +176,28 @@ export const genresDataObj: GenresDataObject = {
   },
   originals: {
     title: 'Fakeflix Originals',
-    urls: {
+    url: {
       tv: NETFLIX_ORIGINALS_URL,
     },
     slug: 'originals',
   },
   action: {
     title: 'Action',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.action,
     },
     slug: 'action',
   },
   adventure: {
     title: 'Adventure',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.adventure,
     },
     slug: 'adventure',
   },
   animation: {
     title: 'Animation',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.animation,
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.animation,
     },
@@ -205,7 +205,7 @@ export const genresDataObj: GenresDataObject = {
   },
   comedy: {
     title: 'Comedy',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.comedy,
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.comedy,
     },
@@ -213,7 +213,7 @@ export const genresDataObj: GenresDataObject = {
   },
   crime: {
     title: 'Crime',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.crime,
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.crime,
     },
@@ -221,7 +221,7 @@ export const genresDataObj: GenresDataObject = {
   },
   documentary: {
     title: 'Documentary',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.documentary,
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.documentary,
     },
@@ -229,7 +229,7 @@ export const genresDataObj: GenresDataObject = {
   },
   drama: {
     title: 'Drama',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.drama,
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.drama,
     },
@@ -237,7 +237,7 @@ export const genresDataObj: GenresDataObject = {
   },
   family: {
     title: 'Family',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.family,
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.family,
     },
@@ -245,35 +245,35 @@ export const genresDataObj: GenresDataObject = {
   },
   fantasy: {
     title: 'Fantasy',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.fantasy,
     },
     slug: 'fantasy',
   },
   history: {
     title: 'History',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.history,
     },
     slug: 'history',
   },
   horror: {
     title: 'Horror',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.horror,
     },
     slug: 'horror',
   },
   music: {
     title: 'Music',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.music,
     },
     slug: 'music',
   },
   mystery: {
     title: 'Mystery',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.mystery,
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.mystery,
     },
@@ -281,42 +281,42 @@ export const genresDataObj: GenresDataObject = {
   },
   romance: {
     title: 'Romance',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.romance,
     },
     slug: 'romance',
   },
   science_fiction: {
     title: 'Science Fiction',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.science_fiction,
     },
     slug: 'science_fiction',
   },
   tv_movie: {
     title: 'TV Movie',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.tv_movie,
     },
     slug: 'tv_movie',
   },
   thriller: {
     title: 'Thriller',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.thriller,
     },
     slug: 'thriller',
   },
   war: {
     title: 'War',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.war,
     },
     slug: 'war',
   },
   western: {
     title: 'Western',
-    urls: {
+    url: {
       movie: GENRE_MOVIES_URL + genresIdByTitle.western,
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.western,
     },
@@ -324,63 +324,63 @@ export const genresDataObj: GenresDataObject = {
   },
   action_adventure: {
     title: 'Action & Adventure',
-    urls: {
+    url: {
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.action_adventure,
     },
     slug: 'action_adventure',
   },
   kids: {
     title: 'Kids',
-    urls: {
+    url: {
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.kids,
     },
     slug: 'kids',
   },
   news: {
     title: 'News',
-    urls: {
+    url: {
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.news,
     },
     slug: 'news',
   },
   reality: {
     title: 'Reality',
-    urls: {
+    url: {
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.reality,
     },
     slug: 'reality',
   },
   'sci-fi_fantasy': {
     title: 'Sci-Fi & Fantasy',
-    urls: {
+    url: {
       tv: GENRE_TV_SERIES_URL + genresIdByTitle['sci-fi_fantasy'],
     },
     slug: 'sci-fi_fantasy',
   },
   soap: {
     title: 'Soap',
-    urls: {
+    url: {
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.soap,
     },
     slug: 'soap',
   },
   talk: {
     title: 'Talk',
-    urls: {
+    url: {
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.talk,
     },
     slug: 'talk',
   },
   war_politics: {
     title: 'War & Politics',
-    urls: {
+    url: {
       tv: GENRE_TV_SERIES_URL + genresIdByTitle.war_politics,
     },
     slug: 'war_politics',
   },
   upcoming: {
     title: 'Upcoming',
-    urls: {
+    url: {
       movie: UPCOMING_MOVIES_URL,
     },
     slug: 'upcoming',
