@@ -61,7 +61,7 @@ export const SearchBar = () => {
         name="search"
         id="search"
         type="text"
-        placeholder="Search titles, person..."
+        placeholder="Search Titles..."
         autoComplete="off"
         className="
           py-2 pr-7 pl-9 w-full

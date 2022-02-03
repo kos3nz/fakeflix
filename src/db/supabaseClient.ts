@@ -11,17 +11,22 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 export const checkUser = async (
   req: IncomingMessage & {
     cookies: NextApiRequestCookies;
-  }
+  },
+  to: string = '/login'
 ) => {
   const { user } = await supabase.auth.api.getUserByCookie(req);
 
-  const redirect = {
+  const redirect = redirectTo(to);
+
+  return { user, redirect };
+};
+
+const redirectTo = (to: string) => {
+  return {
     props: {},
     redirect: {
-      destination: '/login',
+      destination: to,
       permanent: false,
     },
   };
-
-  return { user, redirect };
 };

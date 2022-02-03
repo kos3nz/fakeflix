@@ -1,21 +1,27 @@
 import type { GetServerSideProps } from 'next';
+import useSWR from 'swr';
 import { Layout } from 'components/Layout';
 import { Banner, BannerFallback } from 'components/Banner';
 import { Row } from 'components/Row';
-import { fetchGenreDataWithCache, randomPick } from 'utils';
-import { tvSeriesGenres } from 'constants/data.config';
-import { type TitleData } from 'constants/request-url';
+import { fetcher, getGenres, randomPick } from 'utils';
+import { GenreResponse } from 'constants/request-url';
 import { checkUser } from 'db/supabaseClient';
 
-type TVSeriesProps = {
-  data: TitleData;
-};
+const type = 'tv';
+const bannerGenre = 'trending';
+const genres = getGenres(type);
 
-export default function TVSeries({ data }: TVSeriesProps) {
+export default function TVSeries() {
+  const { data } = useSWR<GenreResponse>(
+    `/api/titles/${type}/${bannerGenre}`,
+    fetcher
+  );
+  const bannerData = data && randomPick(data.results);
+
   return (
     <Layout containsFooter>
-      {data ? <Banner data={data} /> : <BannerFallback />}
-      {tvSeriesGenres.map((genre) => (
+      {bannerData ? <Banner data={bannerData} /> : <BannerFallback />}
+      {genres.map((genre) => (
         <Row key={genre} genre={genre} type="tv" />
       ))}
     </Layout>
@@ -25,16 +31,11 @@ export default function TVSeries({ data }: TVSeriesProps) {
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   try {
     const { user, redirect } = await checkUser(req);
+
     if (!user) return redirect;
 
-    const { results } = await fetchGenreDataWithCache('trending', 'tv');
-    const bannerData = randomPick(results);
-
     return {
-      props: {
-        data: bannerData,
-        user,
-      },
+      props: {},
     };
   } catch (error) {
     console.log(error);

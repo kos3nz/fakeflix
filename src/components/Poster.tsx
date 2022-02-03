@@ -1,8 +1,11 @@
-import Image from 'next/image';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import Viewport from 'react-responsive';
 import { PosterInfo } from 'components/PosterInfo';
-import { type TitleData, W780_IMAGE_URL } from 'constants/request-url';
-import fallbackImage from 'images/Fakeflix_fallback.png';
+import {
+  type TitleData,
+  W500_IMAGE_URL,
+  W300_IMAGE_URL,
+} from 'constants/request-url';
 import { useAppDispatch } from 'redux/hooks';
 import { openModal } from 'redux/modal/modal.slice';
 
@@ -14,41 +17,35 @@ type PosterProps = {
 export const Poster = ({ data, isLarge = false }: PosterProps) => {
   const dispatch = useAppDispatch();
   const { backdrop_path, poster_path } = data;
-  const aspectRatio = {
-    width: isLarge ? 79 : 16,
-    height: isLarge ? 120 : 9,
-  };
   const imageType = isLarge ? poster_path : backdrop_path;
 
-  const handleOpenModal = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const handleOpenModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
     dispatch(openModal(data));
   };
 
   return (
-    <button
+    <div
       className="poster relative rounded-md overflow-hidden cursor-pointer"
       onClick={handleOpenModal}
     >
       <Viewport minWidth={640}>
         {(matches: boolean) => (
-          <Image
-            src={imageType ? `${W780_IMAGE_URL}${imageType}` : fallbackImage}
-            alt="movie"
-            width={aspectRatio.width}
-            height={aspectRatio.height}
-            layout="responsive"
-            quality={matches ? 40 : 20}
-            objectFit="cover"
-            priority
+          <LazyLoadImage
+            src={
+              imageType && matches
+                ? `${W500_IMAGE_URL}${imageType}`
+                : imageType && !matches
+                ? `${W300_IMAGE_URL}${imageType}`
+                : '/images/fallback.png'
+            }
+            alt="poster"
           />
         )}
       </Viewport>
       <PosterBackground />
       <PosterInfo data={data} />
-    </button>
+    </div>
   );
 };
 

@@ -7,13 +7,14 @@ export default async function fetchSearchResults(
 ) {
   try {
     const { keyword, page } = req.query;
-    const { results } = await fetchSearchData(
+    const { results, total_pages } = await fetchSearchData(
       keyword as string,
       page as string
     );
 
     res.status(200).json({
       results,
+      total_pages,
     });
   } catch (error) {
     console.error(error);

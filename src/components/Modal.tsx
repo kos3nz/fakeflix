@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BsFillPlayFill } from 'react-icons/bs';
@@ -6,8 +5,7 @@ import { VscChromeClose } from 'react-icons/vsc';
 import { FaPlus } from 'react-icons/fa';
 import { Button } from 'components/Button';
 import { useOutsideClick, useConvertGenreIds } from 'hooks';
-import { TitleData, W1280_IMAGE_URL } from 'constants/request-url';
-import fallbackImage from 'images/Fakeflix_fallback.png';
+import { type TitleData, W780_IMAGE_URL } from 'constants/request-url';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import {
   selectIsModalOpen,
@@ -77,24 +75,18 @@ export const Modal = () => {
           >
             <motion.div
               ref={modalRef}
-              className="w-[90%] sm:w-[80%] md:w-[65vw] max-w-xl 2xl:max-w-2xl h-[90vh] bg-gray-900 rounded-md overflow-hidden overflow-y-scroll scrollbar-hidden outline-none"
+              className="w-[80%] md:w-[65vw] max-w-xl 2xl:max-w-2xl h-[85vh] bg-gray-900 rounded-md overflow-hidden overflow-y-scroll scrollbar-hidden outline-none"
               variants={modalVariants}
               tabIndex={-1}
             >
               <div className="w-full h-auto relative">
-                <Image
+                <img
                   src={
                     backdrop_path
-                      ? `${W1280_IMAGE_URL}${backdrop_path}`
-                      : fallbackImage
+                      ? `${W780_IMAGE_URL}${backdrop_path}`
+                      : '/images/fallback.png'
                   }
                   alt="poster"
-                  layout="responsive"
-                  width={16}
-                  height={9}
-                  objectFit="cover"
-                  quality={40}
-                  loading="eager"
                 />
                 <div
                   className="

@@ -8,7 +8,7 @@ import { store } from 'redux/store';
 import 'styles/global.scss';
 import 'styles/intro-animation.scss';
 import 'styles/text-animation.scss';
-import 'styles/row-swiper.scss';
+import 'styles/swiper.scss';
 /* Swiper Styles */
 import 'swiper/scss';
 import 'swiper/scss/navigation';
@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <UserContextProviderWithRedux />
       <ScrollLock />
       <NextProgress
-        height={5}
+        height={3}
         color="hsl(0 72% 51%)"
         startPosition={0.2}
         options={{ showSpinner: false }}
