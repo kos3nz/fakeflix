@@ -9,9 +9,9 @@ import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { Poster } from 'components/Poster';
 import { useViewport } from 'hooks';
 import useSWR from 'swr';
-import { getResults } from 'utils';
+import { fetcher, getResults } from 'utils';
 import { Genres, MediaType } from 'constants/data.config';
-import { TitleData } from 'constants/request-url';
+import { GenreResponse, TitleData } from 'constants/request-url';
 
 /* Swiper */
 SwiperCore.use([Pagination, Navigation]);
@@ -22,15 +22,18 @@ export interface MySwiperProps {
 }
 
 export const Swiper = ({ genre, type }: MySwiperProps) => {
-  const { data } = useSWR<TitleData[]>(
+  const { data } = useSWR<GenreResponse>(
     `/api/titles/${type}/${genre}`,
-    getResults
+    fetcher
   );
   const { width } = useViewport();
   const swiperRef = useRef<HTMLDivElement>(null);
   const prevEl = useRef<HTMLDivElement>(null);
   const nextEl = useRef<HTMLDivElement>(null);
   const isLarge = genre === 'originals' ? true : false;
+
+  console.log({ data });
+  // console.log({ error });
 
   const groupNum =
     width >= 1650
@@ -135,7 +138,7 @@ export const Swiper = ({ genre, type }: MySwiperProps) => {
       </div>
       <SwiperContainer {...swiperProps}>
         {data &&
-          data.map((movie, i) => {
+          data.results.map((movie, i) => {
             return (
               <SwiperSlide
                 key={i}

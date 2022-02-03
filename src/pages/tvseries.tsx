@@ -3,8 +3,8 @@ import useSWR from 'swr';
 import { Layout } from 'components/Layout';
 import { Banner, BannerFallback } from 'components/Banner';
 import { Row } from 'components/Row';
-import { getGenres, getResults, randomPick } from 'utils';
-import { type TitleData } from 'constants/request-url';
+import { fetcher, getGenres, getResults, randomPick } from 'utils';
+import { GenreResponse, type TitleData } from 'constants/request-url';
 import { checkUser } from 'db/supabaseClient';
 
 const type = 'tv';
@@ -12,11 +12,11 @@ const bannerGenre = 'trending';
 const genres = getGenres(type);
 
 export default function TVSeries() {
-  const { data } = useSWR<TitleData[]>(
+  const { data } = useSWR<GenreResponse>(
     `/api/titles/${type}/${bannerGenre}`,
-    getResults
+    fetcher
   );
-  const bannerData = data && randomPick(data);
+  const bannerData = data && randomPick(data.results);
 
   return (
     <Layout containsFooter>

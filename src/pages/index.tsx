@@ -4,19 +4,19 @@ import { Layout } from 'components/Layout';
 import { Banner, BannerFallback } from 'components/Banner';
 import { Row } from 'components/Row';
 import { homeGenres } from 'constants/data.config';
-import { getResults, randomPick } from 'utils';
-import { type TitleData } from 'constants/request-url';
+import { fetcher, getResults, randomPick } from 'utils';
+import { GenreResponse, type TitleData } from 'constants/request-url';
 import { checkUser } from 'db/supabaseClient';
 
 const type = 'movie';
 const genre = 'trending';
 
 export default function Home() {
-  const { data } = useSWR<TitleData[]>(
+  const { data } = useSWR<GenreResponse>(
     `/api/titles/${type}/${genre}`,
-    getResults
+    fetcher
   );
-  const bannerData = data && randomPick(data);
+  const bannerData = data && randomPick(data.results);
 
   return (
     <Layout containsFooter>
