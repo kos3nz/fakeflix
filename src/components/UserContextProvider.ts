@@ -9,7 +9,18 @@ const UserContextProviderWithRedux = () => {
 
   useEffect(() => {
     const session = supabase.auth.session();
-    dispatch(setUserSession({ session, user: session?.user }));
+
+    if (session) {
+      dispatch(setUserSession({ session, user: session?.user }));
+      axios.post(
+        '/api/auth',
+        {
+          event: 'SIGNED_IN',
+          session,
+        },
+        { withCredentials: true }
+      );
+    }
 
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (event, session) => {
