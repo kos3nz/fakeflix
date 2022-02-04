@@ -1,18 +1,26 @@
+import toast from 'react-hot-toast';
 import { FiChevronDown } from 'react-icons/fi';
 import { BsFillPlayFill } from 'react-icons/bs';
-import { FaPlus } from 'react-icons/fa';
+import { FaMinus, FaPlus } from 'react-icons/fa';
 import { useConvertGenreIds } from 'hooks';
-import { useAppDispatch } from 'redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { openModal } from 'redux/modal/modal.slice';
 import { openModalVideo } from 'redux/modalVideo/modalVideo.slice';
 import { TitleData } from 'constants/request-url';
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from 'redux/favorites/favorites.slice';
+import { selectFavoritesList } from 'redux/favorites/favorites.selectors';
 
 export const PosterInfo = ({ data }: { data: TitleData }) => {
   const dispatch = useAppDispatch();
+  const list = useAppSelector(selectFavoritesList);
   const { title, original_title, name, original_name, genre_ids, videoKey } =
     data;
   const movieTitle = title || name || original_title || original_name;
   const genres = useConvertGenreIds(genre_ids);
+  const isInList = list.some((fav) => fav.id === data.id);
 
   const handleOpenModal = (
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>
@@ -21,10 +29,17 @@ export const PosterInfo = ({ data }: { data: TitleData }) => {
     dispatch(openModal(data));
   };
 
-  const handleAddFavorite = (
+  const handleFavorites = (
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>
   ) => {
     e.stopPropagation();
+    if (isInList) {
+      dispatch(removeFromFavorites(data));
+      toast('Removed from your list!');
+    } else {
+      dispatch(addToFavorites(data));
+      toast('Added to your list!');
+    }
   };
 
   const handlePlay = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
@@ -70,10 +85,14 @@ export const PosterInfo = ({ data }: { data: TitleData }) => {
               transition duration-300
               hover:bg-gray-200 hover:text-gray-900
             "
-          onClick={handleAddFavorite}
+          onClick={handleFavorites}
           aria-label="Add favorite"
         >
-          <FaPlus className="w-2 sm:w-3 h-2 sm:h-3" />
+          {isInList ? (
+            <FaMinus className="w-2 sm:w-3 h-2 sm:h-3" />
+          ) : (
+            <FaPlus className="w-2 sm:w-3 h-2 sm:h-3" />
+          )}
         </span>
         <span
           className="

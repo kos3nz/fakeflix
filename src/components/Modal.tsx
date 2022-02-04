@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import toast from 'react-hot-toast';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { VscChromeClose } from 'react-icons/vsc';
-import { FaPlus } from 'react-icons/fa';
+import { FaMinus, FaPlus } from 'react-icons/fa';
 import { Button } from 'components/Button';
 import { useOutsideClick, useConvertGenreIds } from 'hooks';
 import { type TitleData, W780_IMAGE_URL } from 'constants/request-url';
@@ -14,13 +15,19 @@ import {
 import { closeModal } from 'redux/modal/modal.slice';
 import { selectIsModalVideoOpen } from 'redux/modalVideo/modalVideo.selectors';
 import { openModalVideo } from 'redux/modalVideo/modalVideo.slice';
+import { selectFavoritesList } from 'redux/favorites/favorites.selectors';
+import {
+  addToFavorites,
+  removeFromFavorites,
+} from 'redux/favorites/favorites.slice';
 
 export const Modal = () => {
   const modalRef = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector(selectIsModalOpen);
   const modalContent = useAppSelector(selectModalContent);
   const isVideoOpen = useAppSelector(selectIsModalVideoOpen);
-  const dispatch = useAppDispatch();
+  const list = useAppSelector(selectFavoritesList);
 
   const {
     title,
@@ -38,6 +45,7 @@ export const Modal = () => {
   } = modalContent || ({} as TitleData);
   const movieTitle = title || name || original_title || original_name;
   const genres = useConvertGenreIds(genre_ids || []);
+  const isInList = list.some((fav) => fav.id === modalContent?.id);
 
   useOutsideClick(modalRef, () => {
     if (isVideoOpen) return;
@@ -52,6 +60,21 @@ export const Modal = () => {
 
   const handlePlayVideo = () => {
     if (videoKey) dispatch(openModalVideo(videoKey));
+  };
+
+  const handleFavorites = (
+    e: React.MouseEvent<HTMLSpanElement, MouseEvent>
+  ) => {
+    e.stopPropagation();
+    if (modalContent) {
+      if (isInList) {
+        dispatch(removeFromFavorites(modalContent));
+        toast('Removed from your list!');
+      } else {
+        dispatch(addToFavorites(modalContent));
+        toast('Added to your list!');
+      }
+    }
   };
 
   return (
@@ -111,8 +134,13 @@ export const Modal = () => {
                     transition duration-300
                     hover:bg-gray-200 hover:text-gray-900
                     "
+                    onClick={handleFavorites}
                   >
-                    <FaPlus className="w-3 sm:w-4 h-3 sm:h-4" aria-hidden />
+                    {isInList ? (
+                      <FaMinus className="w-2 sm:w-3 h-2 sm:h-3" />
+                    ) : (
+                      <FaPlus className="w-2 sm:w-3 h-2 sm:h-3" />
+                    )}
                   </button>
                 </div>
                 <button
