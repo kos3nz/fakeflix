@@ -102,7 +102,7 @@ export const Modal = () => {
               variants={modalVariants}
               tabIndex={-1}
             >
-              <div className="w-full h-auto relative">
+              <div className="w-full min-h-[100px] relative">
                 <img
                   src={
                     backdrop_path

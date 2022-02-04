@@ -8,11 +8,10 @@ import type {
   Session as SupabaseSession,
   User as SupabaseUser,
 } from '@supabase/supabase-js';
-import { supabase } from 'db/supabaseClient';
+import axios, { AxiosResponse } from 'axios';
 
 interface UserState {
   user: SupabaseUser | null | undefined;
-  session: SupabaseSession | null | undefined;
   isProcessing: boolean;
   currentRequestId: string | undefined;
   errorMessage: string | undefined;
@@ -31,7 +30,6 @@ export const authType = {
 
 const initialState: UserState = {
   user: undefined,
-  session: undefined,
   isProcessing: false,
   currentRequestId: undefined,
   errorMessage: undefined,
@@ -49,38 +47,77 @@ export const manageUserSessionWithSupabase = createAsyncThunk<
   { rejectValue: ApiError }
 >(
   'user/manageUserSessionWithSupabase',
-  async ({ email, password, type }, { rejectWithValue }) => {
+  async ({ email, password, type }, { dispatch, rejectWithValue }) => {
     if (type === 'SIGN_IN') {
-      const { error } = await supabase.auth.signIn({
-        email,
-        password,
-      });
-      if (error) return rejectWithValue(error);
+      try {
+        const { data }: AxiosResponse<{ session: SupabaseSession }> =
+          await axios({
+            method: 'POST',
+            url: '/api/auth/signIn',
+            data: {
+              email,
+              password,
+            },
+            withCredentials: true,
+          });
+        axios.post(
+          '/api/auth/setCookie',
+          {
+            event: 'SIGNED_IN',
+            session: data.session,
+          },
+          { withCredentials: true }
+        );
+        dispatch(setUser(data.session.user));
+      } catch (error) {
+        return rejectWithValue(error as ApiError);
+      }
     } else if (type === 'SIGN_UP') {
-      const { error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
-      if (error) return rejectWithValue(error);
+      try {
+        const { data }: AxiosResponse<{ session: SupabaseSession }> =
+          await axios({
+            method: 'POST',
+            url: '/api/auth/signUp',
+            data: {
+              email,
+              password,
+            },
+            withCredentials: true,
+          });
+        axios.post(
+          '/api/auth/setCookie',
+          {
+            event: 'SIGNED_IN',
+            session: data.session,
+          },
+          { withCredentials: true }
+        );
+        dispatch(setUser(data.session.user));
+      } catch (error) {
+        return rejectWithValue(error as ApiError);
+      }
     } else if (type === 'SIGN_OUT') {
-      const { error } = await supabase.auth.signOut();
-      if (error) return rejectWithValue(error);
+      axios.post(
+        '/api/auth/setCookie',
+        {
+          event: 'SIGNED_OUT',
+          session: null,
+        },
+        { withCredentials: true }
+      );
+      dispatch(setUser(null));
     }
   }
 );
 
-type UserSessionPayload = Partial<Pick<UserState, 'session' | 'user'>>;
+type UserSessionPayload = SupabaseUser;
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserSession: (
-      state,
-      action: PayloadAction<UserSessionPayload | null>
-    ) => {
-      state.session = action.payload?.session ?? null;
-      state.user = action.payload?.user ?? null;
+    setUser: (state, action: PayloadAction<UserSessionPayload | null>) => {
+      state.user = action.payload ?? null;
     },
   },
   extraReducers: (builder) => {
@@ -112,6 +149,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setUserSession } = userSlice.actions;
+export const { setUser } = userSlice.actions;
 
 export default userSlice.reducer;
