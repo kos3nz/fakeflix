@@ -23,7 +23,6 @@ export const checkUser = async (
 
 const redirectTo = (to: string) => {
   return {
-    props: {},
     redirect: {
       destination: to,
       permanent: false,

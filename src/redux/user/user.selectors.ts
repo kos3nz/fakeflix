@@ -8,11 +8,6 @@ export const selectCurrentUser = createSelector(
   (user) => user.user
 );
 
-export const selectSession = createSelector(
-  [selectUser],
-  (user) => user.session
-);
-
 export const selectIsProcessing = createSelector(
   [selectUser],
   (user) => user.isProcessing
