@@ -30,7 +30,7 @@ export default function MovieGenre({ genre }: MovieGenreProps) {
     <Layout>
       <div className="w-full pt-16">
         <div className="py-8 px-[4vw]">
-          <h2 className="text-xl font-bold capitalize mb-6">
+          <h2 className="mb-6 text-xl font-bold capitalize">
             {category || 'There is no such genre.'}
           </h2>
           <div className="genre-grid">

@@ -13,7 +13,7 @@ export default function MyList() {
     <Layout>
       <div className="w-full pt-16">
         <div className="py-8 px-[4vw]">
-          <h2 className="text-xl font-bold capitalize mb-6">My List</h2>
+          <h2 className="mb-6 text-xl font-bold capitalize">My List</h2>
           <div className="genre-grid">
             {list.map((data, i) => (
               <Poster key={i} data={data} />

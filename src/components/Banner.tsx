@@ -50,11 +50,11 @@ export const Banner = ({ data }: BannerProps) => {
     <BannerBackground imageUrl={`${imageSize}${imageType}`}>
       <motion.div
         className="
-          relative z-10
-          max-w-xl pb-[10vh] px-[5vw]
-          flex flex-col items-center
-          lg:items-start lg:pb-0
-          md
+          md relative
+          z-10 flex max-w-xl
+          flex-col items-center px-[5vw]
+          pb-[10vh] lg:items-start
+          lg:pb-0
         "
         initial="initial"
         animate="visible"
@@ -62,15 +62,15 @@ export const Banner = ({ data }: BannerProps) => {
       >
         <h1
           className="
-          text-paragraph text-3xl xs:text-4xl sm:text-6xl font-bold text-center lg:text-left
+          text-center text-3xl font-bold text-paragraph xs:text-4xl sm:text-6xl lg:text-left
             "
         >
           {movieTitle}
         </h1>
         <div
           className="
-          flex items-center space-x-3
-          mt-6
+          mt-6 flex items-center
+          space-x-3
           "
         >
           <Button
@@ -92,8 +92,8 @@ export const Banner = ({ data }: BannerProps) => {
         </div>
         <p
           className="
-            md:max-w-[60vw] lg:max-w-sm mt-4
-            text-xs sm:text-base lg:text-sm text-paragraph text-center lg:text-left tracking-wide
+            mt-4 text-center text-xs
+            tracking-wide text-paragraph sm:text-base md:max-w-[60vw] lg:max-w-sm lg:text-left lg:text-sm
             "
         >
           {description}
@@ -106,31 +106,31 @@ export const Banner = ({ data }: BannerProps) => {
 export const BannerFallback = () => (
   <div
     className={`
-    w-full h-9/10 lg:h-[80vh]
-    relative
-    flex items-end justify-center
+    relative flex h-9/10
+    w-full
+    items-end justify-center lg:h-[80vh]
     lg:items-center lg:justify-start
   `}
   >
     <motion.div
-      className="pb-[10vh] px-[5vw] max-w-xl w-full animate-pulse"
+      className="w-full max-w-xl animate-pulse px-[5vw] pb-[10vh]"
       initial="initial"
       animate="visible"
       variants={wrapperVariants}
     >
       <div className="space-y-6 py-1">
         <div className="space-y-3">
-          <div className="h-10 bg-gray-400 rounded-md w-3/4 mx-auto" />
-          <div className="h-10 bg-gray-400 rounded-md w-3/5 mx-auto" />
+          <div className="mx-auto h-10 w-3/4 rounded-md bg-gray-400" />
+          <div className="mx-auto h-10 w-3/5 rounded-md bg-gray-400" />
         </div>
-        <div className="space-x-2 flex items-center justify-center">
-          <div className="h-10 bg-gray-400 rounded-md w-1/4" />
-          <div className="h-10 bg-gray-400 rounded-md w-1/4" />
+        <div className="flex items-center justify-center space-x-2">
+          <div className="h-10 w-1/4 rounded-md bg-gray-400" />
+          <div className="h-10 w-1/4 rounded-md bg-gray-400" />
         </div>
-        <div className="space-y-2 flex flex-col items-center">
-          <div className="h-4 bg-gray-400 rounded-md w-full" />
-          <div className="h-4 bg-gray-400 rounded-md w-5/6" />
-          <div className="h-4 bg-gray-400 rounded-md w-3/4" />
+        <div className="flex flex-col items-center space-y-2">
+          <div className="h-4 w-full rounded-md bg-gray-400" />
+          <div className="h-4 w-5/6 rounded-md bg-gray-400" />
+          <div className="h-4 w-3/4 rounded-md bg-gray-400" />
         </div>
       </div>
     </motion.div>

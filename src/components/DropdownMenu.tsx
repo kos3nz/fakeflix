@@ -24,10 +24,10 @@ export const DropdownMenu = ({ isVisible }: DropdownMenuProps) => {
           variants={dropdownVariants}
           className="
             absolute top-20 right-6
-            min-w-[100px] xs:min-w-[120px]
-            bg-black bg-opacity-60
-            border-1 border-gray-500
-            text-center text-sm xs:text-base
+            min-w-[100px] border-1
+            border-gray-500 bg-black
+            bg-opacity-60 text-center
+            text-sm xs:min-w-[120px] xs:text-base
           "
         >
           <DropdownItem text="Log out" onClick={handleSignOut} />
@@ -43,9 +43,9 @@ const DropdownItem = ({ text, onClick }: DropdownItemProps) => {
   return (
     <li
       className="
-      py-3 px-6
-      border-b-1 last-of-type:border-b-0 border-gray-500
-      cursor-pointer
+      cursor-pointer border-b-1
+      border-gray-500 py-3 px-6
+      last-of-type:border-b-0
       hover:underline
       "
       onClick={onClick}

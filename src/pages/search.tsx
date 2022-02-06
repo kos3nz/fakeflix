@@ -24,7 +24,7 @@ const Search = () => {
     <Layout containsFooter={false}>
       <div className="w-full pt-16">
         <div className="py-8 px-[4vw]">
-          <h2 className="text-xl font-bold mb-6">{`Search results for : " ${query.keyword} "`}</h2>
+          <h2 className="mb-6 text-xl font-bold">{`Search results for : " ${query.keyword} "`}</h2>
           <div className="genre-grid">
             {titles &&
               !noResult &&

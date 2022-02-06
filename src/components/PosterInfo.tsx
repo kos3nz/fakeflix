@@ -50,37 +50,37 @@ export const PosterInfo = ({ data }: { data: TitleData }) => {
   return (
     <div
       className="
-        absolute top-0 left-0
-        w-full h-full
+        poster-info absolute top-0
+        left-0 hidden
+        h-full
+        w-full transform flex-col items-start justify-end
         p-2
-        hidden lg:flex flex-col justify-end items-start
-        transform
-        transition duration-500 delay-150
-        poster-info
+        transition delay-150 duration-500
+        lg:flex
       "
     >
       <div className="flex items-center space-x-1">
         <span
           className={`
-              border-1 rounded-full
-              transition duration-300
-              p-1
+              rounded-full border-1
+              p-1 transition
+              duration-300
               ${
                 videoKey
-                  ? 'bg-gray-200 text-gray-900 hover:bg-gray-400 hover:border-gray-400'
-                  : 'bg-gray-500 text-gray-700 border-gray-500 cursor-default'
+                  ? 'bg-gray-200 text-gray-900 hover:border-gray-400 hover:bg-gray-400'
+                  : 'cursor-default border-gray-500 bg-gray-500 text-gray-700'
               }
             `}
           onClick={handlePlay}
           aria-label="Play"
         >
-          <BsFillPlayFill className="w-4 sm:w-5 h-4 sm:h-5" />
+          <BsFillPlayFill className="h-4 w-4 sm:h-5 sm:w-5" />
         </span>
         <span
           className="
-              p-2 ml-1
-              border-1 rounded-full
-              bg-transparent
+              ml-1 rounded-full
+              border-1 bg-transparent
+              p-2
               outline-none
               transition duration-300
               hover:bg-gray-200 hover:text-gray-900
@@ -89,16 +89,16 @@ export const PosterInfo = ({ data }: { data: TitleData }) => {
           aria-label="Add favorite"
         >
           {isInList ? (
-            <FaMinus className="w-2 sm:w-3 h-2 sm:h-3" />
+            <FaMinus className="h-2 w-2 sm:h-3 sm:w-3" />
           ) : (
-            <FaPlus className="w-2 sm:w-3 h-2 sm:h-3" />
+            <FaPlus className="h-2 w-2 sm:h-3 sm:w-3" />
           )}
         </span>
         <span
           className="
-              p-1 ml-1
-              border-1 rounded-full
-              bg-transparent
+              ml-1 rounded-full
+              border-1 bg-transparent
+              p-1
               outline-none
               transition duration-300
               hover:bg-gray-200 hover:text-gray-900
@@ -106,17 +106,17 @@ export const PosterInfo = ({ data }: { data: TitleData }) => {
           onClick={handleOpenModal}
           aria-label="More Info"
         >
-          <FiChevronDown className="w-4 sm:w-5 h-4 sm:h-5" />
+          <FiChevronDown className="h-4 w-4 sm:h-5 sm:w-5" />
         </span>
       </div>
-      <h3 className="text-xs xl:text-sm font-medium mt-2 text-left">
+      <h3 className="mt-2 text-left text-xs font-medium xl:text-sm">
         {movieTitle}
       </h3>
-      <div className="flex items-center mt-1 space-x-1">
+      <div className="mt-1 flex items-center space-x-1">
         {genres.map((genre, i) => (
           <span key={i} className="poster-genre flex items-center text-[8px]">
             {genre}
-            <span className="block w-[5px] h-[5px] bg-gray-400 rounded-full ml-1" />
+            <span className="ml-1 block h-[5px] w-[5px] rounded-full bg-gray-400" />
           </span>
         ))}
       </div>

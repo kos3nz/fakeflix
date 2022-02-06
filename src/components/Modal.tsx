@@ -84,10 +84,10 @@ export const Modal = () => {
           <motion.div
             className="
             fixed top-0 left-0 z-50
-            w-full min-h-screen
-            flex justify-center items-center
-            bg-black/80
+            flex min-h-screen
+            w-full items-center justify-center
             overflow-hidden
+            bg-black/80
           "
             // overflow:hiddenでmodalがexit animationで下へ消えることによるスクロールバーを非表示
             initial="hidden"
@@ -98,11 +98,11 @@ export const Modal = () => {
           >
             <motion.div
               ref={modalRef}
-              className="w-[80%] md:w-[65vw] max-w-xl 2xl:max-w-2xl h-[85vh] bg-gray-900 rounded-md overflow-hidden overflow-y-scroll scrollbar-hidden outline-none"
+              className="scrollbar-hidden h-[85vh] w-[80%] max-w-xl overflow-hidden overflow-y-scroll rounded-md bg-gray-900 outline-none md:w-[65vw] 2xl:max-w-2xl"
               variants={modalVariants}
               tabIndex={-1}
             >
-              <div className="w-full min-h-[100px] relative">
+              <div className="relative min-h-[100px] w-full">
                 <img
                   src={
                     backdrop_path
@@ -114,8 +114,8 @@ export const Modal = () => {
                 <div
                   className="
                   absolute bottom-0 left-0
-                  w-full h-[50%]
-                  bg-gradient-to-t via-gray-900/30 from-gray-900
+                  h-[50%] w-full
+                  bg-gradient-to-t from-gray-900 via-gray-900/30
                 "
                 />
                 <div className="absolute bottom-[5%] left-6 flex items-center space-x-2">
@@ -128,36 +128,36 @@ export const Modal = () => {
                   </Button>
                   <button
                     className="
-                    p-2 sm:p-3 ml-1
-                    border-1 rounded-full
-                    bg-transparent
-                    transition duration-300
-                    hover:bg-gray-200 hover:text-gray-900
+                    ml-1 rounded-full border-1
+                    bg-transparent p-2
+                    transition
+                    duration-300 hover:bg-gray-200
+                    hover:text-gray-900 sm:p-3
                     "
                     onClick={handleFavorites}
                   >
                     {isInList ? (
-                      <FaMinus className="w-2 sm:w-3 h-2 sm:h-3" />
+                      <FaMinus className="h-2 w-2 sm:h-3 sm:w-3" />
                     ) : (
-                      <FaPlus className="w-2 sm:w-3 h-2 sm:h-3" />
+                      <FaPlus className="h-2 w-2 sm:h-3 sm:w-3" />
                     )}
                   </button>
                 </div>
                 <button
                   className="
                     absolute top-4 right-4
-                    p-1 sm:p-2
-                    border-1 rounded-full
-                    bg-gray-900/75
-                    transition duration-300
-                    hover:bg-gray-200 hover:text-gray-900
+                    rounded-full border-1
+                    bg-gray-900/75 p-1
+                    transition
+                    duration-300 hover:bg-gray-200
+                    hover:text-gray-900 sm:p-2
                   "
                   onClick={() => dispatch(closeModal())}
                   aria-label="Close the modal by clicking here"
                 >
                   <VscChromeClose
                     aria-hidden
-                    className="w-4 sm:w-5 h-4 sm:h-5"
+                    className="h-4 w-4 sm:h-5 sm:w-5"
                   />
                 </button>
                 <button onFocus={() => modalRef.current?.focus()} />
@@ -169,20 +169,20 @@ export const Modal = () => {
                 variants={infoWrapperVariants}
               >
                 <motion.h3
-                  className="text-2xl sm:text-3xl font-semibold mb-4"
+                  className="mb-4 text-2xl font-semibold sm:text-3xl"
                   variants={infoItemVariants}
                 >
                   {movieTitle}
                 </motion.h3>
                 <motion.p
-                  className="text-sm xs:text-base leading-6"
+                  className="text-sm leading-6 xs:text-base"
                   variants={infoItemVariants}
                 >
                   {overview}
                 </motion.p>
-                <hr className="my-4 xs:my-6 border-gray-500" />
+                <hr className="my-4 border-gray-500 xs:my-6" />
                 <motion.h4
-                  className="text-lg xs:text-xl mb-4"
+                  className="mb-4 text-lg xs:text-xl"
                   variants={infoItemVariants}
                 >
                   Info on <b>{movieTitle}</b>
@@ -209,10 +209,10 @@ type InfoItemProps = {
 const InfoItem = ({ info, item = 'Not available' }: InfoItemProps) => {
   return (
     <motion.div
-      className="flex text-xs xs:text-sm mb-2 last:mb-0"
+      className="mb-2 flex text-xs last:mb-0 xs:text-sm"
       variants={infoItemVariants}
     >
-      <span className="text-gray-500 mr-1">{`${info}:`}</span>
+      <span className="mr-1 text-gray-500">{`${info}:`}</span>
       <span>{item}</span>
     </motion.div>
   );

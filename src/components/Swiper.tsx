@@ -126,7 +126,7 @@ export const Swiper = ({ genre, type }: MySwiperProps) => {
   }, [swiperRef, groupNum]);
 
   return (
-    <div ref={swiperRef} className="relative flex row">
+    <div ref={swiperRef} className="row relative flex">
       <div ref={prevEl} className="swiper-button prev">
         <FiChevronLeft />
       </div>

@@ -63,7 +63,7 @@ export const Drawer = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="absolute top-0 left-0 w-full min-h-screen bg-black/80
+            className="absolute top-0 left-0 min-h-screen w-full bg-black/80
             "
             initial="hidden"
             animate="visible"
@@ -74,8 +74,8 @@ export const Drawer = () => {
               ref={drawerRef}
               className="
               absolute top-0 right-0
-              w-72 h-full
-              flex justify-center items-center
+              flex h-full
+              w-72 items-center justify-center
             bg-gray-900
               "
               initial="hidden"
@@ -90,24 +90,24 @@ export const Drawer = () => {
       </AnimatePresence>
       <div
         ref={handlerRef}
-        className="w-6 h-6 space-y-[6px] z-50 cursor-pointer"
+        className="z-50 h-6 w-6 cursor-pointer space-y-[6px]"
         onClick={() => {
           setIsOpen((state) => !state);
           setHandlerAnimation((state) => !state);
         }}
       >
         <motion.span
-          className="block w-6 h-[2px] bg-gray-200 rounded-sm"
+          className="block h-[2px] w-6 rounded-sm bg-gray-200"
           animate="toggle"
           variants={handlerVariants.top}
         />
         <motion.span
-          className="block w-6 h-[2px] bg-gray-200 rounded-sm"
+          className="block h-[2px] w-6 rounded-sm bg-gray-200"
           animate="toggle"
           variants={handlerVariants.middle}
         />
         <motion.span
-          className="block w-6 h-[2px] bg-gray-200 rounded-sm"
+          className="block h-[2px] w-6 rounded-sm bg-gray-200"
           animate="toggle"
           variants={handlerVariants.bottom}
         />

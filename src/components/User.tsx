@@ -30,8 +30,8 @@ export const User = () => {
     <div className="text-paragraph" ref={dropdownRef}>
       <div
         className="
-          flex items-center space-x-1
-          cursor-pointer
+          flex cursor-pointer items-center
+          space-x-1
         "
         onClick={() => setIsVisible((isVisible) => !isVisible)}
       >
@@ -39,7 +39,7 @@ export const User = () => {
           <img src="/images/profile.png" alt="user" />
         </div>
         <motion.div animate={isVisible ? 'up' : 'down'} variants={iconVariants}>
-          <IoMdArrowDropdown className="w-5 h-5" />
+          <IoMdArrowDropdown className="h-5 w-5" />
         </motion.div>
       </div>
       <DropdownMenu isVisible={isVisible} />

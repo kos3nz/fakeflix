@@ -11,10 +11,10 @@ export const AuthInput = ({ registration, error, ...rest }: AuthInputProps) => (
     <input
       autoComplete="off"
       className={`
-            py-3 px-4 w-full
-            bg-gray-700 rounded-md
-            text-paragraph placeholder-gray-500 caret-gray-200
-            appearance-none
+            w-full appearance-none rounded-md
+            bg-gray-700 py-3
+            px-4 text-paragraph placeholder-gray-500
+            caret-gray-200
             ${error ? 'border-b-2 border-yellow-500' : ''}
             focus:outline-none
           `}

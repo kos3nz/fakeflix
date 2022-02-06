@@ -26,10 +26,42 @@
 </div>
 */
 .row {
+  &:hover .swiper-button svg {
+    @apply lg:scale-150 lg:opacity-100;
+  }
+
+  &:hover .swiper-pagination {
+    @apply sm:opacity-100;
+  }
+
+  .swiper-button {
+    @apply absolute top-0
+    z-10 flex h-full min-h-[100px] w-[7%]
+    flex-shrink-0 cursor-pointer items-center
+    justify-center
+    bg-gray-900/70 sm:w-[5%];
+
+    svg {
+      @apply h-10 w-10 text-gray-200 transition duration-300 lg:h-6 lg:w-6 lg:opacity-0;
+    }
+
+    &.prev {
+      @apply left-0 rounded-tr-md rounded-br-md;
+    }
+
+    &.next {
+      @apply right-0 rounded-tl-md rounded-bl-md;
+    }
+
+    &.swiper-button-disabled {
+      @apply cursor-default opacity-30;
+    }
+  }
+
   .swiper {
     // 左右の余白はここで指定
     overflow: initial;
-    @apply px-[7%] sm:px-[5%] w-full h-auto;
+    @apply h-auto w-full px-[7%] sm:px-[5%];
 
     .swiper-wrapper {
       @apply h-auto;
@@ -86,9 +118,9 @@
 
       .swiper-slide {
         // slidesPerViewをautoにするとwidth, heightを指定できる
-        @apply rounded-md max-w-full
-        transition duration-300
-        overflow-hidden cursor-pointer;
+        @apply max-w-full cursor-pointer
+        overflow-hidden rounded-md
+        transition duration-300;
 
         &.center {
           @apply origin-center;
@@ -109,21 +141,21 @@
       left: initial !important;
       bottom: initial !important;
       width: auto !important;
-      @apply absolute -top-8 right-[5%] transition duration-500;
+      @apply absolute -top-8 right-[5%] hidden transition duration-500;
+
+      @media only screen and (min-width: 375px) {
+        @apply block;
+      }
 
       @media only screen and (min-width: 500px) {
         @apply opacity-100 lg:opacity-0;
       }
 
       &-bullet {
-        @apply w-[6px] h-[6px] bg-gray-200 transition duration-300;
-
-        @media only screen and (min-width: 450px) {
-          @apply w-2 h-2;
-        }
+        @apply h-2 w-2 bg-gray-200 transition duration-300;
 
         @media only screen and (min-width: 640px) {
-          @apply sm:w-5 sm:h-[6px] sm:rounded-sm;
+          @apply sm:h-[6px] sm:w-5 sm:rounded-sm;
         }
 
         &-active {
@@ -133,38 +165,6 @@
 
     &:hover .swiper-pagination {
       @apply sm:opacity-100;
-    }
-  }
-
-  .swiper-button {
-    @apply absolute top-0
-    w-[7%] sm:w-[5%] min-h-[100px] h-full flex-shrink-0
-    flex justify-center items-center
-    bg-gray-900/70
-    cursor-pointer z-10;
-
-    svg {
-      @apply w-10 h-10 md:w-6 md:h-6 text-gray-200 md:opacity-0 transition duration-300;
-    }
-
-    &:hover svg {
-      @apply md:opacity-100 md:scale-150;
-    }
-
-    &:hover ~ .swiper .swiper-pagination {
-      @apply sm:opacity-100;
-    }
-
-    &.prev {
-      @apply left-0 rounded-tr-md rounded-br-md;
-    }
-
-    &.next {
-      @apply right-0 rounded-tl-md rounded-bl-md;
-    }
-
-    &.swiper-button-disabled {
-      @apply opacity-30 cursor-default;
     }
   }
 }

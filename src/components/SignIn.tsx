@@ -59,7 +59,7 @@ export const SignIn = () => {
 
   return (
     <>
-      <h2 className="text-paragraph text-xl xs:text-2xl font-semibold mb-4">
+      <h2 className="mb-4 text-xl font-semibold text-paragraph xs:text-2xl">
         Sign In
       </h2>
       <motion.form

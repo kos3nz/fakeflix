@@ -10,7 +10,7 @@ const Swiper = dynamic<MySwiperProps>(
   () => import('components/Swiper').then((mod) => mod.Swiper),
   {
     loading: () => (
-      <div className="min-h-[100px] flex justify-center items-center">
+      <div className="flex min-h-[100px] items-center justify-center">
         <Spinner />
       </div>
     ),
@@ -37,24 +37,24 @@ export const Row = ({ genre, type }: RowProps) => {
       : `/all/${genre}`;
 
   return (
-    <div className="pb-2 sm:pb-3 lg:pb-4" ref={observe}>
+    <div className="pb-4 lg:pb-8" ref={observe}>
       <h2
         className="
-        mb-2 xs:mb-3 px-[7%] sm:px-[5%]
-        font-semibold text-md sm:text-lg lg:text-xl
-        inline-block
+        text-md mb-2 inline-block px-[7%]
+        font-semibold underline decoration-red-700 decoration-2
+        underline-offset-2 active:text-gray-400 sm:mb-2 sm:px-[5%] sm:text-lg sm:no-underline lg:text-xl
         "
       >
         <Link href={href}>
-          <a className="flex items-baseline space-x-1 row-showmore">
+          <a className="showmore flex items-baseline space-x-1">
             {title}
-            <span className="hidden sm:flex items-center text-[10px] sm:text-xs lg:text-sm opacity-0 transition-all duration-700">
+            <span className="hidden items-center text-[10px] underline opacity-0 transition-all duration-700 sm:flex sm:text-xs sm:decoration-1 sm:underline-offset-1 lg:text-sm">
               Show all <FiChevronRight />
             </span>
           </a>
         </Link>
       </h2>
-      <div className="min-h-[100px] sm:min-h-[125px] lg:min-h-[250px">
+      <div className="lg:min-h-[250px min-h-[100px] sm:min-h-[125px]">
         {inView && <Swiper genre={genre} type={type} />}
       </div>
     </div>

@@ -6,7 +6,9 @@
   html,
   body {
     /* font-family: Inter, sans-serif; */
-    @apply text-paragraph bg-gray-900 min-h-full;
+    @apply min-h-full bg-gray-900 text-paragraph;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
   }
 }
 
@@ -14,27 +16,27 @@
   display: none;
 }
 
-.row-showmore {
+.showmore {
   span {
-    @apply opacity-100 transform translate-x-2 underline;
+    @apply translate-x-2 transform opacity-100;
 
     @media only screen and (min-width: 1024px) {
-      @apply opacity-0 translate-x-0;
+      @apply translate-x-0 opacity-0;
     }
   }
 
   &:hover span {
     @media only screen and (min-width: 1024px) {
-      @apply opacity-100 transform translate-x-2;
+      @apply translate-x-2 transform opacity-100;
     }
   }
 }
 
 .poster {
-  @apply w-full h-full relative rounded-md overflow-hidden cursor-pointer;
+  @apply relative h-full w-full cursor-pointer overflow-hidden rounded-md;
 
   .poster-info {
-    @apply opacity-0 translate-y-10;
+    @apply translate-y-10 opacity-0;
   }
 
   .poster-bg {
@@ -45,7 +47,7 @@
     &:hover,
     &:focus {
       .poster-info {
-        @apply opacity-100 translate-y-0;
+        @apply translate-y-0 opacity-100;
       }
       .poster-bg {
         @apply opacity-100;

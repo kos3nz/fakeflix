@@ -9,9 +9,9 @@ export const NavMenu = () => {
   return (
     <ul
       className="
-        text-paragraph
         space-y-12
         text-center
+        text-paragraph
         lg:flex lg:space-x-5 lg:space-y-0
       "
     >
@@ -41,7 +41,7 @@ const NavMenuItem = ({ text, href, active, unavailable }: NavMenuItemProps) => {
   ) : active ? (
     <li className="p-1 font-bold text-red-500">{text}</li>
   ) : (
-    <li className="p-1 transition duration-200 hover:text-gray-400 cursor-pointer">
+    <li className="cursor-pointer p-1 transition duration-200 hover:text-gray-400">
       <Link href={href}>
         <a>{text}</a>
       </Link>

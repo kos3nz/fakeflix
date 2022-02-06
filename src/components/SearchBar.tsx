@@ -46,14 +46,14 @@ export const SearchBar = () => {
   };
 
   return (
-    <div className="flex items-center max-w-[250px] mr-2 sm:mr-0 relative">
+    <div className="relative mr-2 flex max-w-[250px] items-center sm:mr-0">
       <label htmlFor="search" className="absolute left-2 cursor-pointer">
         <button
-          className="flex justify-center items-center"
+          className="flex items-center justify-center"
           onClick={handleClickSearchIcon}
           aria-label="Search titles"
         >
-          <FiSearch className="w-5 h-5 text-gray-300 hover:text-gray-50 transition duration-200" />
+          <FiSearch className="h-5 w-5 text-gray-300 transition duration-200 hover:text-gray-50" />
         </button>
       </label>
       <input
@@ -64,24 +64,24 @@ export const SearchBar = () => {
         placeholder="Search Titles..."
         autoComplete="off"
         className="
-          py-2 pr-7 pl-9 w-full
-          text-xs sm:text-sm text-paragraph
-        placeholder-gray-400 caret-gray-200
-        bg-gray-900/75 rounded-md
-          ring-1 ring-gray-500
-          transition duration-200;
-          focus:outline-none focus:ring-gray-200 focus:bg-gray-900/90
-          appearance-none
+          duration-200; w-full appearance-none rounded-md
+          bg-gray-900/75 py-2 pr-7
+        pl-9 text-xs
+        text-paragraph placeholder-gray-400
+          caret-gray-200 ring-1
+          ring-gray-500 transition
+          focus:bg-gray-900/90 focus:outline-none focus:ring-gray-200
+          sm:text-sm
         "
         onChange={handleInputChange}
         value={query}
         onKeyDown={handleSearchTitles}
       />
       <span
-        className="absolute right-1 flex justify-center items-center cursor-pointer"
+        className="absolute right-1 flex cursor-pointer items-center justify-center"
         onClick={handleClearInput}
       >
-        <RiCloseFill className="w-5 xs:w-6 h-5 xs:h-6 text-gray-500 hover:text-gray-300 transition duration-200" />
+        <RiCloseFill className="h-5 w-5 text-gray-500 transition duration-200 hover:text-gray-300 xs:h-6 xs:w-6" />
       </span>
     </div>
   );

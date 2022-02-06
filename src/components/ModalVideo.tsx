@@ -24,10 +24,10 @@ export const ModalVideo = () => {
         <motion.div
           className="modal-video
           fixed top-0 left-0
-          w-full min-h-screen
-          flex justify-center items-center
+          z-[100] flex
+          min-h-screen w-full items-center
+          justify-center
           bg-gray-900/80
-          z-[100]
           "
           role="dialog"
           aria-label="You just opened the modal video"
@@ -39,23 +39,21 @@ export const ModalVideo = () => {
           <motion.div
             ref={modalVideoRef}
             // can adjust the size of the video screen here
-            className="modal-video-inner
-              max-w-[90%] sm:max-w-[80%] lg:max-w-3xl w-full
-            "
+            className="modal-video-inner w-full max-w-[90%] sm:max-w-[80%] lg:max-w-3xl"
             initial="hidden"
             animate="visible"
             exit="exit"
             variants={modalVideoVariant}
           >
             <div
-              className="relative w-full pt-[56.25%] overflow-hidden" // 56.25% = 16:9 Aspect Ratio
+              className="relative w-full overflow-hidden pt-[56.25%]" // 56.25% = 16:9 Aspect Ratio
             >
               <button
                 className="modal-video-close-btn"
                 aria-label="Close the modal by clicking here"
               ></button>
               <iframe
-                className="absolute top-0 left-0 bottom-0 right-0 w-full h-full"
+                className="absolute top-0 left-0 bottom-0 right-0 h-full w-full"
                 src={`https://www.youtube-nocookie.com/embed/${videoKey}?autoplay=1`}
                 title="YouTube video player"
                 frameBorder="0"

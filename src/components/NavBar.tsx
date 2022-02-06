@@ -13,10 +13,10 @@ export const NavBar = () => {
   return (
     <motion.header
       className="
-        w-full h-20 px-[4%]
-        fixed flex items-center
-        transition duration-300
-        z-30
+        fixed z-30 flex
+        h-20 w-full items-center
+        px-[4%] transition
+        duration-300
       "
       style={{
         backgroundColor: isScrollTop ? 'transparent' : 'rgba(28, 25, 24, 1)',
@@ -31,7 +31,7 @@ export const NavBar = () => {
           )
         }
       </Viewport>
-      <nav className="flex-1 flex justify-end lg:justify-between items-center ml-10">
+      <nav className="ml-10 flex flex-1 items-center justify-end lg:justify-between">
         <Viewport minWidth={1024}>
           {(matches: boolean) => matches && <NavMenu />}
         </Viewport>

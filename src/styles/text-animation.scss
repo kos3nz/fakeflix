@@ -11,11 +11,11 @@
 // text-shadow: 0px 0px transparent, 1px 1px #aaa, ... , 100px 100px #aaa;
 
 #text-animation__wrapper {
-  @apply absolute top-0 left-0 w-full min-h-screen flex justify-center items-center z-50 overflow-hidden;
+  @apply absolute top-0 left-0 z-50 flex min-h-screen w-full items-center justify-center overflow-hidden;
   background: radial-gradient(#fff, #aaa);
 
   .text-animation {
-    @apply text-center text-[10vmin] font-bold uppercase outline-none whitespace-nowrap;
+    @apply whitespace-nowrap text-center text-[10vmin] font-bold uppercase outline-none;
     animation-name: netflix_style;
     animation-duration: 3.5s;
     animation-fill-mode: forwards;

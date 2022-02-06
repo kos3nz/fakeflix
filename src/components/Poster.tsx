@@ -26,7 +26,7 @@ export const Poster = ({ data, isLarge = false }: PosterProps) => {
 
   return (
     <div
-      className="poster relative rounded-md overflow-hidden cursor-pointer"
+      className="poster relative cursor-pointer overflow-hidden rounded-md"
       onClick={handleOpenModal}
     >
       <Viewport minWidth={640}>
@@ -53,11 +53,11 @@ const PosterBackground = () => {
   return (
     <div
       className="
-        absolute top-0 left-0
-        w-full h-full
-        bg-gradient-to-t from-black/50 via-black/30
-        transition duration-300
-        poster-bg
+        poster-bg absolute top-0
+        left-0 h-full
+        w-full bg-gradient-to-t from-black/50
+        via-black/30 transition
+        duration-300
       "
     />
   );
