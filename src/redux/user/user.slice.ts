@@ -3,19 +3,21 @@ import {
   createAsyncThunk,
   type PayloadAction,
 } from '@reduxjs/toolkit';
-import type {
-  ApiError,
-  Session as SupabaseSession,
-  User as SupabaseUser,
-} from '@supabase/supabase-js';
-import axios, { AxiosResponse } from 'axios';
+import type { ApiError, User as SupabaseUser } from '@supabase/supabase-js';
+import { supabase } from 'db/supabaseClient';
 
 interface UserState {
   user: SupabaseUser | null | undefined;
   isProcessing: boolean;
   currentRequestId: string | undefined;
   errorMessage: string | undefined;
+  status: LoginStatus | undefined;
 }
+
+type LoginStatus = {
+  type: AuthType | undefined;
+  status: 'success' | 'failed' | undefined;
+};
 
 type AuthType =
   | typeof authType.SIGN_IN
@@ -33,6 +35,7 @@ const initialState: UserState = {
   isProcessing: false,
   currentRequestId: undefined,
   errorMessage: undefined,
+  status: undefined,
 };
 
 type ViaEmailProps = {
@@ -42,71 +45,23 @@ type ViaEmailProps = {
 };
 
 export const manageUserSessionWithSupabase = createAsyncThunk<
-  void,
+  LoginStatus,
   ViaEmailProps,
-  { rejectValue: ApiError }
+  { rejectValue: { type: AuthType; error: ApiError } }
 >(
   'user/manageUserSessionWithSupabase',
-  async ({ email, password, type }, { dispatch, rejectWithValue }) => {
+  async ({ email, password, type }, { rejectWithValue }) => {
     if (type === 'SIGN_IN') {
-      try {
-        const { data }: AxiosResponse<{ session: SupabaseSession }> =
-          await axios({
-            method: 'POST',
-            url: '/api/auth/signIn',
-            data: {
-              email,
-              password,
-            },
-            withCredentials: true,
-          });
-        axios.post(
-          '/api/auth/setCookie',
-          {
-            event: 'SIGNED_IN',
-            session: data.session,
-          },
-          { withCredentials: true }
-        );
-        dispatch(setUser(data.session.user));
-      } catch (error) {
-        return rejectWithValue(error as ApiError);
-      }
+      const { error } = await supabase.auth.signIn({ email, password });
+      if (error) return rejectWithValue({ type, error });
     } else if (type === 'SIGN_UP') {
-      try {
-        const { data }: AxiosResponse<{ session: SupabaseSession }> =
-          await axios({
-            method: 'POST',
-            url: '/api/auth/signUp',
-            data: {
-              email,
-              password,
-            },
-            withCredentials: true,
-          });
-        axios.post(
-          '/api/auth/setCookie',
-          {
-            event: 'SIGNED_IN',
-            session: data.session,
-          },
-          { withCredentials: true }
-        );
-        dispatch(setUser(data.session.user));
-      } catch (error) {
-        return rejectWithValue(error as ApiError);
-      }
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) return rejectWithValue({ type, error });
     } else if (type === 'SIGN_OUT') {
-      axios.post(
-        '/api/auth/setCookie',
-        {
-          event: 'SIGNED_OUT',
-          session: null,
-        },
-        { withCredentials: true }
-      );
-      dispatch(setUser(null));
+      const { error } = await supabase.auth.signOut();
+      if (error) return rejectWithValue({ type, error });
     }
+    return { type, status: 'success' };
   }
 );
 
@@ -132,6 +87,7 @@ export const userSlice = createSlice({
           state.isProcessing = false;
           state.currentRequestId = undefined;
           state.errorMessage = undefined;
+          state.status = { ...action.payload };
         }
       })
       .addCase(manageUserSessionWithSupabase.rejected, (state, action) => {
@@ -139,9 +95,8 @@ export const userSlice = createSlice({
         if (state.isProcessing && state.currentRequestId === requestId) {
           state.isProcessing = false;
           state.currentRequestId = undefined;
-        }
-        if (action.payload) {
-          state.errorMessage = action.payload.message;
+          state.errorMessage = action?.payload?.error.message;
+          state.status = { type: action?.payload?.type, status: 'failed' };
         }
       });
   },

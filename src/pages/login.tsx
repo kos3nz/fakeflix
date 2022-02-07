@@ -4,28 +4,21 @@ import { motion } from 'framer-motion';
 import { Logo } from 'components/Logo';
 import { SignIn } from 'components/SignIn';
 import { SignUp } from 'components/SignUp';
-import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { selectCurrentUser } from 'redux/user/user.selectors';
+import { useAppSelector } from 'redux/hooks';
+import { selectLoginStatus } from 'redux/user/user.selectors';
 import { GetServerSideProps } from 'next';
 import { checkUser } from 'db/supabaseClient';
 import { Head } from 'components/Head';
-import { setUser } from 'redux/user/user.slice';
 
-type LoginProps = { cookieExpired?: boolean };
-
-export default function Login({ cookieExpired }: LoginProps) {
-  const [isSignedUp, setIsSignedUp] = useState(true);
-  const dispatch = useAppDispatch();
-  const user = useAppSelector(selectCurrentUser);
+export default function Login() {
   const router = useRouter();
+  const status = useAppSelector(selectLoginStatus);
+  const [isSignedUp, setIsSignedUp] = useState(true);
 
   useEffect(() => {
-    if (cookieExpired) dispatch(setUser(null));
-  }, []);
-
-  useEffect(() => {
-    if (user) router.push('/intro');
-  }, [user]);
+    if (status?.type !== 'SIGN_OUT' && status?.status === 'success')
+      router.push('/intro');
+  }, [status]);
 
   return (
     <>
@@ -105,7 +98,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     if (user) return redirect;
 
     return {
-      props: { cookieExpired: true },
+      props: {},
     };
   } catch (error) {
     console.error(error);

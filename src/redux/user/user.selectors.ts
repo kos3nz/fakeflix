@@ -17,3 +17,8 @@ export const selectError = createSelector(
   [selectUser],
   (user) => user.errorMessage
 );
+
+export const selectLoginStatus = createSelector(
+  [selectUser],
+  (user) => user.status
+);

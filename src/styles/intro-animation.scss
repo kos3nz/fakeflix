@@ -550,9 +550,14 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  30% {
+    opacity: 0.5;
+  }
+
   100% {
     opacity: 0;
-    transform: translateY(-70%);
+    transform: translateY(-80%);
   }
 }
 

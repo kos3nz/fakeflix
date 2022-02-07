@@ -4,6 +4,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import NextProgress from 'nextjs-progressbar';
 import { Toaster } from 'react-hot-toast';
 import { ScrollLock } from 'components/ScrollLock';
+import { AuthUser } from 'components/AuthUser';
 import { store, persistor } from 'redux/store';
 /* Styles */
 import 'styles/global.scss';
@@ -19,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
+        <AuthUser />
         <ScrollLock />
         <NextProgress
           height={3}

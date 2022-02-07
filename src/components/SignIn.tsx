@@ -13,8 +13,8 @@ type FormValue = {
 };
 
 export const SignIn = () => {
-  const isProcessing = useAppSelector(selectIsProcessing);
   const dispatch = useAppDispatch();
+  const isProcessing = useAppSelector(selectIsProcessing);
   const {
     register,
     handleSubmit,
