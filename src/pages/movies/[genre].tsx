@@ -34,7 +34,10 @@ export default function MovieGenre({ genre }: MovieGenreProps) {
             {category || 'There is no such genre.'}
           </h2>
           <div className="genre-grid">
-            {titles && titles.map((data, i) => <Poster key={i} data={data} />)}
+            {titles &&
+              titles.map((data, i) => (
+                <Poster key={i} data={data} as={'button'} />
+              ))}
           </div>
           {!reachedEnd && (
             <div ref={observe} className="flex justify-center pt-4">

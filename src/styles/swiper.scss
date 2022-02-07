@@ -35,14 +35,18 @@
   }
 
   .swiper-button {
-    @apply absolute top-0
-    z-10 flex h-full min-h-[100px] w-[7%]
-    flex-shrink-0 cursor-pointer items-center
-    justify-center
-    bg-gray-900/70 sm:w-[5%];
+    @apply absolute top-0 z-10 flex h-full min-h-[100px] w-[7%] flex-shrink-0 cursor-pointer items-center justify-center bg-gray-900/70 sm:w-[4.5%];
 
     svg {
       @apply h-10 w-10 text-gray-200 transition duration-300 lg:h-6 lg:w-6 lg:opacity-0;
+    }
+
+    &:focus svg {
+      @apply scale-150 opacity-100;
+    }
+
+    &:focus ~ .swiper .swiper-pagination {
+      @apply opacity-100;
     }
 
     &.prev {

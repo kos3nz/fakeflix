@@ -35,10 +35,10 @@ export const PosterInfo = ({ data }: { data: TitleData }) => {
     e.stopPropagation();
     if (isInList) {
       dispatch(removeFromFavorites(data));
-      toast('Removed from your list!');
+      toast('Removed from your list!', { duration: 2000 });
     } else {
       dispatch(addToFavorites(data));
-      toast('Added to your list!');
+      toast('Added to your list!', { duration: 2000 });
     }
   };
 
@@ -74,14 +74,13 @@ export const PosterInfo = ({ data }: { data: TitleData }) => {
           onClick={handlePlay}
           aria-label="Play"
         >
-          <BsFillPlayFill className="h-4 w-4 sm:h-5 sm:w-5" />
+          <BsFillPlayFill className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden />
         </span>
         <span
           className="
               ml-1 rounded-full
               border-1 bg-transparent
               p-2
-              outline-none
               transition duration-300
               hover:bg-gray-200 hover:text-gray-900
             "
@@ -89,9 +88,9 @@ export const PosterInfo = ({ data }: { data: TitleData }) => {
           aria-label="Add favorite"
         >
           {isInList ? (
-            <FaMinus className="h-2 w-2 sm:h-3 sm:w-3" />
+            <FaMinus className="h-2 w-2 sm:h-3 sm:w-3" aria-hidden />
           ) : (
-            <FaPlus className="h-2 w-2 sm:h-3 sm:w-3" />
+            <FaPlus className="h-2 w-2 sm:h-3 sm:w-3" aria-hidden />
           )}
         </span>
         <span
@@ -99,14 +98,13 @@ export const PosterInfo = ({ data }: { data: TitleData }) => {
               ml-1 rounded-full
               border-1 bg-transparent
               p-1
-              outline-none
               transition duration-300
               hover:bg-gray-200 hover:text-gray-900
             "
           onClick={handleOpenModal}
           aria-label="More Info"
         >
-          <FiChevronDown className="h-4 w-4 sm:h-5 sm:w-5" />
+          <FiChevronDown className="h-4 w-4 sm:h-5 sm:w-5" aria-hidden />
         </span>
       </div>
       <h3 className="mt-2 text-left text-xs font-medium xl:text-sm">

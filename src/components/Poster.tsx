@@ -8,24 +8,27 @@ import {
 } from 'constants/request-url';
 import { useAppDispatch } from 'redux/hooks';
 import { openModal } from 'redux/modal/modal.slice';
+import { ElementType } from 'react';
 
 type PosterProps = {
+  as?: ElementType;
   data: TitleData;
   isLarge?: boolean;
 };
 
-export const Poster = ({ data, isLarge = false }: PosterProps) => {
+export const Poster = ({ as = 'div', data, isLarge = false }: PosterProps) => {
+  const Component = as;
+
   const dispatch = useAppDispatch();
   const { backdrop_path, poster_path } = data;
   const imageType = isLarge ? poster_path : backdrop_path;
 
-  const handleOpenModal = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    e.stopPropagation();
+  const handleOpenModal = () => {
     dispatch(openModal(data));
   };
 
   return (
-    <div
+    <Component
       className="poster relative cursor-pointer overflow-hidden rounded-md"
       onClick={handleOpenModal}
     >
@@ -45,7 +48,7 @@ export const Poster = ({ data, isLarge = false }: PosterProps) => {
       </Viewport>
       <PosterBackground />
       <PosterInfo data={data} />
-    </div>
+    </Component>
   );
 };
 

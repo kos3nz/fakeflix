@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from 'redux/hooks';
 import { authType, manageUserSessionWithSupabase } from 'redux/user/user.slice';
+import { useCallback } from 'react';
 
 type DropdownMenuProps = { isVisible: boolean };
 
@@ -9,10 +10,10 @@ export const DropdownMenu = ({ isVisible }: DropdownMenuProps) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const handleSignOut = async () => {
+  const handleSignOut = useCallback(async () => {
     dispatch(manageUserSessionWithSupabase({ type: authType.SIGN_OUT }));
     router.push('/play');
-  };
+  }, []);
 
   return (
     <AnimatePresence>
@@ -41,16 +42,18 @@ type DropdownItemProps = { text: string; onClick: () => void };
 
 const DropdownItem = ({ text, onClick }: DropdownItemProps) => {
   return (
-    <li
-      className="
-      cursor-pointer border-b-1
-      border-gray-500 py-3 px-6
-      last-of-type:border-b-0
-      hover:underline
-      "
-      onClick={onClick}
-    >
-      {text}
+    <li>
+      <button
+        className="
+        w-full
+        border-b-1 border-gray-500 py-3
+        px-6 last-of-type:border-b-0
+        hover:underline
+        "
+        onClick={onClick}
+      >
+        {text}
+      </button>
     </li>
   );
 };

@@ -3,7 +3,7 @@ import Viewport from 'react-responsive';
 import { Logo } from 'components/Logo';
 import { NavMenu } from './NavMenu';
 import { SearchBar } from 'components/SearchBar';
-import { User } from 'components/User';
+import { Profile } from 'components/Profile';
 import { Drawer } from 'components/Drawer';
 import { useScrollTop } from 'hooks';
 
@@ -37,7 +37,7 @@ export const NavBar = () => {
         </Viewport>
         <div className="flex items-center space-x-3 sm:space-x-6">
           <SearchBar />
-          <User />
+          <Profile />
           <Viewport minWidth={1024}>
             {(matches: boolean) => !matches && <Drawer />}
           </Viewport>

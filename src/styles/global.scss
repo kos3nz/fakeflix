@@ -25,7 +25,8 @@
     }
   }
 
-  &:hover span {
+  &:hover span,
+  &:focus span {
     @media only screen and (min-width: 1024px) {
       @apply translate-x-2 transform opacity-100;
     }

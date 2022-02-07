@@ -28,8 +28,8 @@ export const Swiper = ({ genre, type }: MySwiperProps) => {
   );
   const { width } = useViewport();
   const swiperRef = useRef<HTMLDivElement>(null);
-  const prevEl = useRef<HTMLDivElement>(null);
-  const nextEl = useRef<HTMLDivElement>(null);
+  const prevEl = useRef<HTMLButtonElement>(null);
+  const nextEl = useRef<HTMLButtonElement>(null);
   const isLarge = genre === 'originals' ? true : false;
 
   const groupNum =
@@ -64,7 +64,7 @@ export const Swiper = ({ genre, type }: MySwiperProps) => {
       nextEl: nextEl?.current,
     },
     pagination: { clickable: true },
-    onSlideChangeTransitionEnd: (swiper: SwiperCore) => {
+    onSlideChangeTransitionEnd: (swiper) => {
       const activeIndex = swiper.activeIndex;
       const slides = swiper.slides;
       const visibleSliders = slides.slice(activeIndex, activeIndex + groupNum);
@@ -126,13 +126,17 @@ export const Swiper = ({ genre, type }: MySwiperProps) => {
   }, [swiperRef, groupNum]);
 
   return (
-    <div ref={swiperRef} className="row relative flex">
-      <div ref={prevEl} className="swiper-button prev">
-        <FiChevronLeft />
-      </div>
-      <div ref={nextEl} className="swiper-button next">
-        <FiChevronRight />
-      </div>
+    <div
+      ref={swiperRef}
+      className="row relative flex"
+      aria-roledescription="carousel"
+    >
+      <button ref={prevEl} className="swiper-button prev">
+        <FiChevronLeft aria-hidden />
+      </button>
+      <button ref={nextEl} className="swiper-button next">
+        <FiChevronRight aria-hidden />
+      </button>
       <SwiperContainer {...swiperProps}>
         {data &&
           data.results.map((movie, i) => {

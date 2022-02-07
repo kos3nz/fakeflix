@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import toast from 'react-hot-toast';
+import FocusLock from 'react-focus-lock';
 import { BsFillPlayFill } from 'react-icons/bs';
 import { VscChromeClose } from 'react-icons/vsc';
 import { FaMinus, FaPlus } from 'react-icons/fa';
@@ -69,10 +70,10 @@ export const Modal = () => {
     if (modalContent) {
       if (isInList) {
         dispatch(removeFromFavorites(modalContent));
-        toast('Removed from your list!');
+        toast('Removed from your list!', { duration: 2000 });
       } else {
         dispatch(addToFavorites(modalContent));
-        toast('Added to your list!');
+        toast('Added to your list!', { duration: 2000 });
       }
     }
   };
@@ -82,25 +83,18 @@ export const Modal = () => {
       {isModalOpen && (
         <>
           <motion.div
-            className="
-            fixed top-0 left-0 z-50
-            flex min-h-screen
-            w-full items-center justify-center
-            overflow-hidden
-            bg-black/80
-          "
+            className="fixed top-0 left-0 z-50 flex min-h-screen w-full items-center justify-center overflow-hidden bg-black/80"
             // overflow:hiddenでmodalがexit animationで下へ消えることによるスクロールバーを非表示
             initial="hidden"
             animate="visible"
             exit="exit"
             variants={bgVariants}
-            // tabIndex={-1}
           >
             <motion.div
               ref={modalRef}
               className="scrollbar-hidden h-[85vh] w-[80%] max-w-xl overflow-hidden overflow-y-scroll rounded-md bg-gray-900 outline-none md:w-[65vw] 2xl:max-w-2xl"
               variants={modalVariants}
-              tabIndex={-1}
+              role="dialog"
             >
               <div className="relative min-h-[100px] w-full">
                 <img
@@ -118,33 +112,38 @@ export const Modal = () => {
                   bg-gradient-to-t from-gray-900 via-gray-900/30
                 "
                 />
-                <div className="absolute bottom-[5%] left-6 flex items-center space-x-2">
-                  <Button
-                    Icon={BsFillPlayFill}
-                    onClick={handlePlayVideo}
-                    color={videoKey ? 'primary' : 'disabled'}
-                  >
-                    Play
-                  </Button>
-                  <button
-                    className="
+                <FocusLock autoFocus={false}>
+                  <div className="absolute bottom-[5%] left-6 flex items-center space-x-2">
+                    <Button
+                      Icon={BsFillPlayFill}
+                      onClick={handlePlayVideo}
+                      color={videoKey ? 'primary' : 'disabled'}
+                      disabled={!videoKey}
+                    >
+                      Play
+                    </Button>
+                    <button
+                      className="
                     ml-1 rounded-full border-1
                     bg-transparent p-2
                     transition
                     duration-300 hover:bg-gray-200
                     hover:text-gray-900 sm:p-3
                     "
-                    onClick={handleFavorites}
-                  >
-                    {isInList ? (
-                      <FaMinus className="h-2 w-2 sm:h-3 sm:w-3" />
-                    ) : (
-                      <FaPlus className="h-2 w-2 sm:h-3 sm:w-3" />
-                    )}
-                  </button>
-                </div>
-                <button
-                  className="
+                      onClick={handleFavorites}
+                    >
+                      {isInList ? (
+                        <FaMinus
+                          className="h-2 w-2 sm:h-3 sm:w-3"
+                          aria-hidden
+                        />
+                      ) : (
+                        <FaPlus className="h-2 w-2 sm:h-3 sm:w-3" aria-hidden />
+                      )}
+                    </button>
+                  </div>
+                  <button
+                    className="
                     absolute top-4 right-4
                     rounded-full border-1
                     bg-gray-900/75 p-1
@@ -152,15 +151,15 @@ export const Modal = () => {
                     duration-300 hover:bg-gray-200
                     hover:text-gray-900 sm:p-2
                   "
-                  onClick={() => dispatch(closeModal())}
-                  aria-label="Close the modal by clicking here"
-                >
-                  <VscChromeClose
-                    aria-hidden
-                    className="h-4 w-4 sm:h-5 sm:w-5"
-                  />
-                </button>
-                <button onFocus={() => modalRef.current?.focus()} />
+                    onClick={() => dispatch(closeModal())}
+                    aria-label="Close the modal by clicking here"
+                  >
+                    <VscChromeClose
+                      aria-hidden
+                      className="h-4 w-4 sm:h-5 sm:w-5"
+                    />
+                  </button>
+                </FocusLock>
               </div>
               <motion.div
                 className="p-6 sm:p-8"

@@ -37,13 +37,13 @@ type NavMenuItemProps = {
 
 const NavMenuItem = ({ text, href, active, unavailable }: NavMenuItemProps) => {
   return unavailable ? (
-    <li className="p-1 text-gray-500">{text}</li>
+    <li className="p-2 text-gray-500">{text}</li>
   ) : active ? (
-    <li className="p-1 font-bold text-red-500">{text}</li>
+    <li className="p-2 font-bold text-red-500">{text}</li>
   ) : (
-    <li className="cursor-pointer p-1 transition duration-200 hover:text-gray-400">
+    <li className="cursor-pointer p-2 transition duration-200 hover:text-gray-400">
       <Link href={href}>
-        <a>{text}</a>
+        <a className="p-1">{text}</a>
       </Link>
     </li>
   );

@@ -28,7 +28,7 @@ export const BannerBackground = ({ imageUrl, children }: BannerBGProps) => {
       />
       <div
         className="
-        absolute bottom-0 left-0
+        absolute -bottom-1 left-0
         h-[50%] w-full
         bg-gradient-to-t from-gray-900 via-gray-900-opacity-75
       "

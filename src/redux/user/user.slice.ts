@@ -110,13 +110,11 @@ export const manageUserSessionWithSupabase = createAsyncThunk<
   }
 );
 
-type UserSessionPayload = SupabaseUser;
-
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<UserSessionPayload | null>) => {
+    setUser: (state, action: PayloadAction<SupabaseUser | null>) => {
       state.user = action.payload ?? null;
     },
   },

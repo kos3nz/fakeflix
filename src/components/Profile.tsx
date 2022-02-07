@@ -19,7 +19,7 @@ const iconVariants = {
   },
 };
 
-export const User = () => {
+export const Profile = () => {
   const [isVisible, setIsVisible] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -28,7 +28,7 @@ export const User = () => {
   return (
     // 親コンポーネントにrefを設定することで、profile iconをクリックしたときに二重にsetIsVisibleがトリガーされるのを防ぎ、DropdownMenuをクリックしたときはref.current.containsに含まれるためunmountしない
     <div className="text-paragraph" ref={dropdownRef}>
-      <div
+      <button
         className="
           flex cursor-pointer items-center
           space-x-1
@@ -39,9 +39,9 @@ export const User = () => {
           <img src="/images/profile.png" alt="user" />
         </div>
         <motion.div animate={isVisible ? 'up' : 'down'} variants={iconVariants}>
-          <IoMdArrowDropdown className="h-5 w-5" />
+          <IoMdArrowDropdown className="h-5 w-5" aria-hidden />
         </motion.div>
-      </div>
+      </button>
       <DropdownMenu isVisible={isVisible} />
     </div>
   );

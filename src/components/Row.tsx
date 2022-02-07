@@ -37,7 +37,7 @@ export const Row = ({ genre, type }: RowProps) => {
       : `/all/${genre}`;
 
   return (
-    <div className="pb-4 lg:pb-8" ref={observe}>
+    <div className="py-2 lg:py-4" ref={observe}>
       <h2
         className="
         text-md mb-2 inline-block px-[7%]
@@ -46,10 +46,10 @@ export const Row = ({ genre, type }: RowProps) => {
         "
       >
         <Link href={href}>
-          <a className="showmore flex items-baseline space-x-1">
+          <a className="showmore flex items-baseline space-x-1 p-1 pr-2">
             {title}
             <span className="hidden items-center text-[10px] underline opacity-0 transition-all duration-700 sm:flex sm:text-xs sm:decoration-1 sm:underline-offset-1 lg:text-sm">
-              Show all <FiChevronRight />
+              Show all <FiChevronRight aria-hidden />
             </span>
           </a>
         </Link>

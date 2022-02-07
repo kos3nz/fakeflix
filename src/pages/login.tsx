@@ -4,16 +4,24 @@ import { motion } from 'framer-motion';
 import { Logo } from 'components/Logo';
 import { SignIn } from 'components/SignIn';
 import { SignUp } from 'components/SignUp';
-import { useAppSelector } from 'redux/hooks';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { selectCurrentUser } from 'redux/user/user.selectors';
 import { GetServerSideProps } from 'next';
 import { checkUser } from 'db/supabaseClient';
 import { Head } from 'components/Head';
+import { setUser } from 'redux/user/user.slice';
 
-export default function Login() {
+type LoginProps = { cookieExpired?: boolean };
+
+export default function Login({ cookieExpired }: LoginProps) {
   const [isSignedUp, setIsSignedUp] = useState(true);
+  const dispatch = useAppDispatch();
   const user = useAppSelector(selectCurrentUser);
   const router = useRouter();
+
+  useEffect(() => {
+    if (cookieExpired) dispatch(setUser(null));
+  }, []);
 
   useEffect(() => {
     if (user) router.push('/intro');
@@ -49,7 +57,7 @@ export default function Login() {
               variants={formContainerVariant}
             >
               <p className="mb-2 text-center text-sm font-semibold text-primary xs:mb-5">
-                Pay attention: this is not the original Netflix sign in. <br />
+                Pay attention: This is not the original Netflix sign in. <br />
                 Don&apos;t insert your real credentials here!!
               </p>
               {isSignedUp ? <SignIn /> : <SignUp />}
@@ -97,7 +105,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     if (user) return redirect;
 
     return {
-      props: {},
+      props: { cookieExpired: true },
     };
   } catch (error) {
     console.error(error);

@@ -28,7 +28,9 @@ const Search = () => {
           <div className="genre-grid">
             {titles &&
               !noResult &&
-              titles.map((data) => <Poster key={data.id} data={data} />)}
+              titles.map((data) => (
+                <Poster key={data.id} data={data} as={'button'} />
+              ))}
           </div>
           {noResult && (
             <div className="flex justify-center pt-8">
