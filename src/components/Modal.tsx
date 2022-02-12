@@ -23,10 +23,38 @@ import {
 } from 'redux/favorites/favorites.slice';
 
 export const Modal = () => {
-  const modalRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector(selectIsModalOpen);
   const modalContent = useAppSelector(selectModalContent);
+
+  return (
+    <AnimatePresence exitBeforeEnter>
+      {isModalOpen && (
+        <>
+          <motion.div
+            className="fixed top-0 left-0 z-50 flex min-h-screen w-full items-center justify-center overflow-hidden bg-black/80"
+            // overflow:hiddenでmodalがexit animationで下へ消えることによるスクロールバーを非表示
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            variants={bgVariants}
+            role="dialog"
+          >
+            <ModalContent content={modalContent} />
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+};
+
+type ModalContentProps = {
+  content: TitleData | null;
+};
+
+const ModalContent = ({ content }: ModalContentProps) => {
+  const previousActiveElement = useRef(document.activeElement);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const dispatch = useAppDispatch();
   const isVideoOpen = useAppSelector(selectIsModalVideoOpen);
   const list = useAppSelector(selectFavoritesList);
 
@@ -43,21 +71,10 @@ export const Modal = () => {
     ageClassification,
     backdrop_path,
     videoKey,
-  } = modalContent || ({} as TitleData);
+  } = content || ({} as TitleData);
   const movieTitle = title || name || original_title || original_name;
   const genres = useConvertGenreIds(genre_ids || []);
-  const isInList = list.some((fav) => fav.id === modalContent?.id);
-
-  useOutsideClick(modalRef, () => {
-    if (isVideoOpen) return;
-    if (isModalOpen) dispatch(closeModal());
-  });
-
-  useEffect(() => {
-    if (isModalOpen) {
-      modalRef.current?.focus();
-    }
-  }, [isModalOpen]);
+  const isInList = list.some((fav) => fav.id === content?.id);
 
   const handlePlayVideo = () => {
     if (videoKey) dispatch(openModalVideo(videoKey));
@@ -67,83 +84,90 @@ export const Modal = () => {
     e: React.MouseEvent<HTMLSpanElement, MouseEvent>
   ) => {
     e.stopPropagation();
-    if (modalContent) {
+    if (content) {
       if (isInList) {
-        dispatch(removeFromFavorites(modalContent));
+        dispatch(removeFromFavorites(content));
         toast('Removed from your list!', { duration: 2000 });
       } else {
-        dispatch(addToFavorites(modalContent));
+        dispatch(addToFavorites(content));
         toast('Added to your list!', { duration: 2000 });
       }
     }
   };
 
+  const checkCloseModal = (e: KeyboardEvent) => {
+    if (!isVideoOpen && e.key === 'Escape') {
+      dispatch(closeModal());
+    }
+  };
+
+  useOutsideClick(contentRef, () => {
+    if (isVideoOpen) return;
+    dispatch(closeModal());
+  });
+
+  useEffect(() => {
+    document.addEventListener('keydown', checkCloseModal);
+
+    return () => {
+      document.removeEventListener('keydown', checkCloseModal);
+      if (previousActiveElement.current instanceof HTMLElement) {
+        previousActiveElement.current.focus();
+      }
+    };
+  });
+
   return (
-    <AnimatePresence exitBeforeEnter>
-      {isModalOpen && (
-        <>
-          <motion.div
-            className="fixed top-0 left-0 z-50 flex min-h-screen w-full items-center justify-center overflow-hidden bg-black/80"
-            // overflow:hiddenでmodalがexit animationで下へ消えることによるスクロールバーを非表示
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={bgVariants}
-          >
-            <motion.div
-              ref={modalRef}
-              className="scrollbar-hidden h-[85vh] w-[80%] max-w-xl overflow-hidden overflow-y-scroll rounded-md bg-gray-900 outline-none md:w-[65vw] 2xl:max-w-2xl"
-              variants={modalVariants}
-              role="dialog"
-            >
-              <div className="relative min-h-[100px] w-full">
-                <img
-                  src={
-                    backdrop_path
-                      ? `${W780_IMAGE_URL}${backdrop_path}`
-                      : '/images/fallback.png'
-                  }
-                  alt="poster"
-                />
-                <div
-                  className="
+    <motion.div
+      ref={contentRef}
+      className="scrollbar-hidden h-[85vh] w-[80%] max-w-xl overflow-hidden overflow-y-scroll rounded-md bg-gray-900 outline-none md:w-[65vw] 2xl:max-w-2xl"
+      variants={modalVariants}
+    >
+      <div className="relative min-h-[100px] w-full">
+        <img
+          src={
+            backdrop_path
+              ? `${W780_IMAGE_URL}${backdrop_path}`
+              : '/images/fallback.png'
+          }
+          alt="poster"
+        />
+        <div
+          className="
                   absolute bottom-0 left-0
                   h-[50%] w-full
                   bg-gradient-to-t from-gray-900 via-gray-900/30
                 "
-                />
-                <FocusLock autoFocus={false}>
-                  <div className="absolute bottom-[5%] left-6 flex items-center space-x-2">
-                    <Button
-                      Icon={BsFillPlayFill}
-                      onClick={handlePlayVideo}
-                      color={videoKey ? 'primary' : 'disabled'}
-                      disabled={!videoKey}
-                    >
-                      Play
-                    </Button>
-                    <button
-                      className="
+        />
+        <FocusLock autoFocus={false}>
+          <div className="absolute bottom-[5%] left-6 flex items-center space-x-2">
+            <Button
+              Icon={BsFillPlayFill}
+              onClick={handlePlayVideo}
+              color={videoKey ? 'primary' : 'disabled'}
+              disabled={!videoKey}
+            >
+              Play
+            </Button>
+            <button
+              className="
                     ml-1 rounded-full border-1
                     bg-transparent p-2
                     transition
                     duration-300 hover:bg-gray-200
                     hover:text-gray-900 sm:p-3
                     "
-                      onClick={handleFavorites}
-                    >
-                      {isInList ? (
-                        <FaMinus
-                          className="h-2 w-2 sm:h-3 sm:w-3"
-                          aria-hidden
-                        />
-                      ) : (
-                        <FaPlus className="h-2 w-2 sm:h-3 sm:w-3" aria-hidden />
-                      )}
-                    </button>
-                  </div>
-                  <button
-                    className="
+              onClick={handleFavorites}
+            >
+              {isInList ? (
+                <FaMinus className="h-2 w-2 sm:h-3 sm:w-3" aria-hidden />
+              ) : (
+                <FaPlus className="h-2 w-2 sm:h-3 sm:w-3" aria-hidden />
+              )}
+            </button>
+          </div>
+          <button
+            className="
                     absolute top-4 right-4
                     rounded-full border-1
                     bg-gray-900/75 p-1
@@ -151,52 +175,45 @@ export const Modal = () => {
                     duration-300 hover:bg-gray-200
                     hover:text-gray-900 sm:p-2
                   "
-                    onClick={() => dispatch(closeModal())}
-                    aria-label="Close the modal by clicking here"
-                  >
-                    <VscChromeClose
-                      aria-hidden
-                      className="h-4 w-4 sm:h-5 sm:w-5"
-                    />
-                  </button>
-                </FocusLock>
-              </div>
-              <motion.div
-                className="p-6 sm:p-8"
-                initial="hidden"
-                animate="visible"
-                variants={infoWrapperVariants}
-              >
-                <motion.h3
-                  className="mb-4 text-2xl font-semibold sm:text-3xl"
-                  variants={infoItemVariants}
-                >
-                  {movieTitle}
-                </motion.h3>
-                <motion.p
-                  className="text-sm leading-6 xs:text-base"
-                  variants={infoItemVariants}
-                >
-                  {overview}
-                </motion.p>
-                <hr className="my-4 border-gray-500 xs:my-6" />
-                <motion.h4
-                  className="mb-4 text-lg xs:text-xl"
-                  variants={infoItemVariants}
-                >
-                  Info on <b>{movieTitle}</b>
-                </motion.h4>
-                <InfoItem info="Genres" item={genres?.join(', ')} />
-                <InfoItem info="First air date" item={release_date} />
-                <InfoItem info="Average vote" item={vote_average} />
-                <InfoItem info="Original language" item={original_language} />
-                <InfoItem info="Age classification" item={ageClassification} />
-              </motion.div>
-            </motion.div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+            onClick={() => dispatch(closeModal())}
+            aria-label="Close the modal by clicking here"
+          >
+            <VscChromeClose aria-hidden className="h-4 w-4 sm:h-5 sm:w-5" />
+          </button>
+        </FocusLock>
+      </div>
+      <motion.div
+        className="p-6 sm:p-8"
+        initial="hidden"
+        animate="visible"
+        variants={infoWrapperVariants}
+      >
+        <motion.h3
+          className="mb-4 text-2xl font-semibold sm:text-3xl"
+          variants={infoItemVariants}
+        >
+          {movieTitle}
+        </motion.h3>
+        <motion.p
+          className="text-sm leading-6 xs:text-base"
+          variants={infoItemVariants}
+        >
+          {overview}
+        </motion.p>
+        <hr className="my-4 border-gray-500 xs:my-6" />
+        <motion.h4
+          className="mb-4 text-lg xs:text-xl"
+          variants={infoItemVariants}
+        >
+          Info on <b>{movieTitle}</b>
+        </motion.h4>
+        <InfoItem info="Genres" item={genres?.join(', ')} />
+        <InfoItem info="First air date" item={release_date} />
+        <InfoItem info="Average vote" item={vote_average} />
+        <InfoItem info="Original language" item={original_language} />
+        <InfoItem info="Age classification" item={ageClassification} />
+      </motion.div>
+    </motion.div>
   );
 };
 
